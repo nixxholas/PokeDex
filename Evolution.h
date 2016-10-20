@@ -5,8 +5,8 @@ using namespace std;
 
 class Evolution {
 private:
-	int index; // The unique id of the pokemon we're evolving to. 
-	string event; // The string to define what the pokemon has to meet in order to evolve.
+	int Index; // The unique id of the pokemon we're evolving to. 
+	string Event; // The string to define what the pokemon has to meet in order to evolve.
 
 public:
 	// A constructor for Evolution

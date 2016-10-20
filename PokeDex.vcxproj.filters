@@ -12,12 +12,29 @@
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
     </Filter>
     <Filter Include="Resource Files\Pokemons">
       <UniqueIdentifier>{73b64f26-f719-4b0b-925e-34e311cdeaec}</UniqueIdentifier>
+      <SourceControlFiles>False</SourceControlFiles>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <None Include="pokemon\001.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\002.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\003.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\004.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\005.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
     <None Include="pokemon\006.json">
       <Filter>Resource Files\Pokemons</Filter>
     </None>
@@ -2157,35 +2174,9 @@
     <None Include="pokemon\718.json">
       <Filter>Resource Files\Pokemons</Filter>
     </None>
-    <None Include="pokemon\001.json">
-      <Filter>Resource Files\Pokemons</Filter>
-    </None>
-    <None Include="pokemon\002.json">
-      <Filter>Resource Files\Pokemons</Filter>
-    </None>
-    <None Include="pokemon\003.json">
-      <Filter>Resource Files\Pokemons</Filter>
-    </None>
-    <None Include="pokemon\004.json">
-      <Filter>Resource Files\Pokemons</Filter>
-    </None>
-    <None Include="pokemon\005.json">
-      <Filter>Resource Files\Pokemons</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Pokemon.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Evolution.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Move.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Pokemon.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

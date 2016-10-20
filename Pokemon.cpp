@@ -1,8 +1,8 @@
 #include <string>
 #include <iostream>
 #include "Pokemon.h"
-#include "Evolution.h"
-#include "Move.h"
+#include "Evolution.cpp"
+#include "Move.cpp"
 
 using namespace std;
 
@@ -21,8 +21,10 @@ Pokemon::~Pokemon() {
 }
 
 void Pokemon::printAllMoveNames() const {
-	list<Move>::const_iterator iterator;
-	for (iterator = this->Moves.begin(); iterator != this->Moves.end(); ++iterator) {
-		
-	}
+	/*for (list<Move>::iterator iterator = this->Moves.begin(); iterator != this->Moves.end(); ++iterator) {
+		cout << iterator->getMoveName();
+	}*/
+	/*for (auto const& i : this->Moves) {
+		cout << i.getMoveName() << endl;
+	}*/
 }

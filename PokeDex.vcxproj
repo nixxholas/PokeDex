@@ -866,12 +866,7 @@
     <None Include="pokemon\718.json" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Evolution.h" />
-    <ClInclude Include="Move.h" />
-    <ClInclude Include="Pokemon.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Pokemon.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
