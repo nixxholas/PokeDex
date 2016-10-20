@@ -1,0 +1,2192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Resource Files\Pokemons">
+      <UniqueIdentifier>{73b64f26-f719-4b0b-925e-34e311cdeaec}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="pokemon\006.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\007.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\008.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\009.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\010.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\011.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\012.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\013.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\014.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\015.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\016.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\017.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\018.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\019.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\020.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\021.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\022.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\023.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\024.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\025.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\026.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\027.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\028.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\029.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\030.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\031.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\032.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\033.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\034.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\035.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\036.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\037.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\038.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\039.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\040.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\041.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\042.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\043.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\044.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\045.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\046.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\047.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\048.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\049.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\050.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\051.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\052.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\053.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\054.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\055.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\056.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\057.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\058.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\059.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\060.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\061.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\062.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\063.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\064.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\065.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\066.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\067.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\068.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\069.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\070.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\071.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\072.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\073.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\074.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\075.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\076.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\077.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\078.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\079.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\080.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\081.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\082.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\083.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\084.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\085.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\086.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\087.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\088.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\089.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\090.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\091.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\092.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\093.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\094.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\095.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\096.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\097.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\098.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\099.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\100.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\101.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\102.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\103.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\104.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\105.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\106.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\107.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\108.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\109.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\110.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\111.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\112.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\113.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\114.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\115.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\116.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\117.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\118.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\119.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\120.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\121.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\122.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\123.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\124.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\125.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\126.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\127.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\128.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\129.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\130.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\131.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\132.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\133.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\134.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\135.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\136.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\137.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\138.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\139.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\140.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\141.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\142.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\143.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\144.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\145.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\146.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\147.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\148.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\149.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\150.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\151.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\152.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\153.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\154.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\155.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\156.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\157.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\158.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\159.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\160.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\161.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\162.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\163.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\164.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\165.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\166.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\167.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\168.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\169.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\170.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\171.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\172.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\173.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\174.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\175.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\176.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\177.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\178.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\179.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\180.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\181.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\182.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\183.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\184.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\185.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\186.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\187.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\188.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\189.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\190.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\191.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\192.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\193.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\194.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\195.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\196.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\197.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\198.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\199.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\200.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\201.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\202.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\203.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\204.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\205.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\206.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\207.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\208.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\209.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\210.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\211.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\212.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\213.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\214.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\215.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\216.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\217.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\218.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\219.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\220.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\221.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\222.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\223.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\224.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\225.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\226.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\227.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\228.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\229.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\230.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\231.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\232.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\233.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\234.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\235.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\236.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\237.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\238.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\239.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\240.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\241.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\242.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\243.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\244.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\245.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\246.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\247.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\248.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\249.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\250.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\251.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\252.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\253.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\254.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\255.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\256.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\257.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\258.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\259.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\260.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\261.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\262.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\263.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\264.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\265.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\266.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\267.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\268.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\269.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\270.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\271.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\272.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\273.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\274.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\275.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\276.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\277.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\278.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\279.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\280.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\281.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\282.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\283.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\284.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\285.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\286.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\287.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\288.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\289.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\290.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\291.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\292.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\293.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\294.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\295.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\296.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\297.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\298.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\299.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\300.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\301.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\302.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\303.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\304.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\305.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\306.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\307.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\308.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\309.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\310.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\311.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\312.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\313.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\314.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\315.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\316.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\317.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\318.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\319.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\320.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\321.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\322.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\323.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\324.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\325.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\326.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\327.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\328.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\329.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\330.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\331.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\332.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\333.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\334.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\335.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\336.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\337.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\338.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\339.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\340.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\341.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\342.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\343.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\344.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\345.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\346.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\347.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\348.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\349.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\350.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\351.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\352.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\353.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\354.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\355.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\356.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\357.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\358.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\359.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\360.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\361.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\362.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\363.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\364.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\365.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\366.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\367.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\368.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\369.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\370.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\371.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\372.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\373.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\374.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\375.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\376.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\377.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\378.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\379.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\380.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\381.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\382.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\383.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\384.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\385.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\386.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\387.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\388.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\389.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\390.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\391.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\392.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\393.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\394.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\395.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\396.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\397.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\398.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\399.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\400.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\401.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\402.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\403.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\404.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\405.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\406.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\407.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\408.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\409.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\410.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\411.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\412.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\413.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\414.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\415.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\416.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\417.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\418.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\419.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\420.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\421.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\422.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\423.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\424.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\425.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\426.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\427.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\428.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\429.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\430.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\431.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\432.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\433.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\434.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\435.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\436.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\437.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\438.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\439.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\440.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\441.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\442.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\443.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\444.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\445.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\446.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\447.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\448.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\449.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\450.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\451.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\452.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\453.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\454.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\455.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\456.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\457.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\458.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\459.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\460.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\461.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\462.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\463.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\464.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\465.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\466.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\467.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\468.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\469.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\470.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\471.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\472.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\473.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\474.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\475.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\476.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\477.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\478.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\479.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\480.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\481.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\482.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\483.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\484.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\485.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\486.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\487.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\488.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\489.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\490.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\491.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\492.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\493.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\494.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\495.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\496.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\497.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\498.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\499.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\500.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\501.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\502.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\503.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\504.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\505.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\506.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\507.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\508.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\509.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\510.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\511.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\512.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\513.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\514.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\515.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\516.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\517.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\518.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\519.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\520.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\521.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\522.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\523.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\524.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\525.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\526.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\527.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\528.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\529.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\530.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\531.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\532.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\533.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\534.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\535.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\536.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\537.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\538.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\539.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\540.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\541.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\542.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\543.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\544.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\545.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\546.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\547.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\548.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\549.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\550.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\551.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\552.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\553.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\554.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\555.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\556.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\557.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\558.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\559.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\560.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\561.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\562.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\563.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\564.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\565.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\566.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\567.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\568.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\569.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\570.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\571.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\572.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\573.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\574.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\575.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\576.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\577.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\578.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\579.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\580.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\581.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\582.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\583.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\584.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\585.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\586.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\587.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\588.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\589.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\590.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\591.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\592.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\593.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\594.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\595.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\596.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\597.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\598.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\599.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\600.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\601.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\602.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\603.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\604.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\605.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\606.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\607.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\608.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\609.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\610.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\611.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\612.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\613.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\614.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\615.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\616.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\617.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\618.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\619.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\620.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\621.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\622.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\623.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\624.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\625.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\626.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\627.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\628.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\629.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\630.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\631.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\632.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\633.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\634.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\635.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\636.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\637.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\638.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\639.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\640.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\641.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\642.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\643.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\644.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\645.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\646.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\647.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\648.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\649.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\650.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\651.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\652.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\653.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\654.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\655.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\656.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\657.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\658.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\659.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\660.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\661.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\662.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\663.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\664.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\665.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\666.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\667.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\668.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\669.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\670.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\671.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\672.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\673.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\674.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\675.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\676.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\677.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\678.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\679.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\680.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\681.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\682.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\683.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\684.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\685.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\686.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\687.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\688.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\689.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\690.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\691.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\692.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\693.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\694.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\695.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\696.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\697.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\698.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\699.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\700.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\701.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\702.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\703.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\704.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\705.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\706.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\707.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\708.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\709.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\710.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\711.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\712.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\713.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\714.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\715.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\716.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\717.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\718.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\001.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\002.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\003.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\004.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+    <None Include="pokemon\005.json">
+      <Filter>Resource Files\Pokemons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Pokemon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Evolution.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Move.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Pokemon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
