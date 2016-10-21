@@ -4,6 +4,12 @@
 *.o
 *.obj
 
+# DSAL Exclusions
+.vs/
+.VC.db
+.vcxproj
+.vcxproj.filters
+
 # Precompiled Headers
 *.gch
 *.pch
