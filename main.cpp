@@ -6,7 +6,8 @@
 #include <fstream>
 #include <filesystem>
 #include "json.hpp"
-#include "Move.h"
+#include "Move.cpp"
+#include "Pokemon.cpp"
 
 // Directory Namespace Inclusion
 // https://msdn.microsoft.com/en-us/library/hh874694.aspx
@@ -15,6 +16,8 @@ using namespace std;
 
 // https://github.com/nlohmann/json
 using json = nlohmann::json;
+
+vector<Pokemon> Pokemons; // List Of Pokemons
 
 // Integer Checker
 // http://stackoverflow.com/questions/4917265/can-i-tell-if-a-stdstring-represents-a-number-using-stringstream
@@ -73,14 +76,17 @@ void initializePokemons() {
 
 		string name = jsonContent["name"];
 
+		vector<string> types;
 		// Iterate through the types array to instantiate the Pokemon's types Array
 		for (json::iterator it = jsonContent["types"].begin(); it != jsonContent["types"].end(); ++it) {
 			// Debugging Types, Has "
-			//cout << *it << endl;
+			//cout << *it << endl;			
+			string str_type = removeQuote(*it);
 
-
+			types.push_back(str_type);
 		}
-
+		
+		vector<Move> moves;
 		// Iterate through the moves array to instantiate the Pokemon's Moves Array
 		for (json::iterator it = jsonContent["moves"].begin(); it != jsonContent["moves"].end(); ++it) {					
 			// Debugging for the output
@@ -174,6 +180,7 @@ void initializePokemons() {
 			//cout << newMove.getMoveName() << endl;
 			
 			// Push newMove to the vector
+			moves.push_back(newMove);
 		}
 
 		// ------------------------------- DEPRECATED CODE ----------------------------- //
@@ -198,6 +205,9 @@ void initializePokemons() {
 		//cout << contents << endl;
 
 		// --------------------------- END OF DEPRECATED CODE ------------------------- //
+
+		// Create the Pokemon Object
+		Pokemon currentPokemon(index, name, types, moves);
 	}
 
 	/*

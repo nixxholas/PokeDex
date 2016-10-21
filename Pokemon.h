@@ -17,7 +17,7 @@ private:
 public:
 
 	// Default Constructor
-	Pokemon::Pokemon(int index, int name, vector<string> types, vector<Move> moves);
+	Pokemon::Pokemon(int index, string name, vector<string> types, vector<Move> moves);
 
 	// Destructor for Pokemon
 	Pokemon::~Pokemon();
