@@ -40,17 +40,9 @@ string removeQuote(string s) {
 // to create the Pokemon objects
 void initializePokemons() {
 	string line;
-	int i = 0;
-	// For debugging purposes only
-	//int i = 1;
 
 	for (auto& p : ::recursive_directory_iterator("Pokemons")) {
 		// For debugging purposes only
-		// Debugging Phase I
-		//cout << i << endl;
-		//i++;
-
-		// Debugging Phase II
 		//cout << p << endl;
 		
 		// cout is a stream, so basically we're just getting the p to a stream
@@ -76,6 +68,19 @@ void initializePokemons() {
 		// Debugging jsonContent
 		//cout << jsonContent["name"] << endl; //  Works
 
+		// Index
+		int index = jsonContent["index"]; // Since index is integer by default
+
+		string name = jsonContent["name"];
+
+		// Iterate through the types array to instantiate the Pokemon's types Array
+		for (json::iterator it = jsonContent["types"].begin(); it != jsonContent["types"].end(); ++it) {
+			// Debugging Types, Has "
+			//cout << *it << endl;
+
+
+		}
+
 		// Iterate through the moves array to instantiate the Pokemon's Moves Array
 		for (json::iterator it = jsonContent["moves"].begin(); it != jsonContent["moves"].end(); ++it) {					
 			// Debugging for the output
@@ -100,7 +105,7 @@ void initializePokemons() {
 			// So that things will look like it's in an orderly manner
 			// Level Integer Variable
 			int level;
-			if (is_number(removeQuote((*it)["level"]))) { // Call is_number to check if we can pasrse it to an int
+			if (is_number(removeQuote((*it)["level"]))) { // Call is_number to check if we can parse it to an int
 				// Debugging for level integer datatype
 				//cout << removeQuote((*it)["level"]) << endl;
 				string str_level = removeQuote((*it)["level"]);
@@ -166,7 +171,9 @@ void initializePokemons() {
 			Move newMove(level, name, type, category, attack, accuracy, pp, effect_percent, description);
  		
 			// Debugging newMove
-			cout << newMove.getMoveName() << endl;
+			//cout << newMove.getMoveName() << endl;
+			
+			// Push newMove to the vector
 		}
 
 		// ------------------------------- DEPRECATED CODE ----------------------------- //
@@ -191,9 +198,6 @@ void initializePokemons() {
 		//cout << contents << endl;
 
 		// --------------------------- END OF DEPRECATED CODE ------------------------- //
-
-		// Reset the integer
-		i = 0;
 	}
 
 	/*

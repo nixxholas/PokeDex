@@ -1,4 +1,5 @@
-﻿  main.cpp
-y:\dsal\1617s2dsal1444728nixholaspokedex\main.cpp(24): warning C4018: '<': signed/unsigned mismatch
+﻿  Pokemon.cpp
+  Evolution.cpp
+  Generating Code...
   PokeDex.vcxproj -> Y:\DSAL\1617S2DSAL1444728NixholasPokedex\Debug\PokeDex.exe
   PokeDex.vcxproj -> Y:\DSAL\1617S2DSAL1444728NixholasPokedex\Debug\PokeDex.pdb (Full PDB)
