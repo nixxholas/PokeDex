@@ -156,6 +156,10 @@
     <ClInclude Include="json.hpp" />
     <ClInclude Include="Move.h" />
     <ClInclude Include="Pokemon.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="PokeDex.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

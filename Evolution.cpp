@@ -1,21 +1,30 @@
 #include "Evolution.h"
 
-using namespace std;
 
-Evolution::Evolution() {}
+
+Evolution::Evolution(int pokemon, string event)
+{
+	Pokemon_ = pokemon;
+	Event_ = event;
+}
+
+
+Evolution::~Evolution()
+{
+}
 
 int Evolution::getPokemonId() const {
-	return this->Pokemon;
+	return Pokemon_;
 }
 
 string Evolution::getEvolvingEvent() const {
-	return this->Event;
+	return Event_;
 }
 
 void Evolution::setPokemonId(int pokemon) {
-	this->Pokemon = pokemon;
+	Pokemon_ = pokemon;
 }
 
 void Evolution::setEvent(string event) {
-	this->Event = event;
+	Event_ = event;
 }

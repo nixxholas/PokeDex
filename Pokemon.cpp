@@ -1,12 +1,20 @@
 #include "Pokemon.h"
 
-using namespace std;
 
-Pokemon::Pokemon(int index, string name, vector<string> types, vector<Move> moves) {
-	Index = index;
-	Name = name;
-	Types = types;
-	Moves = moves;
+
+Pokemon::Pokemon(int index, string name, vector<Evolution> evolutions, vector<string> types, vector<Move> moves) :
+	index_(index),
+	name_(name),
+	evolutions_(evolutions),
+	types_(types),
+	moves_(moves)
+{}
+
+Pokemon::~Pokemon()
+{
 }
 
-Pokemon::~Pokemon() {}
+
+string Pokemon::getPokemonName() const{
+	return name_;
+}

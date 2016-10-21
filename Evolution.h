@@ -3,12 +3,17 @@
 
 using namespace std;
 
-class Evolution {
+class Evolution
+{
 private:
-	int Pokemon; // The pokemon you're evolving to
-	string Event; // The requirement of the evolution
+	int Pokemon_; // The pokemon you're evolving to
+	string Event_; // The requirement of the evolution
 
 public:
+	Evolution(int, string);
+
+	~Evolution();
+
 	// Returns int pokemon
 	int getPokemonId() const;
 
@@ -20,7 +25,5 @@ public:
 
 	// Sets the Pokemon evolution event string
 	void setEvent(string Event);
-
-	// Default Constructor
-	Evolution::Evolution();
 };
+
