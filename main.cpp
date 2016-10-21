@@ -221,65 +221,20 @@ void initializePokemons() {
 			moves.push_back(newMove);
 		}
 
-		// ------------------------------- DEPRECATED CODE ----------------------------- //
-
-		// Iterate through each line in the ifstream
-		// http://stackoverflow.com/questions/13103296/reading-from-file-line-by-line-in-ceach-line-has-one-string-and-several-int-v
-		//while (getline(in, line)) {
-		//	if (i == 1) { // Index
-		//		cout << line << endl;
-		//	}
-		//	else if (i == 2) { // Name of Pokemon
-		//		cout << line << endl;
-		//	}
-		//	i++;
-		//}
-
-		// Read the contents of the file via the ifstream object
-		//string contents((istreambuf_iterator<char>(in)),
-		//	istreambuf_iterator<char>());
-		
-		// Print out what is contained within the file.
-		//cout << contents << endl;
-
-		// --------------------------- END OF DEPRECATED CODE ------------------------- //
-
 		// Create the Pokemon Object
 		Pokemon currentPokemon(index, name, evolutions, types, moves);
 		Pokemons.push_back(currentPokemon);
 	}
-
-	/*
-	Hard-Coded Code for File Directory Reading
-
-	* Deprecated *
-	
-	for (size_t i = 1; i <= 10; i++)
-	{
-		string path;
-		if (i < 10) {
-			path = "00";
-		}
-		else if (i < 100) {
-			path = "0";
-		}
-
-		path = ".\\pokemon\\" + path + to_string(i) + ".json";
-		cout << path << endl;
-
-		ifstream in(path);
-		string contents((istreambuf_iterator<char>(in)),
-			istreambuf_iterator<char>());
-		cout << contents << endl;
-	}*/
 }
 
 int main() {
 	string nice;
-	//vector<Pokemon> Pokemons;
 
 	initializePokemons();
 
+	for (Pokemon pokemon : Pokemons) {
+		cout << pokemon.getPokemonName() << endl;
+	}
 
 	cin >> nice;
 	return 0;
