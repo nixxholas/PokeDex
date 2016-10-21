@@ -14,7 +14,6 @@ Pokemon::~Pokemon()
 {
 }
 
-
 string Pokemon::getPokemonName() const{
 	return name_;
 }

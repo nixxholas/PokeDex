@@ -89,6 +89,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -149,12 +150,14 @@
     <ClCompile Include="Evolution.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Move.cpp" />
+    <ClCompile Include="PokeDex.cpp" />
     <ClCompile Include="Pokemon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Evolution.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="Move.h" />
+    <ClInclude Include="PokeDex.h" />
     <ClInclude Include="Pokemon.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

@@ -1,5 +1,6 @@
-﻿  Pokemon.cpp
+﻿  main.cpp
+  PokeDex.cpp
+y:\dsal\1617s2dsal1444728nixholaspokedex\pokedex.cpp(33): warning C4018: '<': signed/unsigned mismatch
   Generating Code...
-cl : Command line warning D9028: minimal rebuild failure, reverting to normal build
   PokeDex.vcxproj -> Y:\DSAL\1617S2DSAL1444728NixholasPokedex\Debug\PokeDex.exe
   PokeDex.vcxproj -> Y:\DSAL\1617S2DSAL1444728NixholasPokedex\Debug\PokeDex.pdb (Full PDB)
