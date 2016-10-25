@@ -90,6 +90,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <OpenMPSupport>true</OpenMPSupport>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -154,15 +155,15 @@
     <ClCompile Include="Pokemon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Comparator.h" />
     <ClInclude Include="Evolution.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="Move.h" />
     <ClInclude Include="PokeDex.h" />
     <ClInclude Include="Pokemon.h" />
-    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="PokeDex.rc" />
+    <None Include="pokemons.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

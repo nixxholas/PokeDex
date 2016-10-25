@@ -42,19 +42,19 @@
     <ClInclude Include="Evolution.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Pokemon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PokeDex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Comparator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="PokeDex.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
+    <None Include="pokemons.json">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -7,9 +7,6 @@ private:
 	vector<Pokemon> Pokemons_;
 
 public:
-	// Returns all of the pokemons for use
-	vector<Pokemon> getPokemons(); 
-	
 	// Setup the Pokemon Vector.
 	void initializePokemons();
 
