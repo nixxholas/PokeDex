@@ -5,10 +5,10 @@
 *.obj
 
 # DSAL Exclusions
-*.vs/
-*.VC.db
-*.vcxproj
-*.vcxproj.filters
+.vs/
+.VC.db
+.vcxproj
+.vcxproj.filters
 
 # Precompiled Headers
 *.gch
