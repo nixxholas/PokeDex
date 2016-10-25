@@ -37,6 +37,8 @@ then its a definition, otherwise its a declaration.
 #include <fstream>
 #include <iostream>
 #include <filesystem>
+#include <thread> //  Prepare for MT
+#include <mutex> // Prepare for MT
 
 // Directory Namespace Inclusion
 // https://msdn.microsoft.com/en-us/library/hh874694.aspx
@@ -46,6 +48,9 @@ using namespace rapidjson;
 
 // https://github.com/nlohmann/json
 //using json = nlohmann::json;
+
+mutex mutex_;
+condition_variable condition_var_;
 
 PokeDex::PokeDex()
 {
@@ -74,11 +79,98 @@ string removeQuote(string s) {
 	return s.substr(1, s.size() - 2);
 }
 
+// initializePokemons() version 2.3 = Utilizing Threads
+
+//void PokeDex::initializePokemons() {
+//	// Open the Pokemons.json array
+//	// http://www.cplusplus.com/doc/tutorial/files/
+//	ifstream pokemonsFile("pokemons.json");
+//	stringstream jsonSS;
+//
+//	if (pokemonsFile) {
+//		jsonSS << pokemonsFile.rdbuf();
+//		pokemonsFile.close();
+//	}
+//	else {
+//		throw std::runtime_error("!! Unable to open json file");
+//	}
+//
+//	// Convert the file into a document object in conjunction with rapidJSON
+//	Document pokemonDoc;
+//
+//	if (pokemonDoc.Parse<0>(jsonSS.str().c_str()).HasParseError())
+//		throw std::invalid_argument("json parse error");
+//
+//	// Let rapidJSON know that there's an array name pokemons within the json
+//	if (!pokemonDoc.IsArray()) {
+//		pokemonDoc.IsArray();
+//	}
+//
+//	const Value& pokemons = pokemonDoc;
+//	assert(pokemons.IsArray());
+//
+//	auto startTimer = std::chrono::high_resolution_clock::now();
+//
+//	for (SizeType i = 0; i < pokemons.Size(); i++) {
+//		unique_lock<mutex> lock_(mutex_);
+//		/*condition_var_.wait(lock_, [i]() { 
+//			return  
+//		});*/
+//
+//		// Debugging Purposes Only
+//		//cout << i << endl;
+//
+//		// ============== Data Seeding Per Pokemon =============== //
+//
+//		// Evolution
+//		vector<Evolution> evolutions;
+//		for (SizeType j = 0; j < pokemons[i]["evolutions"].Size(); j++) {
+//			// Parse the current evolution object into an auto
+//			auto& currObj = pokemons[i]["evolutions"][j];
+//
+//			// Push the auto object to an evolution object into the vector
+//			evolutions.push_back(Evolution(pokemons[i]["evolutions"][j]["pokemon"].GetInt(), pokemons[i]["evolutions"][j]["event"].GetString()));
+//		}
+//
+//		// Types
+//		vector<string> types_;
+//		// http://discuss.cocos2d-x.org/t/how-to-get-array-inside-json-into-vector/25614/2
+//		for (SizeType k = 0; k < pokemons[i]["types"].Size(); k++) {
+//			types_.push_back(pokemons[i]["types"][k].GetString());
+//		}
+//		// Get the proper types in
+//		vector<Pokemon::Type> types = Pokemon::stringToTypes(types_);
+//
+//		// Moves
+//		vector<Move> moves;
+//		for (SizeType l = 0; l < pokemons[i]["moves"].Size(); l++) {
+//			auto& currObj = pokemons[i]["moves"][l];
+//
+//			moves.push_back(Move(
+//				pokemons[i]["moves"][l]["level"].GetInt(), // Level
+//				pokemons[i]["moves"][l]["name"].GetString(), // Move Name
+//				pokemons[i]["moves"][l]["type"].GetString(), // Move Type
+//				pokemons[i]["moves"][l]["category"].GetString(), // Move Category
+//				pokemons[i]["moves"][l]["attack"].GetInt(), // Attack Damage
+//				pokemons[i]["moves"][l]["accuracy"].GetInt(), // Move Accuracy Percentage
+//				pokemons[i]["moves"][l]["pp"].GetInt(), // PP Move Amount
+//				pokemons[i]["moves"][l]["effect_percent"].GetInt(), // Effect Chance
+//				pokemons[i]["moves"][l]["description"].GetString())); // Description
+//		}
+//
+//		// Create the Pokemon Object
+//		Pokemon currentPokemon(pokemons[i]["index"].GetInt(), pokemons[i]["name"].GetString(), evolutions, types, moves);
+//		Pokemons_.push_back(currentPokemon);
+//		std::cout << ".";
+//	}
+//
+//	auto finishTimer = std::chrono::high_resolution_clock::now();
+//	std::cout << Pokemons_.size() + " Pokemons loaded in " << std::chrono::duration_cast<std::chrono::milliseconds>(finishTimer - startTimer).count() << "ms" << endl;
+//
+//}
+
 // initializePokemons() version 2.2 = Utilizing stringstreams
-// This iteration of initializePokemons() is more streamlined.
-// Instead of running an IOStream Wrapper which is a little slower
-// than a other streams, we'll use StringStream, the fastest one available
-// for rapidJSON
+// This iteration of initializePokemons() is more streamlined with predefined variables
 
 void PokeDex::initializePokemons() {
 	// Open the Pokemons.json array
@@ -107,6 +199,8 @@ void PokeDex::initializePokemons() {
 
 	const Value& pokemons = pokemonDoc;
 	assert(pokemons.IsArray());
+
+	auto startTimer = std::chrono::high_resolution_clock::now();
 
 	for (SizeType i = 0; i < pokemons.Size(); i++) {
 		// Debugging Purposes Only
@@ -153,8 +247,12 @@ void PokeDex::initializePokemons() {
 		// Create the Pokemon Object
 		Pokemon currentPokemon(pokemons[i]["index"].GetInt(), pokemons[i]["name"].GetString(), evolutions, types, moves);
 		Pokemons_.push_back(currentPokemon);
-		cout << ".";
+		std::cout << ".";
 	}
+
+	cout << endl;
+	auto finishTimer = std::chrono::high_resolution_clock::now();
+	std::cout << Pokemons_.size() + " Pokemons loaded in " << std::chrono::duration_cast<std::chrono::milliseconds>(finishTimer - startTimer).count()<< "ms" << endl;
 
 }
 
@@ -583,7 +681,7 @@ void PokeDex::initializePokemons() {
 //}
 
 void PokeDex::savePokemons() {
-	cout << "Saving your data before exiting.." << endl;
+	std::cout << "Saving your data before exiting.." << endl;
 
 	// Delete the existing JSON
 	// http://www.cplusplus.com/reference/cstdio/remove/
@@ -594,8 +692,8 @@ void PokeDex::savePokemons() {
 		puts("File successfully deleted");
 	}
 
-	cout << endl;
-	cout << "Saving the new and existing data..";
+	std::cout << endl;
+	std::cout << "Saving the new and existing data..";
 
 	// Combine the unstaged and staged vectors
 	// http://discuss.cocos2d-x.org/t/solved-how-to-write-json-array-using-rapidjson/29551
@@ -604,6 +702,9 @@ void PokeDex::savePokemons() {
 	outputDocument.SetArray(); // It's an object
 	//assert(outputDocument.IsArray());
 	Document::AllocatorType& allocator = outputDocument.GetAllocator();
+
+	// For Loop Timer
+	auto startTimer = std::chrono::high_resolution_clock::now();
 
 	// Push the Existing Pokemons Back
 	for (int i = 0; i < Pokemons_.size(); i++)
@@ -658,11 +759,14 @@ void PokeDex::savePokemons() {
 
 		// Push the GenericObject to the Document Array
 		outputDocument.PushBack(pokemon, allocator);
-		cout << ".";
+		std::cout << ".";
 	}
+	auto finishTimer = std::chrono::high_resolution_clock::now();
 
-	system("cls");
-	cout << "Writing to json" << endl;
+	std::system("cls");
+	cout << endl;
+	std::cout << Pokemons_.size() + " Pokemons unloaded in " << std::chrono::duration_cast<std::chrono::milliseconds>(finishTimer - startTimer).count() << "ms" << endl;
+	std::cout << "Writing to json" << endl;
 
 	// Output the JSON
 	StringBuffer strbuf;
@@ -676,7 +780,7 @@ void PokeDex::savePokemons() {
 
 void PokeDex::launchSearchMenu() {
 	string searchString;
-	cout << "Type in the Pokemon you'd like to search: ";
+	std::cout << "Type in the Pokemon you'd like to search: ";
 	cin >> searchString;
 }
 
@@ -685,10 +789,10 @@ void PokeDex::launchCreatePokemon() {
 	int typeCount;
 	vector<string> types;
 
-	cout << "Type in the name of the Pokemon";
+	std::cout << "Type in the name of the Pokemon";
 	cin >> name;
 
-	cout << "How many types does your pokemon have? ";
+	std::cout << "How many types does your pokemon have? ";
 	cin >> typeCount;
 
 }
@@ -713,7 +817,7 @@ void PokeDex::menuChoice(int& choice) {
 		savePokemons();
 		break;
 	default:
-		cout << "Please try again" << endl;
+		std::cout << "Please try again" << endl;
 		break;
 	}
 }
@@ -722,12 +826,12 @@ void PokeDex::launchMenu() {
 	string choice = "";
 
 	while (choice == "") {
-		cout << "============ C++ PokeDex ============" << endl;
-		cout << "(1) Search for a pokemon" << endl;
-		cout << "(2) Create a new pokemon" << endl;
+		std::cout << "============ C++ PokeDex ============" << endl;
+		std::cout << "(1) Search for a pokemon" << endl;
+		std::cout << "(2) Create a new pokemon" << endl;
 		//cout << "(3) Edit an existing pokemon" << endl;
 		//cout << "(4) Remove an existing pokemon" << endl;
-		cout << "(5) Exit the PokeDex" << endl;
+		std::cout << "(5) Exit the PokeDex" << endl;
 
 		cin >> choice; // http://stackoverflow.com/questions/13421965/using-cin-get-to-get-an-integer
 		int choiceInt; // Parsing the choice to here later
@@ -742,8 +846,8 @@ void PokeDex::launchMenu() {
 		} else {
 			cin.clear();
 			choice = "";
-			system("cls");
-			cout << "Invalid Input, Please try again." << endl;
+			std::system("cls");
+			std::cout << "Invalid Input, Please try again." << endl;
 		}
 	}
 }

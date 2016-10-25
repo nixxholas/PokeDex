@@ -2,10 +2,8 @@
 
 
 
-Evolution::Evolution(int pokemon, string event)
+Evolution::Evolution(int pokemon, string event) : Pokemon_(pokemon), Event_(event)
 {
-	Pokemon_ = pokemon;
-	Event_ = event;
 }
 
 
