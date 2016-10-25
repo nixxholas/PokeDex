@@ -195,6 +195,7 @@ void PokeDex::initializePokemons() {
 		// Create the Pokemon Object
 		Pokemon currentPokemon(pokemons[i]["index"].GetInt(), pokemons[i]["name"].GetString(), evolutions, types, moves);
 		Pokemons_.push_back(currentPokemon);
+		cout << ".";
 	}
 
 }
@@ -349,10 +350,84 @@ void PokeDex::initializePokemons() {
 //	}
 //}
 
-void PokeDex::menuChoice(int choice) {
+void PokeDex::savePokemons() {
+	// Delete the existing JSON
+
+	// Combine the unstaged and staged vectors
+
+	// Output the JSON
+}
+
+void PokeDex::launchSearchMenu() {
+	string searchString;
+	cout << "Type in the Pokemon you'd like to search: ";
+	cin >> searchString;
+}
+
+void PokeDex::launchCreatePokemon() {
+	string name;
+	int typeCount;
+	vector<string> types;
+
+	cout << "Type in the name of the Pokemon";
+	cin >> name;
+
+	cout << "How many types does your pokemon have? ";
+	cin >> typeCount;
+
+}
+
+void PokeDex::launchDeletePokemon() {
+
+}
+
+void PokeDex::menuChoice(int& choice) {
 	switch (choice) {
+	case 1:
+		launchSearchMenu();
+		break;
+	case 2:
+		launchCreatePokemon();
+		break;
+	case 3:
+		break;
+	case 4:
+		break;
+	case 5:
+		exit;
+		break;
 	default:
 		cout << "Please try again" << endl;
 		break;
+	}
+}
+
+void PokeDex::launchMenu() {
+	string choice = "";
+
+	while (choice == "") {
+		cout << "============ C++ PokeDex ============" << endl;
+		cout << "(1) Search for a pokemon" << endl;
+		cout << "(2) Create a new pokemon" << endl;
+		//cout << "(3) Edit an existing pokemon" << endl;
+		//cout << "(4) Remove an existing pokemon" << endl;
+		cout << "(5) Exit the PokeDex" << endl;
+
+		cin >> choice; // http://stackoverflow.com/questions/13421965/using-cin-get-to-get-an-integer
+		int choiceInt; // Parsing the choice to here later
+
+		if (choice == "1" || 
+			choice == "2" || 
+			//choice == "3" || 
+			//choice == "4" || 
+			choice == "5") {
+			choiceInt = stoi(choice);
+			menuChoice(choiceInt);
+		} else {
+			cin.clear();
+			choice = "";
+			system("cls");
+			cout << "Invalid Input, Please try again." << endl;
+		}
 	}
 }

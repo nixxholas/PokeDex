@@ -7,15 +7,16 @@
 using namespace std;
 
 int main() {
-	cout << "Loading..." << endl;
+	cout << "Loading Pokemons" << endl;
 
 	PokeDex pokeDex;
 	pokeDex.initializePokemons();
 
-	cout << "Loaded. Let's Begin! \n" << endl;
+	cout << "Loaded. Let's Begin!" << endl;
+	
+	system("cls"); // Clear the Console
 
-	string nice;
+	pokeDex.launchMenu();
 
-	cin >> nice;
 	return 0;
 }
