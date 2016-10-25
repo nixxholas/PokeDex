@@ -31,7 +31,65 @@ vector<string> Pokemon::typesToString() const{
 	vector<string> result;
 	
 	for (Type t : types_) {
-
+		switch (t) {
+		case Type::BUG: // 0
+			result.push_back("bug");
+			break;
+		case Type::GRASS: // 1
+			result.push_back("grass");
+			break;
+		case Type::DARK: // 2
+			result.push_back("dark");
+			break;
+		case Type::GROUND: // 3
+			result.push_back("ground");
+			break;
+		case Type::DRAGON: // 4
+			result.push_back("dragon");
+			break;
+		case Type::ICE: // 5
+			result.push_back("ice");
+			break;
+		case Type::ELECTRIC: // 6
+			result.push_back("electric");
+			break;
+		case Type::NORMAL: // 7
+			result.push_back("normal");
+			break;
+		case Type::FAIRY: // 8
+			result.push_back("fairy");
+			break;
+		case Type::POISON: // 9
+			result.push_back("poison");
+			break;
+		case Type::FIGHTING: // 10
+			result.push_back("fighting");
+			break;
+		case Type::PSYCHIC: // 11
+			result.push_back("psychic");
+			break;
+		case Type::FIRE: // 12
+			result.push_back("fire");
+			break;
+		case Type::ROCK: // 13
+			result.push_back("rock");
+			break;
+		case Type::FLYING: // 14
+			result.push_back("flying");
+			break;
+		case Type::STEEL: // 15
+			result.push_back("steel");
+			break;
+		case Type::GHOST: // 16
+			result.push_back("ghost");
+			break;
+		case Type::WATER: // 17
+			result.push_back("water");
+			break;
+		default:
+			cout << "Failed to parse a Type enum." << endl;
+			break;
+		}
 	}
 
 	return result;

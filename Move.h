@@ -20,5 +20,30 @@ public:
 
 	Move::~Move();
 
+	// Returns the level integer
+	int getMoveLevel() const;
+
+	// Returns the move name in string
 	string getMoveName() const;
+
+	// Returns the Move type in string
+	string getMoveType() const;
+
+	// Returns the move category in string
+	string getMoveCategory() const;
+
+	// Returns the attack damage in integer
+	int getMoveAttack() const;
+
+	// Returns the accuracy of the move
+	int getMoveAccuracy() const;
+
+	// Returns the PP amount of the move
+	int getMovePP() const;
+
+	// Returns the effect percent of the move
+	int getMoveEffectPercent() const;
+
+	// Returns the description of the move
+	string getMoveDescription() const;
 };

@@ -537,7 +537,7 @@ void PokeDex::savePokemons() {
 
 		// Get the types
 		for (int j = 0; j < Pokemons_.at(i).typesToString().size(); j++) {
-
+			types.PushBack(StringRef(Pokemons_.at(i).typesToString().at(j).c_str()), allocator);
 		}
 		pokemon.AddMember("types", types, allocator);
 
@@ -554,6 +554,16 @@ void PokeDex::savePokemons() {
 		for (int l = 0; l < Pokemons_.at(i).getMoves().size(); l++) {
 			Value move(kObjectType);
 
+			// Set the values for the current move
+			move.AddMember("level", Pokemons_.at(i).getMoves().at(l).getMoveLevel(), allocator);
+			move.AddMember("name", StringRef(Pokemons_.at(i).getMoves().at(l).getMoveName().c_str()), allocator);
+			move.AddMember("type", StringRef(Pokemons_.at(i).getMoves().at(l).getMoveType().c_str()), allocator);
+			move.AddMember("attack", Pokemons_.at(i).getMoves().at(l).getMoveAttack(), allocator);
+			move.AddMember("accuracy", Pokemons_.at(i).getMoves().at(l).getMoveAccuracy(), allocator);
+			move.AddMember("pp", Pokemons_.at(i).getMoves().at(l).getMovePP(), allocator);
+			move.AddMember("effect_percent", Pokemons_.at(i).getMoves().at(l).getMoveEffectPercent(), allocator);
+			move.AddMember("description", StringRef(Pokemons_.at(i).getMoves().at(l).getMoveDescription().c_str()), allocator);
+
 			moves.PushBack(move, allocator);
 		}
 		pokemon.AddMember("moves", moves, allocator);
@@ -566,6 +576,11 @@ void PokeDex::savePokemons() {
 	StringBuffer strbuf;
 	Writer<StringBuffer> writer(strbuf);
 	outputDocument.Accept(writer);
+
+	// Output to the file
+	ofstream ofs("output.json");
+	ofs << strbuf.GetString();
+	cout << "done" << endl;
 }
 
 void PokeDex::launchSearchMenu() {
