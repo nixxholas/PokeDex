@@ -587,15 +587,15 @@ void PokeDex::savePokemons() {
 
 	// Delete the existing JSON
 	// http://www.cplusplus.com/reference/cstdio/remove/
-	/*if (remove("pokemons.json") != 0) {
+	if (remove("pokemons.json") != 0) {
 		perror("Error deleting file");
 	}
 	else {
 		puts("File successfully deleted");
-	}*/
+	}
 
 	cout << endl;
-	cout << "Saving the new and existing data.." << endl;
+	cout << "Saving the new and existing data..";
 
 	// Combine the unstaged and staged vectors
 	// http://discuss.cocos2d-x.org/t/solved-how-to-write-json-array-using-rapidjson/29551
@@ -658,7 +658,11 @@ void PokeDex::savePokemons() {
 
 		// Push the GenericObject to the Document Array
 		outputDocument.PushBack(pokemon, allocator);
+		cout << ".";
 	}
+
+	system("cls");
+	cout << "Writing to json" << endl;
 
 	// Output the JSON
 	StringBuffer strbuf;
@@ -666,9 +670,8 @@ void PokeDex::savePokemons() {
 	outputDocument.Accept(writer);
 
 	// Output to the file
-	ofstream ofs("output.json");
+	ofstream ofs("pokemons.json");
 	ofs << strbuf.GetString();
-	cout << "done" << endl;
 }
 
 void PokeDex::launchSearchMenu() {
