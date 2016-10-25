@@ -1,5 +1,0 @@
-﻿  PokeDex.cpp
-y:\dsal\1617s2dsal1444728nixholaspokedex\pokedex.cpp(61): warning C4018: '<': signed/unsigned mismatch
-y:\dsal\1617s2dsal1444728nixholaspokedex\pokedex.cpp(357): warning C4065: switch statement contains 'default' but no 'case' labels
-  PokeDex.vcxproj -> Y:\DSAL\1617S2DSAL1444728NixholasPokedex\Debug\PokeDex.exe
-  PokeDex.vcxproj -> Y:\DSAL\1617S2DSAL1444728NixholasPokedex\Debug\PokeDex.pdb (Full PDB)
