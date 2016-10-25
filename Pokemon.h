@@ -48,10 +48,17 @@ public:
 	// Returns int pokemon
 	int getPokemonId() const;
 
-	// Returns string Event
-	string getEvolvingEvent() const;
+	// Returns the vector of evolutions
+	vector<Evolution> getEvolutions() const;
 
+	// Returns the pokemon name
 	string getPokemonName() const;
+
+	// Returns the types in a vector of string
+	vector<string> typesToString() const;
+	
+	// Returns the vector of moves
+	vector<Move> getMoves() const;
 
 	// Sets the pokemon id to evolve to
 	void setPokemonId(int Pokemon);

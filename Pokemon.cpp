@@ -15,8 +15,30 @@ Pokemon::~Pokemon()
 {
 }
 
-string Pokemon::getPokemonName() const{
+int Pokemon::getPokemonId() const {
+	return index_;
+}
+
+string Pokemon::getPokemonName() const {
 	return name_;
+}
+
+vector<Evolution> Pokemon::getEvolutions() const {
+	return evolutions_;
+}
+
+vector<string> Pokemon::typesToString() const{
+	vector<string> result;
+	
+	for (Type t : types_) {
+
+	}
+
+	return result;
+}
+
+vector<Move> Pokemon::getMoves() const {
+	return moves_;
 }
 
 vector<Pokemon::Type> Pokemon::stringToTypes(vector<string>& typesInString) {
