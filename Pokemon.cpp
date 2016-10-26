@@ -27,9 +27,9 @@ vector<Evolution> Pokemon::getEvolutions() const {
 	return evolutions_;
 }
 
-vector<string> Pokemon::typesToString() const{
+vector<string> Pokemon::typesToString() const {
 	vector<string> result;
-	
+
 	for (Type t : types_) {
 		switch (t) {
 		case Type::BUG: // 0
@@ -99,6 +99,146 @@ vector<Move> Pokemon::getMoves() const {
 	return moves_;
 }
 
+// couts a list of Enumerators for the user to cin via enumIntToString()
+// Checks the input, and eventually returns a string
+Pokemon::Type Pokemon::chooseTypeEnum() {
+	int choice;
+
+	for (int i = Type::BUG; i != Type::WATER; ++i) {
+		switch (i) {
+		case Type::BUG: // 0
+			cout << "(1) Bug" << endl;
+			break;
+		case Type::GRASS: // 1
+			cout << "(2) Grass" << endl;
+			break;
+		case Type::DARK: // 2
+			cout << "(3) Dark" << endl;
+			break;
+		case Type::GROUND: // 3
+			cout << "(4) Ground" << endl;
+			break;
+		case Type::DRAGON: // 4
+			cout << "(5) Dragon" << endl;
+			break;
+		case Type::ICE: // 5
+			cout << "(6) Ice" << endl;
+			break;
+		case Type::ELECTRIC: // 6
+			cout << "(7) Electric" << endl;
+			break;
+		case Type::NORMAL: // 7
+			cout << "(8) Normal" << endl;
+			break;
+		case Type::FAIRY: // 8
+			cout << "(9) Fairy" << endl;
+			break;
+		case Type::POISON: // 9
+			cout << "(10) Poison" << endl;
+			break;
+		case Type::FIGHTING: // 10
+			cout << "(11) Fighting" << endl;
+			break;
+		case Type::PSYCHIC: // 11
+			cout << "(12) Psychic" << endl;
+			break;
+		case Type::FIRE: // 12
+			cout << "(13) Fire" << endl;
+			break;
+		case Type::ROCK: // 13
+			cout << "(14) Rock" << endl;
+			break;
+		case Type::FLYING: // 14
+			cout << "(15) Flying" << endl;
+			break;
+		case Type::STEEL: // 15
+			cout << "(16) Steel" << endl;
+			break;
+		case Type::GHOST: // 16
+			cout << "(17) Ghost" << endl;
+			break;
+		case Type::WATER: // 17
+			cout << "(18) Water" << endl;
+			break;
+		default:
+			cout << "Failed to parse a Type enum." << endl;
+			break;
+		}
+	}
+
+	cin >> choice;
+	while (!(choice < 18) || !(choice > 0)) {
+		cout << "Please enter a valid input." << endl;
+		cin >> choice;
+	}
+
+	return enumIntToType(choice - 1);
+}
+
+// Returns the string of the Enumerator identified by an Integer
+Pokemon::Type Pokemon::enumIntToType(int inType) {
+	return Type(inType); // http://www.gamedev.net/topic/330476-cc-how-to-convert-int-to-enum/
+	//switch (inType) {
+	//case Type::BUG: // 0
+	//	return "bug";
+	//	break;
+	//case Type::GRASS: // 1
+	//	return "grass";
+	//	break;
+	//case Type::DARK: // 2
+	//	return "dark";
+	//	break;
+	//case Type::GROUND: // 3
+	//	return "ground";
+	//	break;
+	//case Type::DRAGON: // 4
+	//	return "dragon";
+	//	break;
+	//case Type::ICE: // 5
+	//	return "ice";
+	//	break;
+	//case Type::ELECTRIC: // 6
+	//	return "electric";
+	//	break;
+	//case Type::NORMAL: // 7
+	//	return "normal";
+	//	break;
+	//case Type::FAIRY: // 8
+	//	return "fairy";
+	//	break;
+	//case Type::POISON: // 9
+	//	return "poison";
+	//	break;
+	//case Type::FIGHTING: // 10
+	//	return "fighting";
+	//	break;
+	//case Type::PSYCHIC: // 11
+	//	return "psychic";
+	//	break;
+	//case Type::FIRE: // 12
+	//	return "fire";
+	//	break;
+	//case Type::ROCK: // 13
+	//	return "rock";
+	//	break;
+	//case Type::FLYING: // 14
+	//	return "flying";
+	//	break;
+	//case Type::STEEL: // 15
+	//	return "steel";
+	//	break;
+	//case Type::GHOST: // 16
+	//	return "ghost";
+	//	break;
+	//case Type::WATER: // 17
+	//	return "water";
+	//	break;
+	//default:
+	//	cout << "Failed to parse a Type enum." << endl;
+	//	break;
+	//}
+}
+
 vector<Pokemon::Type> Pokemon::stringToTypes(vector<string>& typesInString) {
 	vector<Type> types;
 
@@ -141,7 +281,8 @@ vector<Pokemon::Type> Pokemon::stringToTypes(vector<string>& typesInString) {
 		case 'g':
 			if (type == "ghost") {
 				t = Type::GHOST;
-			} else if (type == "grass") {
+			}
+			else if (type == "grass") {
 				t = Type::GRASS;
 			}
 			else if (type == "ground") {

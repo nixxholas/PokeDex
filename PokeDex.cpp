@@ -37,6 +37,7 @@ then its a definition, otherwise its a declaration.
 #include <fstream>
 #include <iostream>
 #include <filesystem>
+#include <iterator>
 #include "ThreadPool.h"
 
 // Directory Namespace Inclusion
@@ -48,7 +49,8 @@ using namespace rapidjson;
 // https://github.com/nlohmann/json
 //using json = nlohmann::json;
 
-mutex mutex_;
+mutex initialMutex_;
+mutex exitingMutex_;
 
 PokeDex::PokeDex()
 {
@@ -78,6 +80,9 @@ string removeQuote(string s) {
 }
 
 // initializePokemons() version 2.3 = Utilizing Threads
+// With the use of a custom ThreadPool object, we're able
+// to emulate Java's ThreadPooling which allows parallelizing
+// tasks in order to drastically increase performance.
 
 void PokeDex::initializePokemons() {
 	// Open the Pokemons.json array
@@ -109,26 +114,25 @@ void PokeDex::initializePokemons() {
 
 	// create thread pool with 4 worker threads
 	ThreadPool pool(4);
-	
+
 	for (SizeType i = 0; i < pokemons.Size(); i++) {
 		const Value& pokemon = pokemons[i];
 
-		mutex_.lock();
-		pool.AddJob([&]() { // http://stackoverflow.com/questions/26903602/an-enclosing-function-local-variable-cannot-be-referenced-in-a-lambda-body-unles
-			
+		// Commented out to disable multi threading first
+		pool.AddJob([&](void) { // http://stackoverflow.com/questions/26903602/an-enclosing-function-local-variable-cannot-be-referenced-in-a-lambda-body-unles
 			iPThreadTask(pokemon);
-		});
-		mutex_.unlock();
+		}
+		);
 		//pool.WaitAll();
 	}
-	
-	pool.WaitAll();
 
-	}
+	pool.WaitAll();
+	pool.JoinAll();
+}
 
 void PokeDex::iPThreadTask(const Value& pokemon) {
 	// ============== Data Seeding Per Pokemon =============== //
-	cout << pokemon["name"].GetString() << endl;
+	//cout << pokemon["name"].GetString() << endl;
 
 	// Evolution
 	vector<Evolution> evolutions;
@@ -168,6 +172,7 @@ void PokeDex::iPThreadTask(const Value& pokemon) {
 
 	// Create the Pokemon Object
 	Pokemon currentPokemon(pokemon["index"].GetInt(), pokemon["name"].GetString(), evolutions, types, moves);
+	lock_guard<mutex> lock(initialMutex_);
 	Pokemons_.push_back(currentPokemon);
 }
 
@@ -787,15 +792,46 @@ void PokeDex::launchSearchMenu() {
 }
 
 void PokeDex::launchCreatePokemon() {
+	int index = Pokemons_.size() + 1; // Fixed Identity Key
 	string name;
 	int typeCount;
-	vector<string> types;
+	vector<Pokemon::Type> types;
+	vector<Evolution> evolutions;
+	vector<Move> moves;
 
-	std::cout << "Type in the name of the Pokemon";
+	cout << "Type in the name of the Pokemon" << endl;
 	cin >> name;
 
-	std::cout << "How many types does your pokemon have? ";
+	cout << "How many type/s will " + name + " have? [Maximum of 2 Types]" << endl;
 	cin >> typeCount;
+	while (!(typeCount < 3) || !(typeCount > 0)) {
+		cout << "Please enter a valid input." << endl;
+		cin >> typeCount;
+	}
+
+	for (int i = 0; i < typeCount; i++) {
+		cout << "Choose a type: " << endl;
+		types.push_back(Pokemon::chooseTypeEnum());
+	}
+
+	string evoChoice;
+	cout << "Will " + name + " have any evolution/s?" << endl;
+	cout << "Yes (Y) or No (N)" << endl;
+	cin >> evoChoice;
+	while (evoChoice != "Y" || evoChoice != "N") {
+		cout << "Please enter Y or N." << endl;
+		cin >> evoChoice;
+	}
+	if (evoChoice == "Y") {
+
+	}
+	else {
+
+	}
+
+	Pokemon newPokemon(index, name, evolutions, types, moves);
+	Pokemons_.push_back(newPokemon);
+	cout << name + " has been created!" << endl;
 
 }
 
@@ -828,24 +864,25 @@ void PokeDex::launchMenu() {
 	string choice = "";
 
 	while (choice == "") {
-		std::cout << "============ C++ PokeDex ============" << endl;
-		std::cout << "(1) Search for a pokemon" << endl;
-		std::cout << "(2) Create a new pokemon" << endl;
-		//cout << "(3) Edit an existing pokemon" << endl;
+		cout << "============ C++ PokeDex ============" << endl;
+		cout << "(1) Search for a pokemon" << endl;
+		cout << "(2) Create a new pokemon" << endl;
+		cout << "(3) Compare two pokemons" << endl;
 		//cout << "(4) Remove an existing pokemon" << endl;
-		std::cout << "(5) Exit the PokeDex" << endl;
+		cout << "(5) Exit the PokeDex" << endl;
 
 		cin >> choice; // http://stackoverflow.com/questions/13421965/using-cin-get-to-get-an-integer
 		int choiceInt; // Parsing the choice to here later
 
-		if (choice == "1" || 
-			choice == "2" || 
-			//choice == "3" || 
+		if (choice == "1" ||
+			choice == "2" ||
+			choice == "3" ||
 			//choice == "4" || 
 			choice == "5") {
 			choiceInt = stoi(choice);
 			menuChoice(choiceInt);
-		} else {
+		}
+		else {
 			cin.clear();
 			choice = "";
 			std::system("cls");

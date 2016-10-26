@@ -1,5 +1,5 @@
-#ifndef CONCURRENT_THREADPOOL_H
-#define CONCURRENT_THREADPOOL_H
+#ifndef NIXHOPOOL
+#define NIXHOPOOL
 
 #include <thread>
 #include <mutex>
@@ -10,21 +10,23 @@
 using namespace std;
 
 /**
-*  Simple ThreadPool that creates `threadCount` threads upon its creation,
-*  and pulls from a queue to get new jobs.
+*  ThreadPool, an alternative to ExecutorService on Java, for C++.
+*  Enabling Workers in C++.
 *
-*  This class requires a number of c++11 features be present in your compiler.
+*  This class requires a number of C++11 features to be included
+*  into your compiler.
 */
+
 class ThreadPool
 {
 public:
-	explicit ThreadPool(int threadCount) :
-		_jobsLeft(0),
-		_bailout(false)
+	explicit ThreadPool(int thread_amt) :
+		jobsRmdr_(0),
+		quit_(false)
 	{
-		_threads = vector<thread>(threadCount);
+		_threads = vector<thread>(thread_amt);
 
-		for (int index = 0; index < threadCount; ++index)
+		for (int index = 0; index < thread_amt; ++index)
 		{
 			_threads[index] = move(thread([this]
 			{
@@ -38,50 +40,52 @@ public:
 	*/
 	~ThreadPool()
 	{
-		JoinAll();
+		JoinAll(); // Destroy all them threads
 	}
 
 	/**
-	*  Add a new job to the pool. If there are no jobs in the queue,
-	*  a thread is woken up to take the job. If all threads are busy,
-	*  the job is added to the end of the queue.
+	*  Adds a new job to the pool, and if there are no jobs in the queue,
+	*  a thread is called to take the job. If all threads are busy,
+	*  the job is added to the end of the queue to await for execution.
 	*/
 	void AddJob(function<void(void)> job)
 	{
 		// scoped lock
 		{
-			lock_guard<mutex> lock(_queueMutex);
+			lock_guard<mutex> lock(queueMutex_);
 			_queue.emplace(job);
 		}
 		// scoped lock
 		{
-			lock_guard<mutex> lock(_jobsLeftMutex);
-			++_jobsLeft;
+			lock_guard<mutex> lock(jobsRmdr_Mutex);
+			++jobsRmdr_;
 		}
-		_jobAvailableVar.notify_one();
+		jobAvailableCVar_.notify_one();
 	}
 
 	/**
 	*  Join with all threads. Block until all threads have completed.
 	*  The queue may be filled after this call, but the threads will
-	*  be done. After invoking `ThreadPool::JoinAll`, the pool can no
+	*  be done. 
+	*
+	*  After invoking `ThreadPool::JoinAll`, the pool can no
 	*  longer be used.
 	*/
 	void JoinAll()
 	{
 		// scoped lock
 		{
-			lock_guard<mutex> lock(_queueMutex);
-			if (_bailout)
+			lock_guard<mutex> lock(queueMutex_);
+			if (quit_)
 			{
 				return;
 			}
-			_bailout = true;
+			quit_ = true;
 		}
 
 		// note that we're done, and wake up any thread that's
 		// waiting for a new job
-		_jobAvailableVar.notify_all();
+		jobAvailableCVar_.notify_all();
 
 		for (auto& x : _threads)
 		{
@@ -99,20 +103,20 @@ public:
 	*/
 	void WaitAll()
 	{
-		unique_lock<mutex> lock(_jobsLeftMutex);
-		if (_jobsLeft > 0)
+		unique_lock<mutex> lock(jobsRmdr_Mutex);
+		if (jobsRmdr_ > 0)
 		{
-			_waitVar.wait(lock, [this]
+			waitCVar_.wait(lock, [this]
 			{
-				return _jobsLeft == 0;
+				return jobsRmdr_ == 0;
 			});
 		}
 	}
 
 private:
 	/**
-	*  Take the next job in the queue and run it.
-	*  Notify the main thread that a job has completed.
+	*  Retrieve the upcoming job in queue to run it and
+	*  notify the main thread that a job has been accomplished.
 	*/
 	void Task()
 	{
@@ -122,20 +126,20 @@ private:
 
 			// scoped lock
 			{
-				unique_lock<mutex> lock(_queueMutex);
+				unique_lock<mutex> lock(queueMutex_);
 
-				if (_bailout)
+				if (quit_)
 				{
 					return;
 				}
 
 				// Wait for a job if we don't have any.
-				_jobAvailableVar.wait(lock, [this]
+				jobAvailableCVar_.wait(lock, [this]
 				{
-					return _queue.size() > 0 || _bailout;
+					return _queue.size() > 0 || quit_;
 				});
 
-				if (_bailout)
+				if (quit_)
 				{
 					return;
 				}
@@ -149,23 +153,23 @@ private:
 
 			// scoped lock
 			{
-				lock_guard<mutex> lock(_jobsLeftMutex);
-				--_jobsLeft;
+				lock_guard<mutex> lock(jobsRmdr_Mutex);
+				--jobsRmdr_;
 			}
 
-			_waitVar.notify_one();
+			waitCVar_.notify_one();
 		}
 	}
 
 	vector<thread> _threads;
 	queue<function<void(void)>> _queue;
 
-	int _jobsLeft;
-	bool _bailout;
-	condition_variable _jobAvailableVar;
-	condition_variable _waitVar;
-	mutex _jobsLeftMutex;
-	mutex _queueMutex;
+	int jobsRmdr_; // Remainder jobs
+	bool quit_; // To get out of the current thing or not?
+	condition_variable jobAvailableCVar_;
+	condition_variable waitCVar_;
+	mutex jobsRmdr_Mutex;
+	mutex queueMutex_;
 };
 
-#endif //CONCURRENT_THREADPOOL_H
+#endif //NIXHOPOOL

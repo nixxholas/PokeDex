@@ -12,7 +12,7 @@ class Pokemon
 {
 public:
 	// Has to be public for PokeDex's Accessibility
-	enum class Type {
+	enum Type {
 		BUG, // 0 
 		GRASS, // 1
 		DARK, // 2
@@ -59,6 +59,12 @@ public:
 	
 	// Returns the vector of moves
 	vector<Move> getMoves() const;
+
+	// Returns us the pokemon type chosen
+	static Type chooseTypeEnum();
+
+	// Returns us the enum in string
+	static Type enumIntToType(int);
 
 	// Sets the pokemon id to evolve to
 	void setPokemonId(int Pokemon);
