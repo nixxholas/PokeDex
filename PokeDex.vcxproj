@@ -161,6 +161,7 @@
     <ClInclude Include="Move.h" />
     <ClInclude Include="PokeDex.h" />
     <ClInclude Include="Pokemon.h" />
+    <ClInclude Include="ThreadPool.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="pokemons.json" />

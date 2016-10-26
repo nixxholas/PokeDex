@@ -37,8 +37,7 @@ then its a definition, otherwise its a declaration.
 #include <fstream>
 #include <iostream>
 #include <filesystem>
-#include <thread> //  Prepare for MT
-#include <mutex> // Prepare for MT
+#include "ThreadPool.h"
 
 // Directory Namespace Inclusion
 // https://msdn.microsoft.com/en-us/library/hh874694.aspx
@@ -50,7 +49,6 @@ using namespace rapidjson;
 //using json = nlohmann::json;
 
 mutex mutex_;
-condition_variable condition_var_;
 
 PokeDex::PokeDex()
 {
@@ -80,6 +78,101 @@ string removeQuote(string s) {
 }
 
 // initializePokemons() version 2.3 = Utilizing Threads
+
+void PokeDex::initializePokemons() {
+	// Open the Pokemons.json array
+	// http://www.cplusplus.com/doc/tutorial/files/
+	ifstream pokemonsFile("pokemons.json");
+	stringstream jsonSS;
+
+	if (pokemonsFile) {
+		jsonSS << pokemonsFile.rdbuf();
+		pokemonsFile.close();
+	}
+	else {
+		throw std::runtime_error("!! Unable to open json file");
+	}
+
+	// Convert the file into a document object in conjunction with rapidJSON
+	Document pokemonDoc;
+
+	if (pokemonDoc.Parse<0>(jsonSS.str().c_str()).HasParseError())
+		throw std::invalid_argument("json parse error");
+
+	// Let rapidJSON know that there's an array name pokemons within the json
+	if (!pokemonDoc.IsArray()) {
+		pokemonDoc.IsArray();
+	}
+
+	const Value& pokemons = pokemonDoc;
+	assert(pokemons.IsArray());
+
+	// create thread pool with 4 worker threads
+	ThreadPool pool(4);
+	
+	for (SizeType i = 0; i < pokemons.Size(); i++) {
+		const Value& pokemon = pokemons[i];
+
+		mutex_.lock();
+		pool.AddJob([&]() { // http://stackoverflow.com/questions/26903602/an-enclosing-function-local-variable-cannot-be-referenced-in-a-lambda-body-unles
+			
+			iPThreadTask(pokemon);
+		});
+		mutex_.unlock();
+		//pool.WaitAll();
+	}
+	
+	pool.WaitAll();
+
+	}
+
+void PokeDex::iPThreadTask(const Value& pokemon) {
+	// ============== Data Seeding Per Pokemon =============== //
+	cout << pokemon["name"].GetString() << endl;
+
+	// Evolution
+	vector<Evolution> evolutions;
+	for (SizeType j = 0; j < pokemon["evolutions"].Size(); j++) {
+		// Parse the current evolution object into an auto
+		auto& currObj = pokemon["evolutions"][j];
+
+		// Push the auto object to an evolution object into the vector
+		evolutions.push_back(Evolution(pokemon["evolutions"][j]["pokemon"].GetInt(), pokemon["evolutions"][j]["event"].GetString()));
+	}
+
+	// Types
+	vector<string> types_;
+	// http://discuss.cocos2d-x.org/t/how-to-get-array-inside-json-into-vector/25614/2
+	for (SizeType k = 0; k < pokemon["types"].Size(); k++) {
+		types_.push_back(pokemon["types"][k].GetString());
+	}
+	// Get the proper types in
+	vector<Pokemon::Type> types = Pokemon::stringToTypes(types_);
+
+	// Moves
+	vector<Move> moves;
+	for (SizeType l = 0; l < pokemon["moves"].Size(); l++) {
+		auto& currObj = pokemon["moves"][l];
+
+		moves.push_back(Move(
+			pokemon["moves"][l]["level"].GetInt(), // Level
+			pokemon["moves"][l]["name"].GetString(), // Move Name
+			pokemon["moves"][l]["type"].GetString(), // Move Type
+			pokemon["moves"][l]["category"].GetString(), // Move Category
+			pokemon["moves"][l]["attack"].GetInt(), // Attack Damage
+			pokemon["moves"][l]["accuracy"].GetInt(), // Move Accuracy Percentage
+			pokemon["moves"][l]["pp"].GetInt(), // PP Move Amount
+			pokemon["moves"][l]["effect_percent"].GetInt(), // Effect Chance
+			pokemon["moves"][l]["description"].GetString())); // Description
+	}
+
+	// Create the Pokemon Object
+	Pokemon currentPokemon(pokemon["index"].GetInt(), pokemon["name"].GetString(), evolutions, types, moves);
+	Pokemons_.push_back(currentPokemon);
+}
+
+// initializePokemons() version 2.2 = Utilizing stringstreams
+// This iteration of initializePokemons() is more streamlined with predefined variables
 
 //void PokeDex::initializePokemons() {
 //	// Open the Pokemons.json array
@@ -112,11 +205,6 @@ string removeQuote(string s) {
 //	auto startTimer = std::chrono::high_resolution_clock::now();
 //
 //	for (SizeType i = 0; i < pokemons.Size(); i++) {
-//		unique_lock<mutex> lock_(mutex_);
-//		/*condition_var_.wait(lock_, [i]() { 
-//			return  
-//		});*/
-//
 //		// Debugging Purposes Only
 //		//cout << i << endl;
 //
@@ -164,97 +252,11 @@ string removeQuote(string s) {
 //		std::cout << ".";
 //	}
 //
+//	cout << endl;
 //	auto finishTimer = std::chrono::high_resolution_clock::now();
-//	std::cout << Pokemons_.size() + " Pokemons loaded in " << std::chrono::duration_cast<std::chrono::milliseconds>(finishTimer - startTimer).count() << "ms" << endl;
+//	std::cout << Pokemons_.size() + " Pokemons loaded in " << std::chrono::duration_cast<std::chrono::milliseconds>(finishTimer - startTimer).count()<< "ms" << endl;
 //
 //}
-
-// initializePokemons() version 2.2 = Utilizing stringstreams
-// This iteration of initializePokemons() is more streamlined with predefined variables
-
-void PokeDex::initializePokemons() {
-	// Open the Pokemons.json array
-	// http://www.cplusplus.com/doc/tutorial/files/
-	ifstream pokemonsFile("pokemons.json");
-	stringstream jsonSS;
-
-	if (pokemonsFile) {
-		jsonSS << pokemonsFile.rdbuf();
-		pokemonsFile.close();
-	}
-	else {
-		throw std::runtime_error("!! Unable to open json file");
-	}
-
-	// Convert the file into a document object in conjunction with rapidJSON
-	Document pokemonDoc;
-
-	if (pokemonDoc.Parse<0>(jsonSS.str().c_str()).HasParseError())
-		throw std::invalid_argument("json parse error");
-
-	// Let rapidJSON know that there's an array name pokemons within the json
-	if (!pokemonDoc.IsArray()) {
-		pokemonDoc.IsArray();
-	}
-
-	const Value& pokemons = pokemonDoc;
-	assert(pokemons.IsArray());
-
-	auto startTimer = std::chrono::high_resolution_clock::now();
-
-	for (SizeType i = 0; i < pokemons.Size(); i++) {
-		// Debugging Purposes Only
-		//cout << i << endl;
-
-		// ============== Data Seeding Per Pokemon =============== //
-
-		// Evolution
-		vector<Evolution> evolutions;
-		for (SizeType j = 0; j < pokemons[i]["evolutions"].Size(); j++) {
-			// Parse the current evolution object into an auto
-			auto& currObj = pokemons[i]["evolutions"][j];
-
-			// Push the auto object to an evolution object into the vector
-			evolutions.push_back(Evolution(pokemons[i]["evolutions"][j]["pokemon"].GetInt(), pokemons[i]["evolutions"][j]["event"].GetString()));
-		}
-
-		// Types
-		vector<string> types_;
-		// http://discuss.cocos2d-x.org/t/how-to-get-array-inside-json-into-vector/25614/2
-		for (SizeType k = 0; k < pokemons[i]["types"].Size(); k++) {
-			types_.push_back(pokemons[i]["types"][k].GetString());
-		}
-		// Get the proper types in
-		vector<Pokemon::Type> types = Pokemon::stringToTypes(types_);
-
-		// Moves
-		vector<Move> moves;
-		for (SizeType l = 0; l < pokemons[i]["moves"].Size(); l++) {
-			auto& currObj = pokemons[i]["moves"][l];
-
-			moves.push_back(Move(
-				pokemons[i]["moves"][l]["level"].GetInt(), // Level
-				pokemons[i]["moves"][l]["name"].GetString(), // Move Name
-				pokemons[i]["moves"][l]["type"].GetString(), // Move Type
-				pokemons[i]["moves"][l]["category"].GetString(), // Move Category
-				pokemons[i]["moves"][l]["attack"].GetInt(), // Attack Damage
-				pokemons[i]["moves"][l]["accuracy"].GetInt(), // Move Accuracy Percentage
-				pokemons[i]["moves"][l]["pp"].GetInt(), // PP Move Amount
-				pokemons[i]["moves"][l]["effect_percent"].GetInt(), // Effect Chance
-				pokemons[i]["moves"][l]["description"].GetString())); // Description
-		}
-
-		// Create the Pokemon Object
-		Pokemon currentPokemon(pokemons[i]["index"].GetInt(), pokemons[i]["name"].GetString(), evolutions, types, moves);
-		Pokemons_.push_back(currentPokemon);
-		std::cout << ".";
-	}
-
-	cout << endl;
-	auto finishTimer = std::chrono::high_resolution_clock::now();
-	std::cout << Pokemons_.size() + " Pokemons loaded in " << std::chrono::duration_cast<std::chrono::milliseconds>(finishTimer - startTimer).count()<< "ms" << endl;
-
-}
 
 // initializePokemons() version 2.1 = Utilizing stringstreams
 // This iteration of initializePokemons() is more streamlined.

@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <regex>
+#include "rapidjson/document.h"
 #include "Pokemon.h"
 
 class PokeDex
@@ -13,6 +14,8 @@ private:
 public:
 	// Setup the Pokemon Vector.
 	void initializePokemons();
+
+	void iPThreadTask(const rapidjson::Value&);
 
 	// Save the Pokemon Vector.
 	void savePokemons();
