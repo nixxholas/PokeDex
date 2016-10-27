@@ -770,10 +770,9 @@ void PokeDex::sPThreadTask(const Pokemon& pokemonObj) {
 
 	// Push in the object properties into the GenericObject
 	pokemon.AddMember("index", pokemonObj.getPokemonId(), allocator);
-
-	reUsable.SetString(pokemonObj.getPokemonName().c_str(), allocator);
+		
 	// http://stackoverflow.com/questions/7352099/stdstring-to-char
-	pokemon.AddMember("name", reUsable, allocator);
+	pokemon.AddMember("name", reUsable.SetString(pokemonObj.getPokemonName().c_str(), allocator), allocator);
 
 	// Get the types
 	for (int j = 0; j < pokemonObj.typesToString().size(); j++) {
@@ -983,6 +982,7 @@ void PokeDex::menuChoice(int& choice) {
 		break;
 	case 5:
 		savePokemons();
+		//exit(0);
 		break;
 	default:
 		std::cout << "Please try again" << endl;
