@@ -43,7 +43,6 @@ then its a definition, otherwise its a declaration.
 // Directory Namespace Inclusion
 // https://msdn.microsoft.com/en-us/library/hh874694.aspx
 //using namespace std::tr2::sys;
-using namespace std;
 using namespace rapidjson;
 
 // https://github.com/nlohmann/json
@@ -88,7 +87,7 @@ string removeQuote(string s) {
 // Version Performances
 //	v1.X -> 14+ seconds
 //	v2.X before 2.3 -> 2 - 3 seconds
-//	Current -> 5-8 ms
+//	Current -> Around 1100 ms
 
 void PokeDex::initializePokemons() {
 	// Open the Pokemons.json array
@@ -108,7 +107,7 @@ void PokeDex::initializePokemons() {
 	Document pokemonDoc;
 
 	if (pokemonDoc.Parse<0>(jsonSS.str().c_str()).HasParseError())
-		throw std::invalid_argument("json parse error");
+		throw std::invalid_argument("JSON parse error");
 
 	// Let rapidJSON know that there's an array name pokemons within the json
 	if (!pokemonDoc.IsArray()) {
@@ -127,9 +126,8 @@ void PokeDex::initializePokemons() {
 
 		pool.AddJob([&](void) { // http://stackoverflow.com/questions/26903602/an-enclosing-function-local-variable-cannot-be-referenced-in-a-lambda-body-unles
 			iPThreadTask(pokemon);
-		}
+			}
 		);
-		//pool.WaitAll();
 	}
 		
 	pool.WaitAll();
@@ -147,9 +145,6 @@ void PokeDex::iPThreadTask(const Value& pokemon) {
 	// Evolution
 	vector<Evolution> evolutions;
 	for (SizeType j = 0; j < pokemon["evolutions"].Size(); j++) {
-		// Parse the current evolution object into an auto
-		auto& currObj = pokemon["evolutions"][j];
-
 		// Push the auto object to an evolution object into the vector
 		evolutions.push_back(Evolution(pokemon["evolutions"][j]["pokemon"].GetInt(), pokemon["evolutions"][j]["event"].GetString()));
 	}
@@ -166,8 +161,6 @@ void PokeDex::iPThreadTask(const Value& pokemon) {
 	// Moves
 	vector<Move> moves;
 	for (SizeType l = 0; l < pokemon["moves"].Size(); l++) {
-		auto& currObj = pokemon["moves"][l];
-
 		moves.push_back(Move(
 			pokemon["moves"][l]["level"].GetInt(), // Level
 			pokemon["moves"][l]["name"].GetString(), // Move Name
@@ -757,6 +750,7 @@ void PokeDex::savePokemons() {
 	// Output to the file
 	ofstream ofs("pokemons.json");
 	ofs << strbuf.GetString();
+	cout << "Done!" << endl;
 }
 
 void PokeDex::sPThreadTask(const Pokemon& pokemonObj) {
@@ -923,18 +917,20 @@ void PokeDex::launchSearchMenu() {
 void PokeDex::launchCreatePokemon() {
 	int index = Pokemons_.size() + 1; // Fixed Identity Key
 	string name;
-	int typeCount;
 	vector<Pokemon::Type> types;
 	vector<Evolution> evolutions;
 	vector<Move> moves;
 
+	// Pokemon Name
 	cout << "Type in the name of the Pokemon" << endl;
 	cin >> name;
 
+	int typeCount;
+	// Pokemon Type/s
 	cout << "How many type/s will " + name + " have? [Maximum of 2 Types]" << endl;
 	cin >> typeCount;
 	while (!(typeCount < 3) || !(typeCount > 0)) {
-		cout << "Please enter a valid input." << endl;
+		cout << "Please enter a valid input. (1 or 2)" << endl;
 		cin >> typeCount;
 	}
 
@@ -943,29 +939,103 @@ void PokeDex::launchCreatePokemon() {
 		types.push_back(Pokemon::chooseTypeEnum());
 	}
 
-	string evoChoice;
+	// Pokemon Evolution/s
+	char evoChoice;
 	cout << "Will " + name + " have any evolution/s?" << endl;
-	cout << "Yes (Y) or No (N)" << endl;
+	cout << "Yes (y) or No (n)" << endl;
 	cin >> evoChoice;
-	while (evoChoice != "Y" || evoChoice != "N") {
-		cout << "Please enter Y or N." << endl;
-		cin >> evoChoice;
-	}
-	if (evoChoice == "Y") {
+	// Phased out user input validation for now
+	//while (evoChoice != 'y' || evoChoice != 'n') {
+	//	cout << "Please enter y or n." << endl;
+	//	cin >> evoChoice;
+	//}
+	if (evoChoice == 'y') {
+		int evoCount;
+		cout << "How many evolution variations will " + name + " have?" << endl;
+		cin >> evoCount;
+		while (!(evoCount < 5) || !(evoCount > 0)) {
+			cout << "Please enter a valid input. (1 to 4)" << endl;
+			cin >> evoCount;
 
+			for (int i = 0; i < evoCount; i++) {
+				evolutions.push_back(createEvolution());
+			}
+		}
 	}
-	else {
 
+	// Pokemon Move/s
+	int moveCount;
+	cout << "How many moves will " + name + " have?" << endl;
+	cin >> moveCount;
+	while (!(moveCount < 50) || !(moveCount > 0)) {
+		cout << "Please enter a valid input. (1 - 50)" << endl;
+		cin >> moveCount;
+	}
+
+	for (int i = 0; i < moveCount; i++) {
+		moves.push_back(createMove());
 	}
 
 	Pokemon newPokemon(index, name, evolutions, types, moves);
 	Pokemons_.push_back(newPokemon);
 	cout << name + " has been created!" << endl;
-
+	cin.get();
+	launchMenu();
 }
 
 void PokeDex::launchDeletePokemon() {
 
+}
+
+Evolution PokeDex::createEvolution() {
+	int index = searchAndGetPokemonIndex();
+	string event;
+
+	cout << "What is the event that would trigger the evolution?" << endl;
+	cin >> event;
+
+	return Evolution(index, event);
+}
+
+Move PokeDex::createMove() {
+	int Level_; // Level requirement for the move, can be 0
+	string Name_; // Name of the move
+	string Type_; // Type of the move (e.g. Ground)
+	string Category_; // Category of move, Other, physical, etc.
+	int Attack_; // Damage of the move, can be 0
+	int Accuracy_; // Accuracy of the move, max 100
+	int Pp_; // Quantity for the move
+	int Effect_percent_; // Effect of the move, can be 0
+	string Description_; // Description of the move
+
+	cout << "What's the level requirement for the move?" << endl;
+	cin >> Level_;
+
+	cout << "What's the name of the move?" << endl;
+	cin >> Name_;
+
+	cout << "What's the type of " + Name_ + "?" << endl;
+	cin >> Type_;
+
+	cout << "What's the category of " + Name_ + "?" << endl;
+	cin >> Category_;
+
+	cout << "What's the attack damage of " + Name_ + "?" << endl;
+	cin >> Attack_;
+
+	cout << "What's the accuracy percentage of " + Name_ + "?" << endl;
+	cin >> Accuracy_;
+
+	cout << "What's the PP of " + Name_ + "?" << endl;
+	cin >> Pp_;
+
+	cout << "What's the effect chance percentage of " + Name_ + "?" << endl;
+	cin >> Effect_percent_;
+
+	cout << "Provide a simple/detailed description for " + Name_ + "." << endl;
+	cin >> Description_;
+
+	return Move(Level_, Name_, Type_, Category_, Attack_, Accuracy_, Pp_, Effect_percent_, Description_);
 }
 
 void PokeDex::menuChoice(int& choice) {
@@ -990,6 +1060,19 @@ void PokeDex::menuChoice(int& choice) {
 	}
 }
 
+int PokeDex::searchAndGetPokemonIndex() {
+	string search;
+
+	cout << "Enter the name of the pokemon you would like to find: " << endl;
+	cin >> search;
+
+	cout << "Searching..." << endl;
+
+	for (Pokemon p : Pokemons_) {
+		
+	}
+}
+
 void PokeDex::launchMenu() {
 	string choice = "";
 
@@ -998,7 +1081,7 @@ void PokeDex::launchMenu() {
 		cout << "(1) Search for a pokemon" << endl;
 		cout << "(2) Create a new pokemon" << endl;
 		cout << "(3) Compare two pokemons" << endl;
-		//cout << "(4) Remove an existing pokemon" << endl;
+		cout << "(4) Command Mode" << endl;
 		cout << "(5) Exit the PokeDex" << endl;
 
 		cin >> choice; // http://stackoverflow.com/questions/13421965/using-cin-get-to-get-an-integer
@@ -1007,7 +1090,7 @@ void PokeDex::launchMenu() {
 		if (choice == "1" ||
 			choice == "2" ||
 			choice == "3" ||
-			//choice == "4" || 
+			choice == "4" || 
 			choice == "5") {
 			choiceInt = stoi(choice);
 			menuChoice(choiceInt);

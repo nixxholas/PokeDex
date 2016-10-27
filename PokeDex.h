@@ -9,7 +9,6 @@ class PokeDex
 private:
 	bool exitStatus;
 	vector<Pokemon> Pokemons_;
-	vector<Pokemon> unstagedPokemons_; // Do I need this?
 	rapidjson::Document* document_;
 
 public:
@@ -28,6 +27,9 @@ public:
 	// Function to display the search menu
 	void launchSearchMenu();
 
+	// Function to search and return the pokemon select in integer
+	int searchAndGetPokemonIndex();
+
 	// Function to create a new pokemon
 	void launchCreatePokemon();
 
@@ -42,6 +44,12 @@ public:
 
 	// Switch case container for the options from cin
 	void menuChoice(int&);
+
+	// Evolution Object Creator Console Function
+	Evolution createEvolution();
+
+	// Move Object Creator Console Function
+	Move createMove();
 
 	// Adds a pokemon to the unstagedPokemons Vector
 	void addUnstagedPokemon(Pokemon);
