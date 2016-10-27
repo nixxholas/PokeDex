@@ -54,6 +54,7 @@ mutex exitingMutex_;
 
 PokeDex::PokeDex()
 {
+	document_ = new Document();
 }
 
 
@@ -83,6 +84,11 @@ string removeQuote(string s) {
 // With the use of a custom ThreadPool object, we're able
 // to emulate Java's ThreadPooling which allows parallelizing
 // tasks in order to drastically increase performance.
+// 
+// Version Performances
+//	v1.X -> 14+ seconds
+//	v2.X before 2.3 -> 2 - 3 seconds
+//	Current -> 5-8 ms
 
 void PokeDex::initializePokemons() {
 	// Open the Pokemons.json array
@@ -119,19 +125,18 @@ void PokeDex::initializePokemons() {
 	for (SizeType i = 0; i < pokemons.Size(); i++) {
 		const Value& pokemon = pokemons[i];
 
-		// Commented out to disable multi threading first
 		pool.AddJob([&](void) { // http://stackoverflow.com/questions/26903602/an-enclosing-function-local-variable-cannot-be-referenced-in-a-lambda-body-unles
 			iPThreadTask(pokemon);
 		}
 		);
 		//pool.WaitAll();
 	}
-
-	auto finish = chrono::high_resolution_clock::now();
-	cout << chrono::duration_cast<chrono::nanoseconds>(finish - start).count() / 1000000 << " ms" << endl;
-
+		
 	pool.WaitAll();
-	pool.JoinAll();
+	auto finish = chrono::high_resolution_clock::now();
+
+	system("cls"); // Clear the Console
+	cout << chrono::duration_cast<chrono::nanoseconds>(finish - start).count() / 1000000 << " ms" << endl;
 }
 
 // initializePokemonsThreadTask Function
@@ -692,9 +697,14 @@ void PokeDex::iPThreadTask(const Value& pokemon) {
 //	}
 //}
 
-// savePokemons() version 1.0
+/* savePokemons() version 2.0
+	- Multi Threading Support with ThreadPool
+
+	This has reduced write times by 3X.
+	From 27-28.800+ seconds, to 9166ms (9.166 seconds)
+*/
 void PokeDex::savePokemons() {
-	std::cout << "Saving your data before exiting.." << endl;
+	cout << "Saving your data before exiting.." << endl;
 
 	// Delete the existing JSON
 	// http://www.cplusplus.com/reference/cstdio/remove/
@@ -705,36 +715,44 @@ void PokeDex::savePokemons() {
 		puts("File successfully deleted");
 	}
 
-	std::cout << endl;
-	std::cout << "Saving the new and existing data..";
+	cout << endl;
+	cout << "Saving the new and existing data..";
 
 	// Combine the unstaged and staged vectors
 	// http://discuss.cocos2d-x.org/t/solved-how-to-write-json-array-using-rapidjson/29551
 	stringstream jsonSS; // Define the stringstream
 	//Document outputDocument; // Define the document to receive the C++ Objects for jsonSS
 
-	(*exportDocument).SetArray(); // It's an object
+	(*document_).SetArray(); // It's an object
 							   //assert(outputDocument.IsArray());
-	Document::AllocatorType exportAllocator = (*exportDocument).GetAllocator();
 
 	// For Loop Timer
-	auto startTimer = chrono::high_resolution_clock::now();
+	auto start = chrono::high_resolution_clock::now();
+	ThreadPool pool(4);
 
 	// Push the Existing Pokemons Back
 	for (int i = 0; i < Pokemons_.size(); i++)
 	{
-	}
-	auto finishTimer = chrono::high_resolution_clock::now();
+		Pokemon& pokemon = Pokemons_.at(i);
 
-	std::system("cls");
+		pool.AddJob([&](void) { // http://stackoverflow.com/questions/26903602/an-enclosing-function-local-variable-cannot-be-referenced-in-a-lambda-body-unles
+				sPThreadTask(pokemon);
+			}
+		);
+	}
+
+	pool.WaitAll();
+	auto finish = chrono::high_resolution_clock::now();
+
+	system("cls");
 	cout << endl;
-	std::cout << Pokemons_.size() + " Pokemons unloaded in " << chrono::duration_cast<std::chrono::milliseconds>(finishTimer - startTimer).count() << "ms" << endl;
-	std::cout << "Writing to json" << endl;
+	cout << chrono::duration_cast<chrono::nanoseconds>(finish - start).count() / 1000000 << " ms" << endl;
+	cout << "Writing to json" << endl;
 
 	// Output the JSON
 	StringBuffer strbuf;
 	Writer<StringBuffer> writer(strbuf);
-	(*exportDocument).Accept(writer);
+	(*document_).Accept(writer);
 
 	// Output to the file
 	ofstream ofs("pokemons.json");
@@ -748,52 +766,54 @@ void PokeDex::sPThreadTask(const Pokemon& pokemonObj) {
 	Value moves(kArrayType);
 	Value reUsable;
 
-	// Push in the object properties into the GenericObject
-	pokemon.AddMember("index", pokemonObj.getPokemonId(), (*exportAllocator));
+	Document::AllocatorType& allocator = document_->GetAllocator();
 
-	reUsable.SetString(pokemonObj.getPokemonName().c_str(), (*exportAllocator));
+	// Push in the object properties into the GenericObject
+	pokemon.AddMember("index", pokemonObj.getPokemonId(), allocator);
+
+	reUsable.SetString(pokemonObj.getPokemonName().c_str(), allocator);
 	// http://stackoverflow.com/questions/7352099/stdstring-to-char
-	pokemon.AddMember("name", reUsable, (*exportAllocator));
+	pokemon.AddMember("name", reUsable, allocator);
 
 	// Get the types
 	for (int j = 0; j < pokemonObj.typesToString().size(); j++) {
 		//Value type;
-		types.PushBack(reUsable.SetString(pokemonObj.typesToString().at(j).c_str(), (*exportAllocator)), (*exportAllocator));
+		types.PushBack(reUsable.SetString(pokemonObj.typesToString().at(j).c_str(), allocator), allocator);
 	}
-	pokemon.AddMember("types", types, (*exportAllocator));
+	pokemon.AddMember("types", types, allocator);
 
 	// Get the evolutions
 	for (int k = 0; k < pokemonObj.getEvolutions().size(); k++) {
 		Value evolution(kObjectType);
-		evolution.AddMember("pokemon", pokemonObj.getEvolutions().at(k).getPokemonId(), (*exportAllocator));
-		evolution.AddMember("event", reUsable.SetString(pokemonObj.getEvolutions().at(k).getEvolvingEvent().c_str(), (*exportAllocator)), (*exportAllocator));
-		evolutions.PushBack(evolution, (*exportAllocator));
+		evolution.AddMember("pokemon", pokemonObj.getEvolutions().at(k).getPokemonId(), allocator);
+		evolution.AddMember("event", reUsable.SetString(pokemonObj.getEvolutions().at(k).getEvolvingEvent().c_str(), allocator), allocator);
+		evolutions.PushBack(evolution, allocator);
 	}
-	pokemon.AddMember("evolutions", evolutions, (*exportAllocator));
+	pokemon.AddMember("evolutions", evolutions, allocator);
 
 	// Get the moves
 	for (int l = 0; l < pokemonObj.getMoves().size(); l++) {
 		Value move(kObjectType);
 
 		// Set the values for the current move
-		move.AddMember("level", pokemonObj.getMoves().at(l).getMoveLevel(), (*exportAllocator));
-		move.AddMember("name", reUsable.SetString(pokemonObj.getMoves().at(l).getMoveName().c_str(), (*exportAllocator)), (*exportAllocator));
-		move.AddMember("type", reUsable.SetString(pokemonObj.getMoves().at(l).getMoveType().c_str(), (*exportAllocator)), (*exportAllocator));
-		move.AddMember("category", reUsable.SetString(pokemonObj.getMoves().at(l).getMoveCategory().c_str(), (*exportAllocator)), (*exportAllocator));
-		move.AddMember("attack", pokemonObj.getMoves().at(l).getMoveAttack(), (*exportAllocator));
-		move.AddMember("accuracy", pokemonObj.getMoves().at(l).getMoveAccuracy(), (*exportAllocator));
-		move.AddMember("pp", pokemonObj.getMoves().at(l).getMovePP(), (*exportAllocator));
-		move.AddMember("effect_percent", pokemonObj.getMoves().at(l).getMoveEffectPercent(), (*exportAllocator));
-		move.AddMember("description", reUsable.SetString(pokemonObj.getMoves().at(l).getMoveDescription().c_str(), (*exportAllocator)), (*exportAllocator));
+		move.AddMember("level", pokemonObj.getMoves().at(l).getMoveLevel(), allocator);
+		move.AddMember("name", reUsable.SetString(pokemonObj.getMoves().at(l).getMoveName().c_str(), allocator), allocator);
+		move.AddMember("type", reUsable.SetString(pokemonObj.getMoves().at(l).getMoveType().c_str(), allocator), allocator);
+		move.AddMember("category", reUsable.SetString(pokemonObj.getMoves().at(l).getMoveCategory().c_str(), allocator), allocator);
+		move.AddMember("attack", pokemonObj.getMoves().at(l).getMoveAttack(), allocator);
+		move.AddMember("accuracy", pokemonObj.getMoves().at(l).getMoveAccuracy(), allocator);
+		move.AddMember("pp", pokemonObj.getMoves().at(l).getMovePP(), allocator);
+		move.AddMember("effect_percent", pokemonObj.getMoves().at(l).getMoveEffectPercent(), allocator);
+		move.AddMember("description", reUsable.SetString(pokemonObj.getMoves().at(l).getMoveDescription().c_str(), allocator), allocator);
 
-		moves.PushBack(move, (*exportAllocator));
+		moves.PushBack(move, allocator);
 	}
-	pokemon.AddMember("moves", moves, (*exportAllocator));
+	pokemon.AddMember("moves", moves, allocator);
 
 	// Make outputDocument thread 
 	lock_guard<mutex> lock(exitingMutex_);
 	// Push the GenericObject to the Document Array
-	(*exportDocument).PushBack(pokemon, (*exportAllocator));
+	(*document_).PushBack(pokemon, allocator);
 }
 
 // savePokemons() version 1.0
@@ -974,7 +994,7 @@ void PokeDex::launchMenu() {
 	string choice = "";
 
 	while (choice == "") {
-		cout << "============ C++ PokeDex ============" << endl;
+		cout << "============ C++ PokeDex [Developers Release] ============" << endl;
 		cout << "(1) Search for a pokemon" << endl;
 		cout << "(2) Create a new pokemon" << endl;
 		cout << "(3) Compare two pokemons" << endl;

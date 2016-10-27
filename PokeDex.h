@@ -10,7 +10,7 @@ private:
 	bool exitStatus;
 	vector<Pokemon> Pokemons_;
 	vector<Pokemon> unstagedPokemons_; // Do I need this?
-	Document* exportDocument = new Document();
+	rapidjson::Document* document_;
 
 public:
 	// Setup the Pokemon Vector.
@@ -49,8 +49,8 @@ public:
 	// Removes a pokemon from the unstagedPokemons Vector
 	void removeUnstagedPokemon(Pokemon);
 
-	PokeDex();
+	PokeDex::PokeDex();
 
-	~PokeDex();
+	PokeDex::~PokeDex();
 };
 
