@@ -9,16 +9,21 @@ class PokeDex
 private:
 	bool exitStatus;
 	vector<Pokemon> Pokemons_;
-	vector<Pokemon> unstagedPokemons_;
+	vector<Pokemon> unstagedPokemons_; // Do I need this?
+	Document* exportDocument = new Document();
 
 public:
 	// Setup the Pokemon Vector.
 	void initializePokemons();
 
+	// initializePokemons()'s Worker Task
 	void iPThreadTask(const rapidjson::Value&);
 
 	// Save the Pokemon Vector.
 	void savePokemons();
+
+	// savePokemons()'s Worker Task
+	void sPThreadTask(const Pokemon&);
 
 	// Function to display the search menu
 	void launchSearchMenu();

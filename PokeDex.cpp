@@ -114,6 +114,7 @@ void PokeDex::initializePokemons() {
 
 	// create thread pool with 4 worker threads
 	ThreadPool pool(4);
+	auto start = chrono::high_resolution_clock::now();
 
 	for (SizeType i = 0; i < pokemons.Size(); i++) {
 		const Value& pokemon = pokemons[i];
@@ -126,10 +127,14 @@ void PokeDex::initializePokemons() {
 		//pool.WaitAll();
 	}
 
+	auto finish = chrono::high_resolution_clock::now();
+	cout << chrono::duration_cast<chrono::nanoseconds>(finish - start).count() / 1000000 << " ms" << endl;
+
 	pool.WaitAll();
 	pool.JoinAll();
 }
 
+// initializePokemonsThreadTask Function
 void PokeDex::iPThreadTask(const Value& pokemon) {
 	// ============== Data Seeding Per Pokemon =============== //
 	//cout << pokemon["name"].GetString() << endl;
@@ -687,6 +692,7 @@ void PokeDex::iPThreadTask(const Value& pokemon) {
 //	}
 //}
 
+// savePokemons() version 1.0
 void PokeDex::savePokemons() {
 	std::cout << "Saving your data before exiting.." << endl;
 
@@ -705,85 +711,189 @@ void PokeDex::savePokemons() {
 	// Combine the unstaged and staged vectors
 	// http://discuss.cocos2d-x.org/t/solved-how-to-write-json-array-using-rapidjson/29551
 	stringstream jsonSS; // Define the stringstream
-	Document outputDocument; // Define the document to receive the C++ Objects for jsonSS
-	outputDocument.SetArray(); // It's an object
-	//assert(outputDocument.IsArray());
-	Document::AllocatorType& allocator = outputDocument.GetAllocator();
+	//Document outputDocument; // Define the document to receive the C++ Objects for jsonSS
+
+	(*exportDocument).SetArray(); // It's an object
+							   //assert(outputDocument.IsArray());
+	Document::AllocatorType exportAllocator = (*exportDocument).GetAllocator();
 
 	// For Loop Timer
-	auto startTimer = std::chrono::high_resolution_clock::now();
+	auto startTimer = chrono::high_resolution_clock::now();
 
 	// Push the Existing Pokemons Back
 	for (int i = 0; i < Pokemons_.size(); i++)
 	{
-		Value pokemon(kObjectType);
-		Value evolutions(kArrayType);
-		Value types(kArrayType);
-		Value moves(kArrayType);
-		Value reUsable;
-
-		// Push in the object properties into the GenericObject
-		pokemon.AddMember("index", Pokemons_.at(i).getPokemonId(), allocator);
-
-		reUsable.SetString(Pokemons_.at(i).getPokemonName().c_str(), allocator);
-		// http://stackoverflow.com/questions/7352099/stdstring-to-char
-		pokemon.AddMember("name", reUsable, allocator);
-
-		// Get the types
-		for (int j = 0; j < Pokemons_.at(i).typesToString().size(); j++) {
-			//Value type;
-			types.PushBack(reUsable.SetString(Pokemons_.at(i).typesToString().at(j).c_str(), allocator), allocator);
-		}
-		pokemon.AddMember("types", types, allocator);
-
-		// Get the evolutions
-		for (int k = 0; k < Pokemons_.at(i).getEvolutions().size(); k++) {
-			Value evolution(kObjectType);
-			evolution.AddMember("pokemon", Pokemons_.at(i).getEvolutions().at(k).getPokemonId(), allocator);
-			evolution.AddMember("event", reUsable.SetString(Pokemons_.at(i).getEvolutions().at(k).getEvolvingEvent().c_str(), allocator), allocator);
-			evolutions.PushBack(evolution, allocator);
-		}
-		pokemon.AddMember("evolutions", evolutions, allocator);
-
-		// Get the moves
-		for (int l = 0; l < Pokemons_.at(i).getMoves().size(); l++) {
-			Value move(kObjectType);
-
-			// Set the values for the current move
-			move.AddMember("level", Pokemons_.at(i).getMoves().at(l).getMoveLevel(), allocator);
-			move.AddMember("name", reUsable.SetString(Pokemons_.at(i).getMoves().at(l).getMoveName().c_str(), allocator), allocator);
-			move.AddMember("type", reUsable.SetString(Pokemons_.at(i).getMoves().at(l).getMoveType().c_str(), allocator), allocator);
-			move.AddMember("category", reUsable.SetString(Pokemons_.at(i).getMoves().at(l).getMoveCategory().c_str(), allocator), allocator);
-			move.AddMember("attack", Pokemons_.at(i).getMoves().at(l).getMoveAttack(), allocator);
-			move.AddMember("accuracy", Pokemons_.at(i).getMoves().at(l).getMoveAccuracy(), allocator);
-			move.AddMember("pp", Pokemons_.at(i).getMoves().at(l).getMovePP(), allocator);
-			move.AddMember("effect_percent", Pokemons_.at(i).getMoves().at(l).getMoveEffectPercent(), allocator);
-			move.AddMember("description", reUsable.SetString(Pokemons_.at(i).getMoves().at(l).getMoveDescription().c_str(), allocator), allocator);
-
-			moves.PushBack(move, allocator);
-		}
-		pokemon.AddMember("moves", moves, allocator);
-
-		// Push the GenericObject to the Document Array
-		outputDocument.PushBack(pokemon, allocator);
-		std::cout << ".";
 	}
-	auto finishTimer = std::chrono::high_resolution_clock::now();
+	auto finishTimer = chrono::high_resolution_clock::now();
 
 	std::system("cls");
 	cout << endl;
-	std::cout << Pokemons_.size() + " Pokemons unloaded in " << std::chrono::duration_cast<std::chrono::milliseconds>(finishTimer - startTimer).count() << "ms" << endl;
+	std::cout << Pokemons_.size() + " Pokemons unloaded in " << chrono::duration_cast<std::chrono::milliseconds>(finishTimer - startTimer).count() << "ms" << endl;
 	std::cout << "Writing to json" << endl;
 
 	// Output the JSON
 	StringBuffer strbuf;
 	Writer<StringBuffer> writer(strbuf);
-	outputDocument.Accept(writer);
+	(*exportDocument).Accept(writer);
 
 	// Output to the file
 	ofstream ofs("pokemons.json");
 	ofs << strbuf.GetString();
 }
+
+void PokeDex::sPThreadTask(const Pokemon& pokemonObj) {
+	Value pokemon(kObjectType);
+	Value evolutions(kArrayType);
+	Value types(kArrayType);
+	Value moves(kArrayType);
+	Value reUsable;
+
+	// Push in the object properties into the GenericObject
+	pokemon.AddMember("index", pokemonObj.getPokemonId(), (*exportAllocator));
+
+	reUsable.SetString(pokemonObj.getPokemonName().c_str(), (*exportAllocator));
+	// http://stackoverflow.com/questions/7352099/stdstring-to-char
+	pokemon.AddMember("name", reUsable, (*exportAllocator));
+
+	// Get the types
+	for (int j = 0; j < pokemonObj.typesToString().size(); j++) {
+		//Value type;
+		types.PushBack(reUsable.SetString(pokemonObj.typesToString().at(j).c_str(), (*exportAllocator)), (*exportAllocator));
+	}
+	pokemon.AddMember("types", types, (*exportAllocator));
+
+	// Get the evolutions
+	for (int k = 0; k < pokemonObj.getEvolutions().size(); k++) {
+		Value evolution(kObjectType);
+		evolution.AddMember("pokemon", pokemonObj.getEvolutions().at(k).getPokemonId(), (*exportAllocator));
+		evolution.AddMember("event", reUsable.SetString(pokemonObj.getEvolutions().at(k).getEvolvingEvent().c_str(), (*exportAllocator)), (*exportAllocator));
+		evolutions.PushBack(evolution, (*exportAllocator));
+	}
+	pokemon.AddMember("evolutions", evolutions, (*exportAllocator));
+
+	// Get the moves
+	for (int l = 0; l < pokemonObj.getMoves().size(); l++) {
+		Value move(kObjectType);
+
+		// Set the values for the current move
+		move.AddMember("level", pokemonObj.getMoves().at(l).getMoveLevel(), (*exportAllocator));
+		move.AddMember("name", reUsable.SetString(pokemonObj.getMoves().at(l).getMoveName().c_str(), (*exportAllocator)), (*exportAllocator));
+		move.AddMember("type", reUsable.SetString(pokemonObj.getMoves().at(l).getMoveType().c_str(), (*exportAllocator)), (*exportAllocator));
+		move.AddMember("category", reUsable.SetString(pokemonObj.getMoves().at(l).getMoveCategory().c_str(), (*exportAllocator)), (*exportAllocator));
+		move.AddMember("attack", pokemonObj.getMoves().at(l).getMoveAttack(), (*exportAllocator));
+		move.AddMember("accuracy", pokemonObj.getMoves().at(l).getMoveAccuracy(), (*exportAllocator));
+		move.AddMember("pp", pokemonObj.getMoves().at(l).getMovePP(), (*exportAllocator));
+		move.AddMember("effect_percent", pokemonObj.getMoves().at(l).getMoveEffectPercent(), (*exportAllocator));
+		move.AddMember("description", reUsable.SetString(pokemonObj.getMoves().at(l).getMoveDescription().c_str(), (*exportAllocator)), (*exportAllocator));
+
+		moves.PushBack(move, (*exportAllocator));
+	}
+	pokemon.AddMember("moves", moves, (*exportAllocator));
+
+	// Make outputDocument thread 
+	lock_guard<mutex> lock(exitingMutex_);
+	// Push the GenericObject to the Document Array
+	(*exportDocument).PushBack(pokemon, (*exportAllocator));
+}
+
+// savePokemons() version 1.0
+
+//void PokeDex::savePokemons() {
+//	std::cout << "Saving your data before exiting.." << endl;
+//
+//	// Delete the existing JSON
+//	// http://www.cplusplus.com/reference/cstdio/remove/
+//	if (remove("pokemons.json") != 0) {
+//		perror("Error deleting file");
+//	}
+//	else {
+//		puts("File successfully deleted");
+//	}
+//
+//	std::cout << endl;
+//	std::cout << "Saving the new and existing data..";
+//
+//	// Combine the unstaged and staged vectors
+//	// http://discuss.cocos2d-x.org/t/solved-how-to-write-json-array-using-rapidjson/29551
+//	stringstream jsonSS; // Define the stringstream
+//	Document outputDocument; // Define the document to receive the C++ Objects for jsonSS
+//	outputDocument.SetArray(); // It's an object
+//	//assert(outputDocument.IsArray());
+//	Document::AllocatorType& allocator = outputDocument.GetAllocator();
+//
+//	// For Loop Timer
+//	auto startTimer = std::chrono::high_resolution_clock::now();
+//
+//	// Push the Existing Pokemons Back
+//	for (int i = 0; i < Pokemons_.size(); i++)
+//	{
+//		Value pokemon(kObjectType);
+//		Value evolutions(kArrayType);
+//		Value types(kArrayType);
+//		Value moves(kArrayType);
+//		Value reUsable;
+//
+//		// Push in the object properties into the GenericObject
+//		pokemon.AddMember("index", Pokemons_.at(i).getPokemonId(), allocator);
+//
+//		reUsable.SetString(Pokemons_.at(i).getPokemonName().c_str(), allocator);
+//		// http://stackoverflow.com/questions/7352099/stdstring-to-char
+//		pokemon.AddMember("name", reUsable, allocator);
+//
+//		// Get the types
+//		for (int j = 0; j < Pokemons_.at(i).typesToString().size(); j++) {
+//			//Value type;
+//			types.PushBack(reUsable.SetString(Pokemons_.at(i).typesToString().at(j).c_str(), allocator), allocator);
+//		}
+//		pokemon.AddMember("types", types, allocator);
+//
+//		// Get the evolutions
+//		for (int k = 0; k < Pokemons_.at(i).getEvolutions().size(); k++) {
+//			Value evolution(kObjectType);
+//			evolution.AddMember("pokemon", Pokemons_.at(i).getEvolutions().at(k).getPokemonId(), allocator);
+//			evolution.AddMember("event", reUsable.SetString(Pokemons_.at(i).getEvolutions().at(k).getEvolvingEvent().c_str(), allocator), allocator);
+//			evolutions.PushBack(evolution, allocator);
+//		}
+//		pokemon.AddMember("evolutions", evolutions, allocator);
+//
+//		// Get the moves
+//		for (int l = 0; l < Pokemons_.at(i).getMoves().size(); l++) {
+//			Value move(kObjectType);
+//
+//			// Set the values for the current move
+//			move.AddMember("level", Pokemons_.at(i).getMoves().at(l).getMoveLevel(), allocator);
+//			move.AddMember("name", reUsable.SetString(Pokemons_.at(i).getMoves().at(l).getMoveName().c_str(), allocator), allocator);
+//			move.AddMember("type", reUsable.SetString(Pokemons_.at(i).getMoves().at(l).getMoveType().c_str(), allocator), allocator);
+//			move.AddMember("category", reUsable.SetString(Pokemons_.at(i).getMoves().at(l).getMoveCategory().c_str(), allocator), allocator);
+//			move.AddMember("attack", Pokemons_.at(i).getMoves().at(l).getMoveAttack(), allocator);
+//			move.AddMember("accuracy", Pokemons_.at(i).getMoves().at(l).getMoveAccuracy(), allocator);
+//			move.AddMember("pp", Pokemons_.at(i).getMoves().at(l).getMovePP(), allocator);
+//			move.AddMember("effect_percent", Pokemons_.at(i).getMoves().at(l).getMoveEffectPercent(), allocator);
+//			move.AddMember("description", reUsable.SetString(Pokemons_.at(i).getMoves().at(l).getMoveDescription().c_str(), allocator), allocator);
+//
+//			moves.PushBack(move, allocator);
+//		}
+//		pokemon.AddMember("moves", moves, allocator);
+//
+//		// Push the GenericObject to the Document Array
+//		outputDocument.PushBack(pokemon, allocator);
+//	}
+//	auto finishTimer = std::chrono::high_resolution_clock::now();
+//
+//	std::system("cls");
+//	cout << endl;
+//	std::cout << Pokemons_.size() + " Pokemons unloaded in " << std::chrono::duration_cast<std::chrono::milliseconds>(finishTimer - startTimer).count() << "ms" << endl;
+//	std::cout << "Writing to json" << endl;
+//
+//	// Output the JSON
+//	StringBuffer strbuf;
+//	Writer<StringBuffer> writer(strbuf);
+//	outputDocument.Accept(writer);
+//
+//	// Output to the file
+//	ofstream ofs("pokemons.json");
+//	ofs << strbuf.GetString();
+//}
 
 void PokeDex::launchSearchMenu() {
 	string searchString;
