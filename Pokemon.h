@@ -37,11 +37,12 @@ private:
 	int index_;
 	string name_;
 	vector<Evolution> evolutions_;
-	//vector<string> types_;
 	vector<Move> moves_;
 	vector<Type> types_;
 
 public:
+	bool operator==( string name ) { return name_ == name; }
+
 	// Returns a vector of enum Types with the vector of strings
 	static vector<Type> stringToTypes(vector<string>&);
 
@@ -53,6 +54,9 @@ public:
 
 	// Returns the pokemon name
 	string getPokemonName() const;
+
+	// Returns the pokemon name with it's id
+	string getPokemonNameInt(int index) const;
 
 	// Returns the types in a vector of string
 	vector<string> typesToString() const;

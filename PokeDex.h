@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <regex>
+#include <map>
 #include "rapidjson/document.h"
 #include "Pokemon.h"
 
@@ -9,6 +10,7 @@ class PokeDex
 private:
 	bool exitStatus;
 	vector<Pokemon> Pokemons_;
+	map<int, Pokemon> PokemonMap_;
 	rapidjson::Document* document_;
 
 public:

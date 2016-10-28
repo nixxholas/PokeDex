@@ -117,8 +117,8 @@ void PokeDex::initializePokemons() {
 	const Value& pokemons = pokemonDoc;
 	assert(pokemons.IsArray());
 
-	// create thread pool with 4 worker threads
-	ThreadPool pool(4);
+	// Create a thread pool with 15 worker threads
+	ThreadPool pool(15); // 15 Workers provide the best performance
 	auto start = chrono::high_resolution_clock::now();
 
 	for (SizeType i = 0; i < pokemons.Size(); i++) {
@@ -134,6 +134,9 @@ void PokeDex::initializePokemons() {
 	auto finish = chrono::high_resolution_clock::now();
 
 	system("cls"); // Clear the Console
+
+	cout << PokemonMap_.size() << endl;
+
 	cout << chrono::duration_cast<chrono::nanoseconds>(finish - start).count() / 1000000 << " ms" << endl;
 }
 
@@ -176,6 +179,7 @@ void PokeDex::iPThreadTask(const Value& pokemon) {
 	// Create the Pokemon Object
 	Pokemon currentPokemon(pokemon["index"].GetInt(), pokemon["name"].GetString(), evolutions, types, moves);
 	lock_guard<mutex> lock(initialMutex_);
+	PokemonMap_.try_emplace(pokemon["index"].GetInt(), currentPokemon);
 	Pokemons_.push_back(currentPokemon);
 }
 
@@ -721,7 +725,7 @@ void PokeDex::savePokemons() {
 
 	// For Loop Timer
 	auto start = chrono::high_resolution_clock::now();
-	ThreadPool pool(4);
+	ThreadPool pool(15); // 15 Workers have shown a 1000ms latency decrease compared to 4 Workers
 
 	// Push the Existing Pokemons Back
 	for (int i = 0; i < Pokemons_.size(); i++)
@@ -910,7 +914,11 @@ void PokeDex::sPThreadTask(const Pokemon& pokemonObj) {
 
 void PokeDex::launchSearchMenu() {
 	string searchString;
-	std::cout << "Type in the Pokemon you'd like to search: ";
+	cout << "============= Search Menu ===============" << endl;
+	cout << "(1) Search by Pokemon name" << endl;
+	cout << "(2) Search a Pokemon by one of it's type" << endl;
+	cout << "" << endl;
+	cout << "(5) Back to Main Menu" << endl;
 	cin >> searchString;
 }
 
@@ -956,10 +964,10 @@ void PokeDex::launchCreatePokemon() {
 		while (!(evoCount < 5) || !(evoCount > 0)) {
 			cout << "Please enter a valid input. (1 to 4)" << endl;
 			cin >> evoCount;
+		}
 
-			for (int i = 0; i < evoCount; i++) {
-				evolutions.push_back(createEvolution());
-			}
+		for (int i = 0; i < evoCount; i++) {
+			evolutions.push_back(createEvolution());
 		}
 	}
 
@@ -1067,10 +1075,41 @@ int PokeDex::searchAndGetPokemonIndex() {
 	cin >> search;
 
 	cout << "Searching..." << endl;
-
+	
 	for (Pokemon p : Pokemons_) {
-		
+		if (p.getPokemonName() == search) {
+			cout << p.getPokemonId() << endl;
+			cout << p.getPokemonName() << endl;
+			return p.getPokemonId();
+		}
 	}
+
+	while (true) {
+		cout << "Pokemon not found, please search again." << endl;
+		cin >> search;
+		for (Pokemon p : Pokemons_) {
+			if (p.getPokemonName() == search) {
+				cout << p.getPokemonId() << endl;
+				cout << p.getPokemonName() << endl;
+				return p.getPokemonId();
+			}
+		}
+	}
+
+	//auto iter = find_if(Pokemons_.begin(),
+	//	Pokemons_.end(), [&search](const Pokemon& obj) { return obj.getPokemonName() == search; });
+
+	//if (iter != Pokemons_.end())
+	//{
+	//	// found element. it is an iterator to the first matching element.
+	//	// if you really need the index, you can also get it:		
+	//	cout << distance(Pokemons_.begin(), iter) << endl;
+	//	
+
+	//	return distance(Pokemons_.begin(), iter);
+	//}
+
+	return 0;
 }
 
 void PokeDex::launchMenu() {
