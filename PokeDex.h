@@ -10,7 +10,6 @@ class PokeDex
 private:
 	bool exitStatus;
 	vector<Pokemon> Pokemons_;
-	map<int, Pokemon> PokemonMap_;
 	rapidjson::Document* document_;
 
 public:

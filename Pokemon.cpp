@@ -23,8 +23,20 @@ string Pokemon::getPokemonName() const {
 	return name_;
 }
 
+int Pokemon::getTypesSize() const {
+	return types_.size();
+}
+
+bool Pokemon::operator==(const string& name) const {
+	return (name_ == name);
+}
+
 vector<Evolution> Pokemon::getEvolutions() const {
 	return evolutions_;
+}
+
+vector<Pokemon::Type> Pokemon::getTypesVector() const {
+	return types_;
 }
 
 vector<string> Pokemon::typesToString() const {
@@ -93,6 +105,23 @@ vector<string> Pokemon::typesToString() const {
 	}
 
 	return result;
+}
+
+// Compared to typesToString, we're reducing the function into
+// a Linear Incremental Difficulty O(N) Function instead of 
+// an exponentially difficult (O2N) function
+vector<int> Pokemon::typesToInt() const {
+	vector<int> result;
+
+	for (Type t : types_) {
+		result.push_back(static_cast<int>(t));
+	}
+
+	return result;
+}
+
+int Pokemon::typeToInt(const Type& t) const {
+	return static_cast<int>(t);
 }
 
 vector<Move> Pokemon::getMoves() const {
@@ -331,4 +360,15 @@ vector<Pokemon::Type> Pokemon::stringToTypes(vector<string>& typesInString) {
 	}
 
 	return types;
+}
+
+ostream & operator<<(ostream& ostreamObj, const Pokemon& pokemon)
+{
+	ostreamObj << pokemon.getPokemonName();
+
+	return ostreamObj;
+}
+
+istream & operator >> (istream& istreamObj, const Pokemon& pokemon) {
+	return istreamObj;
 }

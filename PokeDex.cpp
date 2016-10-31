@@ -134,9 +134,7 @@ void PokeDex::initializePokemons() {
 	auto finish = chrono::high_resolution_clock::now();
 
 	system("cls"); // Clear the Console
-
-	cout << PokemonMap_.size() << endl;
-
+	
 	cout << chrono::duration_cast<chrono::nanoseconds>(finish - start).count() / 1000000 << " ms" << endl;
 }
 
@@ -179,7 +177,6 @@ void PokeDex::iPThreadTask(const Value& pokemon) {
 	// Create the Pokemon Object
 	Pokemon currentPokemon(pokemon["index"].GetInt(), pokemon["name"].GetString(), evolutions, types, moves);
 	lock_guard<mutex> lock(initialMutex_);
-	PokemonMap_.try_emplace(pokemon["index"].GetInt(), currentPokemon);
 	Pokemons_.push_back(currentPokemon);
 }
 
@@ -773,9 +770,16 @@ void PokeDex::sPThreadTask(const Pokemon& pokemonObj) {
 	pokemon.AddMember("name", reUsable.SetString(pokemonObj.getPokemonName().c_str(), allocator), allocator);
 
 	// Get the types
-	for (int j = 0; j < pokemonObj.typesToString().size(); j++) {
-		//Value type;
-		types.PushBack(reUsable.SetString(pokemonObj.typesToString().at(j).c_str(), allocator), allocator);
+	for (int j = 0; j < pokemonObj.getTypesSize(); j++) {
+		// Previously, the types vector -> json array parsing was done by the conventional
+		// enum to string to char method, which undoubtedly proves to show significant decrease in
+		// data output performance. 
+		// With the introduction of this enum -> int method, we're basically reducing 1 call,
+		// ultimately reducing the data parsing latency.
+		//
+		// Before: 9000 - 10000 ms
+		// After: 7677ms
+		types.PushBack(reUsable.SetInt(pokemonObj.getTypesVector().at(j)), allocator);
 	}
 	pokemon.AddMember("types", types, allocator);
 

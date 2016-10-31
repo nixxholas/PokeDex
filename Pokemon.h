@@ -10,6 +10,10 @@ using namespace std;
 
 class Pokemon
 {
+	//Overload the stream insertion and extraction operators
+	friend ostream& operator << (ostream&, const Pokemon &);
+	friend istream& operator >> (istream&, Pokemon &);
+
 public:
 	// Has to be public for PokeDex's Accessibility
 	enum Type {
@@ -41,7 +45,8 @@ private:
 	vector<Type> types_;
 
 public:
-	bool operator==( string name ) { return name_ == name; }
+	// == Operator to check with the Pokemon's name
+	bool operator==(const string&) const;
 
 	// Returns a vector of enum Types with the vector of strings
 	static vector<Type> stringToTypes(vector<string>&);
@@ -58,9 +63,21 @@ public:
 	// Returns the pokemon name with it's id
 	string getPokemonNameInt(int index) const;
 
+	// Returns the vector of enum Types
+	vector<Type> getTypesVector() const;
+
+	// Returns the size of the Types Vector
+	int getTypesSize() const;
+
 	// Returns the types in a vector of string
 	vector<string> typesToString() const;
-	
+
+	// Returns the types in a vector of int
+	vector<int> typesToInt() const;
+
+	// Returns the current Type enum to an int
+	int typeToInt(const Type&) const;
+
 	// Returns the vector of moves
 	vector<Move> getMoves() const;
 
