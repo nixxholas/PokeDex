@@ -79,7 +79,8 @@ string removeQuote(string s) {
 	return s.substr(1, s.size() - 2);
 }
 
-// initializePokemons() version 2.3 = Utilizing Threads
+// initializePokemons() version 2.3.1  
+// 2.3 Update - Utilizing Threads
 // With the use of a custom ThreadPool object, we're able
 // to emulate Java's ThreadPooling which allows parallelizing
 // tasks in order to drastically increase performance.
@@ -88,6 +89,10 @@ string removeQuote(string s) {
 //	v1.X -> 14+ seconds
 //	v2.X before 2.3 -> 2 - 3 seconds
 //	Current -> Around 1100 ms
+//
+// 2.3.1 Update - Further Optimization
+//
+// Part One -> Types statically casted from integer
 
 void PokeDex::initializePokemons() {
 	// Open the Pokemons.json array
@@ -151,13 +156,11 @@ void PokeDex::iPThreadTask(const Value& pokemon) {
 	}
 
 	// Types
-	vector<string> types_;
+	vector<Pokemon::Type> types;
 	// http://discuss.cocos2d-x.org/t/how-to-get-array-inside-json-into-vector/25614/2
 	for (SizeType k = 0; k < pokemon["types"].Size(); k++) {
-		types_.push_back(pokemon["types"][k].GetString());
+		types.push_back(static_cast<Pokemon::Type>((pokemon["types"][k].GetInt())));
 	}
-	// Get the proper types in
-	vector<Pokemon::Type> types = Pokemon::stringToTypes(types_);
 
 	// Moves
 	vector<Move> moves;
