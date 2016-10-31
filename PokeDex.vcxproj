@@ -156,7 +156,6 @@
     <ClCompile Include="Pokemon.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Comparator.h" />
     <ClInclude Include="Evolution.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="Move.h" />

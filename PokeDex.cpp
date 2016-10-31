@@ -79,7 +79,8 @@ string removeQuote(string s) {
 	return s.substr(1, s.size() - 2);
 }
 
-// initializePokemons() version 2.3.1  
+// initializePokemons() Current Version 2.3.1  
+//
 // 2.3 Update - Utilizing Threads
 // With the use of a custom ThreadPool object, we're able
 // to emulate Java's ThreadPooling which allows parallelizing
@@ -92,7 +93,9 @@ string removeQuote(string s) {
 //
 // 2.3.1 Update - Further Optimization
 //
-// Part One -> Types statically casted from integer
+// Changes
+// -> Types statically casted from integer
+// -> Indices-based For loop Iteration for vectors when initializing
 
 void PokeDex::initializePokemons() {
 	// Open the Pokemons.json array
@@ -150,21 +153,20 @@ void PokeDex::iPThreadTask(const Value& pokemon) {
 
 	// Evolution
 	vector<Evolution> evolutions;
-	for (SizeType j = 0; j < pokemon["evolutions"].Size(); j++) {
-		// Push the auto object to an evolution object into the vector
+	for (std::vector<Evolution>::size_type j = 0; j != pokemon["evolutions"].Size(); j++) {
 		evolutions.push_back(Evolution(pokemon["evolutions"][j]["pokemon"].GetInt(), pokemon["evolutions"][j]["event"].GetString()));
 	}
 
 	// Types
 	vector<Pokemon::Type> types;
 	// http://discuss.cocos2d-x.org/t/how-to-get-array-inside-json-into-vector/25614/2
-	for (SizeType k = 0; k < pokemon["types"].Size(); k++) {
+	for (std::vector<Pokemon::Type>::size_type k = 0; k < pokemon["types"].Size(); k++) {
 		types.push_back(static_cast<Pokemon::Type>((pokemon["types"][k].GetInt())));
 	}
 
 	// Moves
 	vector<Move> moves;
-	for (SizeType l = 0; l < pokemon["moves"].Size(); l++) {
+	for (std::vector<Move>::size_type l = 0; l < pokemon["moves"].Size(); l++) {
 		moves.push_back(Move(
 			pokemon["moves"][l]["level"].GetInt(), // Level
 			pokemon["moves"][l]["name"].GetString(), // Move Name
@@ -275,7 +277,7 @@ void PokeDex::iPThreadTask(const Value& pokemon) {
 // Instead of running an IOStream Wrapper which is a little slower
 // than a other streams, we'll use StringStream, the fastest one available
 // for rapidJSON
-//
+
 //void PokeDex::initializePokemons() {
 //	// Open the Pokemons.json array
 //	// http://www.cplusplus.com/doc/tutorial/files/
@@ -694,11 +696,17 @@ void PokeDex::iPThreadTask(const Value& pokemon) {
 //	}
 //}
 
-/* savePokemons() version 2.0
+/* savePokemons() Current Version: 2.1
+
+	Version 2.0
 	- Multi Threading Support with ThreadPool
 
 	This has reduced write times by 3X.
 	From 27-28.800+ seconds, to 9166ms (9.166 seconds)
+
+	Version 2.1
+	- Indices-based for loops
+	- Reduction in redundant .at functions
 */
 void PokeDex::savePokemons() {
 	cout << "Saving your data before exiting.." << endl;
@@ -728,13 +736,19 @@ void PokeDex::savePokemons() {
 	ThreadPool pool(15); // 15 Workers have shown a 1000ms latency decrease compared to 4 Workers
 
 	// Push the Existing Pokemons Back
-	for (int i = 0; i < Pokemons_.size(); i++)
-	{
-		Pokemon& pokemon = Pokemons_.at(i);
+	//for (std::vector<Pokemon>::size_type i = 0; i < Pokemons_.size(); i++)
+	//{
+	//	Pokemon& pokemon = Pokemons_[i]; // Pokemons_[i] is faster than .at(i)
 
+	//	pool.AddJob([&](void) { // http://stackoverflow.com/questions/26903602/an-enclosing-function-local-variable-cannot-be-referenced-in-a-lambda-body-unles
+	//			sPThreadTask(pokemon);
+	//		}
+	//	);
+	//}
+	for (auto const& pokemon : Pokemons_) {
 		pool.AddJob([&](void) { // http://stackoverflow.com/questions/26903602/an-enclosing-function-local-variable-cannot-be-referenced-in-a-lambda-body-unles
-				sPThreadTask(pokemon);
-			}
+			sPThreadTask(pokemon);
+		}
 		);
 	}
 
@@ -781,16 +795,16 @@ void PokeDex::sPThreadTask(const Pokemon& pokemonObj) {
 		// ultimately reducing the data parsing latency.
 		//
 		// Before: 9000 - 10000 ms
-		// After: 7677ms
-		types.PushBack(reUsable.SetInt(pokemonObj.getTypesVector().at(j)), allocator);
+		// After: 7677ms - 7927ms
+		types.PushBack(reUsable.SetInt(pokemonObj.getTypesVector()[j]), allocator);
 	}
 	pokemon.AddMember("types", types, allocator);
 
 	// Get the evolutions
 	for (int k = 0; k < pokemonObj.getEvolutions().size(); k++) {
 		Value evolution(kObjectType);
-		evolution.AddMember("pokemon", pokemonObj.getEvolutions().at(k).getPokemonId(), allocator);
-		evolution.AddMember("event", reUsable.SetString(pokemonObj.getEvolutions().at(k).getEvolvingEvent().c_str(), allocator), allocator);
+		evolution.AddMember("pokemon", pokemonObj.getEvolutions()[k].getPokemonId(), allocator);
+		evolution.AddMember("event", reUsable.SetString(pokemonObj.getEvolutions()[k].getEvolvingEvent().c_str(), allocator), allocator);
 		evolutions.PushBack(evolution, allocator);
 	}
 	pokemon.AddMember("evolutions", evolutions, allocator);
@@ -800,15 +814,15 @@ void PokeDex::sPThreadTask(const Pokemon& pokemonObj) {
 		Value move(kObjectType);
 
 		// Set the values for the current move
-		move.AddMember("level", pokemonObj.getMoves().at(l).getMoveLevel(), allocator);
-		move.AddMember("name", reUsable.SetString(pokemonObj.getMoves().at(l).getMoveName().c_str(), allocator), allocator);
-		move.AddMember("type", reUsable.SetString(pokemonObj.getMoves().at(l).getMoveType().c_str(), allocator), allocator);
-		move.AddMember("category", reUsable.SetString(pokemonObj.getMoves().at(l).getMoveCategory().c_str(), allocator), allocator);
-		move.AddMember("attack", pokemonObj.getMoves().at(l).getMoveAttack(), allocator);
-		move.AddMember("accuracy", pokemonObj.getMoves().at(l).getMoveAccuracy(), allocator);
-		move.AddMember("pp", pokemonObj.getMoves().at(l).getMovePP(), allocator);
-		move.AddMember("effect_percent", pokemonObj.getMoves().at(l).getMoveEffectPercent(), allocator);
-		move.AddMember("description", reUsable.SetString(pokemonObj.getMoves().at(l).getMoveDescription().c_str(), allocator), allocator);
+		move.AddMember("level", pokemonObj.getMoves()[l].getMoveLevel(), allocator);
+		move.AddMember("name", reUsable.SetString(pokemonObj.getMoves()[l].getMoveName().c_str(), allocator), allocator);
+		move.AddMember("type", reUsable.SetString(pokemonObj.getMoves()[l].getMoveType().c_str(), allocator), allocator);
+		move.AddMember("category", reUsable.SetString(pokemonObj.getMoves()[l].getMoveCategory().c_str(), allocator), allocator);
+		move.AddMember("attack", pokemonObj.getMoves()[l].getMoveAttack(), allocator);
+		move.AddMember("accuracy", pokemonObj.getMoves()[l].getMoveAccuracy(), allocator);
+		move.AddMember("pp", pokemonObj.getMoves()[l].getMovePP(), allocator);
+		move.AddMember("effect_percent", pokemonObj.getMoves()[l].getMoveEffectPercent(), allocator);
+		move.AddMember("description", reUsable.SetString(pokemonObj.getMoves()[l].getMoveDescription().c_str(), allocator), allocator);
 
 		moves.PushBack(move, allocator);
 	}

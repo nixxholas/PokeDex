@@ -52,12 +52,6 @@ public:
 	// Move Object Creator Console Function
 	Move createMove();
 
-	// Adds a pokemon to the unstagedPokemons Vector
-	void addUnstagedPokemon(Pokemon);
-
-	// Removes a pokemon from the unstagedPokemons Vector
-	void removeUnstagedPokemon(Pokemon);
-
 	PokeDex::PokeDex();
 
 	PokeDex::~PokeDex();
