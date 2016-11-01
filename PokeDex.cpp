@@ -53,7 +53,7 @@ mutex exitingMutex_;
 
 PokeDex::PokeDex()
 {
-	document_ = new Document();
+	//document_ = new Document();
 }
 
 
@@ -134,16 +134,17 @@ void PokeDex::initializePokemons() {
 
 		pool.AddJob([&](void) { // http://stackoverflow.com/questions/26903602/an-enclosing-function-local-variable-cannot-be-referenced-in-a-lambda-body-unles
 			iPThreadTask(pokemon);
-			}
+		}
 		);
 	}
-		
+
 	pool.WaitAll();
 	auto finish = chrono::high_resolution_clock::now();
 
 	system("cls"); // Clear the Console
-	
+
 	cout << chrono::duration_cast<chrono::nanoseconds>(finish - start).count() / 1000000 << " ms" << endl;
+
 }
 
 // initializePokemonsThreadTask Function
@@ -733,29 +734,58 @@ void PokeDex::savePokemons() {
 
 	// For Loop Timer
 	auto start = chrono::high_resolution_clock::now();
-	ThreadPool pool(15); // 15 Workers have shown a 1000ms latency decrease compared to 4 Workers
-
+	
+	// The Single Threaded, Indices-based Pokemon Output Iterator.
+	//
 	// Push the Existing Pokemons Back
-	//for (std::vector<Pokemon>::size_type i = 0; i < Pokemons_.size(); i++)
-	//{
-	//	Pokemon& pokemon = Pokemons_[i]; // Pokemons_[i] is faster than .at(i)
+	// Test 1 -> 216ms
+	// Test 2 -> 207ms
+	// Test 3 -> 230ms
+	// Test 4 -> 215ms
+	// Test 5 -> 218ms
+	// Theoretical Average = 217.2ms
+	for (std::vector<Pokemon>::size_type i = 0; i < Pokemons_.size(); i++)
+	{
+		//Pokemon& pokemon = Pokemons_[i]; // Pokemons_[i] is faster than .at(i)
 
-	//	pool.AddJob([&](void) { // http://stackoverflow.com/questions/26903602/an-enclosing-function-local-variable-cannot-be-referenced-in-a-lambda-body-unles
-	//			sPThreadTask(pokemon);
+		//pool.AddJob([&](void) { // http://stackoverflow.com/questions/26903602/an-enclosing-function-local-variable-cannot-be-referenced-in-a-lambda-body-unles
+		sPThreadTask(Pokemons_[i]);
+		//	}
+		//);
+	}
+
+	//ThreadPool pool(15); // 15 Workers have shown a 1000ms latency decrease compared to 4 Workers
+
+	// Push the existing pokemons back
+	// test 1 -> 7597ms
+	// test 2 -> 7633ms
+	// test 3 -> 8235ms
+	// theoretical average = 7821.6ms
+	//for (std::vector<pokemon>::size_type i = 0; i < pokemons_.size(); i++)
+	//{
+	//	pokemon& pokemon = pokemons_[i]; // pokemons_[i] is faster than .at(i)
+
+	//	pool.addjob([&](void) { // http://stackoverflow.com/questions/26903602/an-enclosing-function-local-variable-cannot-be-referenced-in-a-lambda-body-unles
+	//			spthreadtask(pokemons_[i]);
 	//		}
 	//	);
 	//}
-	for (auto const& pokemon : Pokemons_) {
-		pool.AddJob([&](void) { // http://stackoverflow.com/questions/26903602/an-enclosing-function-local-variable-cannot-be-referenced-in-a-lambda-body-unles
-			sPThreadTask(pokemon);
-		}
-		);
-	}
 
-	pool.WaitAll();
+	// 7970ms -> Test 1
+	// 8660ms -> Test 2, Relaunching after Test 2 crashes the program.
+	// 7614ms -> Test 3
+	// Theoretical Average = 8081.3ms
+	//for (auto const& pokemon : Pokemons_) {
+	//	pool.AddJob([&](void) { // http://stackoverflow.com/questions/26903602/an-enclosing-function-local-variable-cannot-be-referenced-in-a-lambda-body-unles
+	//		sPThreadTask(pokemon);
+	//		}
+	//	);
+	//}
+
+	//pool.WaitAll();
 	auto finish = chrono::high_resolution_clock::now();
 
-	system("cls");
+	//system("cls");
 	cout << endl;
 	cout << chrono::duration_cast<chrono::nanoseconds>(finish - start).count() / 1000000 << " ms" << endl;
 	cout << "Writing to json" << endl;
@@ -778,12 +808,16 @@ void PokeDex::sPThreadTask(const Pokemon& pokemonObj) {
 	Value moves(kArrayType);
 	Value reUsable;
 
+	// Debugging Purposes
+	//cout << pokemonObj.getPokemonName() << endl;
+
 	Document::AllocatorType& allocator = document_->GetAllocator();
 
 	// Push in the object properties into the GenericObject
 	pokemon.AddMember("index", pokemonObj.getPokemonId(), allocator);
-		
+
 	// http://stackoverflow.com/questions/7352099/stdstring-to-char
+	// reUsable.SetString(pokemonObj.getPokemonName().c_str()
 	pokemon.AddMember("name", reUsable.SetString(pokemonObj.getPokemonName().c_str(), allocator), allocator);
 
 	// Get the types
@@ -796,7 +830,12 @@ void PokeDex::sPThreadTask(const Pokemon& pokemonObj) {
 		//
 		// Before: 9000 - 10000 ms
 		// After: 7677ms - 7927ms
-		types.PushBack(reUsable.SetInt(pokemonObj.getTypesVector()[j]), allocator);
+		//
+		// Previously, the line below was used to get the integer
+		// types.PushBack(reUsable.SetInt(pokemonObj.getTypesVector()[j]), allocator);
+		// This call requires a placeholder object, calling a integer setter, and getting the vector element.
+		// By using the modified code below, we trimmed out 2 extra calls.
+		types.PushBack(pokemonObj.getTypesVector()[j], allocator);
 	}
 	pokemon.AddMember("types", types, allocator);
 
@@ -1081,7 +1120,8 @@ void PokeDex::menuChoice(int& choice) {
 		break;
 	case 5:
 		savePokemons();
-		//exit(0);
+		system("pause"); // Windows Command Prompt Compatible only.
+		exit(0);
 		break;
 	default:
 		std::cout << "Please try again" << endl;
@@ -1096,7 +1136,7 @@ int PokeDex::searchAndGetPokemonIndex() {
 	cin >> search;
 
 	cout << "Searching..." << endl;
-	
+
 	for (Pokemon p : Pokemons_) {
 		if (p.getPokemonName() == search) {
 			cout << p.getPokemonId() << endl;
@@ -1150,7 +1190,7 @@ void PokeDex::launchMenu() {
 		if (choice == "1" ||
 			choice == "2" ||
 			choice == "3" ||
-			choice == "4" || 
+			choice == "4" ||
 			choice == "5") {
 			choiceInt = stoi(choice);
 			menuChoice(choiceInt);

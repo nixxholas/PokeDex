@@ -10,7 +10,7 @@ class PokeDex
 private:
 	bool exitStatus;
 	vector<Pokemon> Pokemons_;
-	rapidjson::Document* document_;
+	rapidjson::Document* document_ = new rapidjson::Document();
 
 public:
 	// Setup the Pokemon Vector.
