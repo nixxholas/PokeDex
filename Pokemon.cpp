@@ -130,9 +130,7 @@ vector<Move> Pokemon::getMoves() const {
 
 // couts a list of Enumerators for the user to cin via enumIntToString()
 // Checks the input, and eventually returns a string
-Pokemon::Type Pokemon::chooseTypeEnum() {
-	int choice;
-
+void Pokemon::printEnumChoices() {
 	for (int i = Type::BUG; i != Type::WATER; ++i) {
 		switch (i) {
 		case Type::BUG: // 0
@@ -194,14 +192,6 @@ Pokemon::Type Pokemon::chooseTypeEnum() {
 			break;
 		}
 	}
-
-	cin >> choice;
-	while (!(choice < 18) || !(choice > 0)) {
-		cout << "Please enter a valid input." << endl;
-		cin >> choice;
-	}
-
-	return enumIntToType(choice - 1);
 }
 
 // Returns the string of the Enumerator identified by an Integer

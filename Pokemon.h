@@ -82,7 +82,7 @@ public:
 	vector<Move> getMoves() const;
 
 	// Returns us the pokemon type chosen
-	static Type chooseTypeEnum();
+	static void printEnumChoices();
 
 	// Returns us the enum in string
 	static Type enumIntToType(int);

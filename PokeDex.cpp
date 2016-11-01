@@ -143,7 +143,7 @@ void PokeDex::initializePokemons() {
 
 	system("cls"); // Clear the Console
 
-	cout << chrono::duration_cast<chrono::nanoseconds>(finish - start).count() / 1000000 << " ms" << endl;
+	std::cout << chrono::duration_cast<chrono::nanoseconds>(finish - start).count() / 1000000 << " ms" << endl;
 
 }
 
@@ -710,7 +710,7 @@ void PokeDex::iPThreadTask(const Value& pokemon) {
 	- Reduction in redundant .at functions
 */
 void PokeDex::savePokemons() {
-	cout << "Saving your data before exiting.." << endl;
+	std::cout << "Saving your data before exiting.." << endl;
 
 	// Delete the existing JSON
 	// http://www.cplusplus.com/reference/cstdio/remove/
@@ -721,8 +721,8 @@ void PokeDex::savePokemons() {
 		puts("File successfully deleted");
 	}
 
-	cout << endl;
-	cout << "Saving the new and existing data..";
+	std::cout << endl;
+	std::cout << "Saving the new and existing data..";
 
 	// Combine the unstaged and staged vectors
 	// http://discuss.cocos2d-x.org/t/solved-how-to-write-json-array-using-rapidjson/29551
@@ -734,7 +734,7 @@ void PokeDex::savePokemons() {
 
 	// For Loop Timer
 	auto start = chrono::high_resolution_clock::now();
-	
+
 	// The Single Threaded, Indices-based Pokemon Output Iterator.
 	//
 	// Push the Existing Pokemons Back
@@ -786,9 +786,9 @@ void PokeDex::savePokemons() {
 	auto finish = chrono::high_resolution_clock::now();
 
 	//system("cls");
-	cout << endl;
-	cout << chrono::duration_cast<chrono::nanoseconds>(finish - start).count() / 1000000 << " ms" << endl;
-	cout << "Writing to json" << endl;
+	std::cout << endl;
+	std::cout << chrono::duration_cast<chrono::nanoseconds>(finish - start).count() / 1000000 << " ms" << endl;
+	std::cout << "Writing to json" << endl;
 
 	// Output the JSON
 	StringBuffer strbuf;
@@ -798,7 +798,7 @@ void PokeDex::savePokemons() {
 	// Output to the file
 	ofstream ofs("pokemons.json");
 	ofs << strbuf.GetString();
-	cout << "Done!" << endl;
+	std::cout << "Done!" << endl;
 }
 
 void PokeDex::sPThreadTask(const Pokemon& pokemonObj) {
@@ -974,14 +974,19 @@ void PokeDex::sPThreadTask(const Pokemon& pokemonObj) {
 
 void PokeDex::launchSearchMenu() {
 	string searchString;
-	cout << "============= Search Menu ===============" << endl;
-	cout << "(1) Search by Pokemon name" << endl;
-	cout << "(2) Search a Pokemon by one of it's type" << endl;
-	cout << "" << endl;
-	cout << "(5) Back to Main Menu" << endl;
-	cin >> searchString;
+	std::cout << "============= Search Menu ===============" << endl;
+	std::cout << "(1) Search by Pokemon name" << endl;
+	std::cout << "(2) Search a Pokemon by one of it's type" << endl;
+	std::cout << "" << endl;
+	std::cout << "(5) Back to Main Menu" << endl;
+	std::cin >> searchString;
 }
 
+// Launches the Create Pokemon Instance.
+//
+// User Validation Method Credits:
+// http://stackoverflow.com/questions/2075898/good-input-validation-loop-using-cin-c
+//
 void PokeDex::launchCreatePokemon() {
 	int index = Pokemons_.size() + 1; // Fixed Identity Key
 	string name;
@@ -990,42 +995,80 @@ void PokeDex::launchCreatePokemon() {
 	vector<Move> moves;
 
 	// Pokemon Name
-	cout << "Type in the name of the Pokemon" << endl;
-	cin >> name;
+	std::cout << "Type in the name of the Pokemon: ";
+	for (;;) {
+		if (std::cin >> name) {
+			break;
+		}
+		else {
+			std::cout << "Please enter a valid characters." << endl;
+			std::cin.clear();
+		}
+	}
 
 	int typeCount;
 	// Pokemon Type/s
-	cout << "How many type/s will " + name + " have? [Maximum of 2 Types]" << endl;
-	cin >> typeCount;
-	while (!(typeCount < 3) || !(typeCount > 0)) {
-		cout << "Please enter a valid input. (1 or 2)" << endl;
-		cin >> typeCount;
+	std::cout << "How many type/s will " + name + " have? [Maximum of 2 Types]" << endl;
+	for (;;) {
+		if (std::cin >> typeCount && (typeCount < 3 && typeCount > 0)) {
+			break;
+		}
+		else {
+			std::cout << "Please enter a valid integer [1 or 2]" << endl;
+			std::cin.clear();
+			std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
 	}
 
+	// Iterate through the number of types entered
 	for (int i = 0; i < typeCount; i++) {
-		cout << "Choose a type: " << endl;
-		types.push_back(Pokemon::chooseTypeEnum());
+		int choice;
+
+		std::cout << "Choose a type: " << endl;
+		Pokemon::printEnumChoices(); // Prints out all the choices
+
+		// Input Checking + Data pushing to vector
+		for (;;) {
+			if (std::cin >> choice && (choice < 19 && choice > 0)) {
+				types.push_back(Pokemon::enumIntToType(choice));
+				break;
+			}
+			else {
+				std::cout << "Please enter a valid integer [1 to 18]" << endl;
+				std::cin.clear();
+				std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			}
+		}
 	}
 
 	// Pokemon Evolution/s
 	char evoChoice;
-	cout << "Will " + name + " have any evolution/s?" << endl;
-	cout << "Yes (y) or No (n)" << endl;
-	cin >> evoChoice;
-	// Phased out user input validation for now
-	//while (evoChoice != 'y' || evoChoice != 'n') {
-	//	cout << "Please enter y or n." << endl;
-	//	cin >> evoChoice;
-	//}
-	if (evoChoice == 'y') {
-		int evoCount;
-		cout << "How many evolution variations will " + name + " have?" << endl;
-		cin >> evoCount;
-		while (!(evoCount < 5) || !(evoCount > 0)) {
-			cout << "Please enter a valid input. (1 to 4)" << endl;
-			cin >> evoCount;
+	std::cout << "Will " + name + " have any evolution/s?" << endl;
+	std::cout << "Yes (1) or No (0)" << endl;
+	for (;;) {
+		if (std::cin >> evoChoice && (typeCount == 1 || typeCount == 0)) {
+			break;
 		}
-
+		else {
+			std::cout << "Please enter a valid integer [0 or 1]" << endl;
+			std::cin.clear();
+			std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
+	}
+	
+	if (evoChoice == 1) {
+		int evoCount;
+		std::cout << "How many evolution variations will " + name + " have?" << endl;
+		for (;;) {
+			if (std::cin >> evoCount && (evoCount < 5 || evoCount > 0)) {
+				break;
+			}
+			else {
+				std::cout << "Please enter a valid integer [1 to 4]" << endl;
+				std::cin.clear();
+				std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			}
+		}
 		for (int i = 0; i < evoCount; i++) {
 			evolutions.push_back(createEvolution());
 		}
@@ -1033,21 +1076,25 @@ void PokeDex::launchCreatePokemon() {
 
 	// Pokemon Move/s
 	int moveCount;
-	cout << "How many moves will " + name + " have?" << endl;
-	cin >> moveCount;
-	while (!(moveCount < 50) || !(moveCount > 0)) {
-		cout << "Please enter a valid input. (1 - 50)" << endl;
-		cin >> moveCount;
+	std::cout << "How many moves will " + name + " have?" << endl;
+	for (;;) {
+		if (std::cin >> moveCount && (moveCount < 50 || moveCount > 0)) {
+			for (int i = 0; i < moveCount; i++) {
+				moves.push_back(createMove());
+			}
+			break;
+		}
+		else {
+			std::cout << "Please enter a valid integer [1 to 50]" << endl;
+			std::cin.clear();
+			std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
 	}
-
-	for (int i = 0; i < moveCount; i++) {
-		moves.push_back(createMove());
-	}
-
+	
 	Pokemon newPokemon(index, name, evolutions, types, moves);
 	Pokemons_.push_back(newPokemon);
-	cout << name + " has been created!" << endl;
-	cin.get();
+	std::cout << name + " has been created!" << endl;
+	std::cin.get();
 	launchMenu();
 }
 
@@ -1059,8 +1106,8 @@ Evolution PokeDex::createEvolution() {
 	int index = searchAndGetPokemonIndex();
 	string event;
 
-	cout << "What is the event that would trigger the evolution?" << endl;
-	cin >> event;
+	std::cout << "What is the event that would trigger the evolution?" << endl;
+	std::cin >> event;
 
 	return Evolution(index, event);
 }
@@ -1077,7 +1124,16 @@ Move PokeDex::createMove() {
 	string Description_; // Description of the move
 
 	cout << "What's the level requirement for the move?" << endl;
-	cin >> Level_;
+	for (;;) {
+		if (cin >> Level_ && (Level_ < 100 && Level_ >= 0)) {
+			break;
+		}
+		else {
+			std::cout << "Please enter a valid level limit. [0 to 100] (0 for no requirement)" << endl;
+			std::cin.clear();
+			std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
+	}
 
 	cout << "What's the name of the move?" << endl;
 	cin >> Name_;
@@ -1092,8 +1148,17 @@ Move PokeDex::createMove() {
 	cin >> Attack_;
 
 	cout << "What's the accuracy percentage of " + Name_ + "?" << endl;
-	cin >> Accuracy_;
-
+	for (;;) {
+		if (cin >> Accuracy_ && (Accuracy_ < 100 && Accuracy_ >= 0)) {
+			break;
+		}
+		else {
+			std::cout << "Please enter a valid percentage limit. [0 to 100] (0 for no requirement)" << endl;
+			std::cin.clear();
+			std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
+	}
+	
 	cout << "What's the PP of " + Name_ + "?" << endl;
 	cin >> Pp_;
 
