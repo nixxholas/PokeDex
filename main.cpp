@@ -13,7 +13,7 @@ int main() {
 	PokeDex pokeDex;
 	pokeDex.initializePokemons();
 
-	cout << "Loaded. Let's Begin!" << endl;
+	cout <<  "Loaded. Let's Begin!" << endl;
 	
 	//system("cls"); // Clear the Console
 

@@ -16,6 +16,9 @@ public:
 	// Setup the Pokemon Vector.
 	void initializePokemons();
 
+	// Returns the size of the Pokemon vector in bytes.
+	int getBytesOfPokemons() const;
+
 	// initializePokemons()'s Worker Task
 	void iPThreadTask(const rapidjson::Value&);
 

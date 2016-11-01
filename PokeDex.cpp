@@ -1046,7 +1046,7 @@ void PokeDex::launchCreatePokemon() {
 	std::cout << "Will " + name + " have any evolution/s?" << endl;
 	std::cout << "Yes (1) or No (0)" << endl;
 	for (;;) {
-		if (std::cin >> evoChoice && (typeCount == 1 || typeCount == 0)) {
+		if (std::cin >> evoChoice && (typeCount > 0 && typeCount < 2)) {
 			break;
 		}
 		else {
@@ -1060,7 +1060,7 @@ void PokeDex::launchCreatePokemon() {
 		int evoCount;
 		std::cout << "How many evolution variations will " + name + " have?" << endl;
 		for (;;) {
-			if (std::cin >> evoCount && (evoCount < 5 || evoCount > 0)) {
+			if (std::cin >> evoCount && (evoCount < 5 && evoCount > 0)) {
 				break;
 			}
 			else {
@@ -1145,7 +1145,16 @@ Move PokeDex::createMove() {
 	cin >> Category_;
 
 	cout << "What's the attack damage of " + Name_ + "?" << endl;
-	cin >> Attack_;
+	for (;;) {
+		if (cin >> Attack_ && (Attack_ < 999 && Attack_ >= 0)) {
+			break;
+		}
+		else {
+			std::cout << "Please enter a valid pp limit. [0 to 999] (0 for damage-less moves)" << endl;
+			std::cin.clear();
+			std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
+	}
 
 	cout << "What's the accuracy percentage of " + Name_ + "?" << endl;
 	for (;;) {
@@ -1160,10 +1169,28 @@ Move PokeDex::createMove() {
 	}
 	
 	cout << "What's the PP of " + Name_ + "?" << endl;
-	cin >> Pp_;
+	for (;;) {
+		if (cin >> Pp_ && (Pp_ < 100 && Pp_ >= 0)) {
+			break;
+		}
+		else {
+			std::cout << "Please enter a valid pp limit. [0 to 100] (0 for no requirement)" << endl;
+			std::cin.clear();
+			std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
+	}
 
 	cout << "What's the effect chance percentage of " + Name_ + "?" << endl;
-	cin >> Effect_percent_;
+	for (;;) {
+		if (cin >> Effect_percent_ && (Effect_percent_ < 100 && Effect_percent_ >= 0)) {
+			break;
+		}
+		else {
+			std::cout << "Please enter a valid percentage limit. [0 to 100] (0 -> Moves without effect)" << endl;
+			std::cin.clear();
+			std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
+	}
 
 	cout << "Provide a simple/detailed description for " + Name_ + "." << endl;
 	cin >> Description_;
@@ -1242,14 +1269,14 @@ void PokeDex::launchMenu() {
 	string choice = "";
 
 	while (choice == "") {
-		cout << "============ C++ PokeDex [Developers Release] ============" << endl;
-		cout << "(1) Search for a pokemon" << endl;
-		cout << "(2) Create a new pokemon" << endl;
-		cout << "(3) Compare two pokemons" << endl;
-		cout << "(4) Command Mode" << endl;
-		cout << "(5) Exit the PokeDex" << endl;
+		std::cout << "============ C++ PokeDex [Developers Release] ============" << endl;
+		std::cout << "(1) Search for a pokemon" << endl;
+		std::cout << "(2) Create a new pokemon" << endl;
+		std::cout << "(3) Compare two pokemons" << endl;
+		std::cout << "(4) Command Mode" << endl;
+		std::cout << "(5) Exit the PokeDex" << endl;
 
-		cin >> choice; // http://stackoverflow.com/questions/13421965/using-cin-get-to-get-an-integer
+		std::cin >> choice; // http://stackoverflow.com/questions/13421965/using-cin-get-to-get-an-integer
 		int choiceInt; // Parsing the choice to here later
 
 		if (choice == "1" ||
@@ -1267,4 +1294,8 @@ void PokeDex::launchMenu() {
 			std::cout << "Invalid Input, Please try again." << endl;
 		}
 	}
+}
+
+int PokeDex::getBytesOfPokemons() const {
+	return Pokemons_.size();
 }
