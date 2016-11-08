@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Evolution.cpp" />
+    <ClCompile Include="LevelData.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Move.cpp" />
     <ClCompile Include="PokeDex.cpp" />
@@ -157,10 +158,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Evolution.h" />
+    <ClInclude Include="Grade.h" />
     <ClInclude Include="json.hpp" />
+    <ClInclude Include="LevelData.h" />
     <ClInclude Include="Move.h" />
     <ClInclude Include="PokeDex.h" />
     <ClInclude Include="Pokemon.h" />
+    <ClInclude Include="PokemonGo.h" />
     <ClInclude Include="rapidjson\allocators.h" />
     <ClInclude Include="rapidjson\document.h" />
     <ClInclude Include="rapidjson\encodedstream.h" />

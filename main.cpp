@@ -13,6 +13,8 @@ int main() {
 	PokeDex pokeDex;
 	pokeDex.initializePokemons();
 
+	pokeDex.initializeLevelData();
+
 	cout <<  "Loaded. Let's Begin!" << endl;
 	
 	//system("cls"); // Clear the Console

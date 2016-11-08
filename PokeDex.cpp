@@ -79,7 +79,67 @@ string removeQuote(string s) {
 	return s.substr(1, s.size() - 2);
 }
 
-// initializePokemons() Current Version 2.3.1  
+// initializeLevelData() - Current Version 0.1.0
+//
+// Implemented to help facilitate the storage of PoGo's leveling data
+
+void PokeDex::initializeLevelData() {
+	ifstream levelDataFile("leveldata.json");
+	stringstream jsonSS; 
+	
+	if (levelDataFile) {
+		jsonSS << levelDataFile.rdbuf();
+		levelDataFile.close();
+	}
+	else {
+		throw std::runtime_error("!! Unable to open json file");
+	}
+
+	// Convert the file into a document object in conjunction with rapidJSON
+	Document levelDataDoc;
+
+	if (levelDataDoc.Parse<0>(jsonSS.str().c_str()).HasParseError())
+		throw std::invalid_argument("JSON parse error");
+
+	// Let rapidJSON know that there's an array name pokemons within the json
+	if (!levelDataDoc.IsArray()) {
+		levelDataDoc.IsArray();
+	}
+
+	const Value& levels = levelDataDoc;
+	assert(levels.IsArray());
+
+	// Create a thread pool with 15 worker threads
+	ThreadPool pool(8); // 15 Workers provide the best performance
+	auto start = chrono::high_resolution_clock::now();
+
+	for (SizeType i = 0; i < levels.Size(); i++) {
+		const Value& level = levels[i];
+
+		pool.AddJob([&](void) { // http://stackoverflow.com/questions/26903602/an-enclosing-function-local-variable-cannot-be-referenced-in-a-lambda-body-unles
+			iLDThreadTask(level);
+		}
+		);
+	}
+
+	pool.WaitAll();
+	auto finish = chrono::high_resolution_clock::now();
+
+	system("cls"); // Clear the Console
+
+	std::cout << chrono::duration_cast<chrono::nanoseconds>(finish - start).count() / 1000000 << " ms" << endl;
+
+}
+
+// initializeLevelData ThreadTask Function
+void PokeDex::iLDThreadTask(const rapidjson::Value& level) {
+	// Create the LevelData Object
+	LevelData currentLevelData(level["level"].GetInt(), level["dust"].GetInt(), level["candy"].GetInt(), level["cpScalar"].GetFloat());
+	lock_guard<mutex> lock(initialMutex_);
+	levelsData_.push_back(currentLevelData);
+}
+
+// initializePokemons() - Current Version 2.3.1  
 //
 // 2.3 Update - Utilizing Threads
 // With the use of a custom ThreadPool object, we're able
@@ -126,7 +186,7 @@ void PokeDex::initializePokemons() {
 	assert(pokemons.IsArray());
 
 	// Create a thread pool with 15 worker threads
-	ThreadPool pool(15); // 15 Workers provide the best performance
+	ThreadPool pool(8); // 15 Workers provide the best performance
 	auto start = chrono::high_resolution_clock::now();
 
 	for (SizeType i = 0; i < pokemons.Size(); i++) {
@@ -192,7 +252,7 @@ void PokeDex::iPThreadTask(const Value& pokemon) {
 //void PokeDex::initializePokemons() {
 //	// Open the Pokemons.json array
 //	// http://www.cplusplus.com/doc/tutorial/files/
-//	ifstream pokemonsFile("pokemons.json");
+//	ifstream pokemonsFile("pokemonsString.json");
 //	stringstream jsonSS;
 //
 //	if (pokemonsFile) {
@@ -729,7 +789,7 @@ void PokeDex::savePokemons() {
 	stringstream jsonSS; // Define the stringstream
 	//Document outputDocument; // Define the document to receive the C++ Objects for jsonSS
 
-	(*document_).SetArray(); // It's an object
+	document_->SetArray(); // It's an object
 							   //assert(outputDocument.IsArray());
 
 	// For Loop Timer
@@ -868,7 +928,7 @@ void PokeDex::sPThreadTask(const Pokemon& pokemonObj) {
 	pokemon.AddMember("moves", moves, allocator);
 
 	// Make outputDocument thread 
-	lock_guard<mutex> lock(exitingMutex_);
+	//lock_guard<mutex> lock(exitingMutex_);
 	// Push the GenericObject to the Document Array
 	(*document_).PushBack(pokemon, allocator);
 }

@@ -37,7 +37,7 @@ public:
 		WATER // 17
 	};
 
-private:
+protected:
 	int index_;
 	string name_;
 	vector<Evolution> evolutions_;
@@ -70,7 +70,7 @@ public:
 	int getTypesSize() const;
 
 	// Returns the types in a vector of string
-	vector<string> typesToString() const;
+	vector<string> typesToString();
 
 	// Returns the types in a vector of int
 	vector<int> typesToInt() const;
@@ -100,4 +100,3 @@ public:
 	~Pokemon();
 
 };
-

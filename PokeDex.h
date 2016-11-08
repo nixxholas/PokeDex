@@ -4,6 +4,8 @@
 #include <map>
 #include "rapidjson/document.h"
 #include "Pokemon.h"
+#include "PokemonGo.h"
+#include "LevelData.h"
 
 class PokeDex
 {
@@ -11,8 +13,17 @@ private:
 	bool exitStatus;
 	vector<Pokemon> Pokemons_;
 	rapidjson::Document* document_ = new rapidjson::Document();
+	// https://www.tutorialspoint.com/cplusplus/cpp_multi_dimensional_arrays.htm
+	//Pokemon::Type typeEffectiveness[][]; // Screw this, not gonna waste time on that
+	vector<LevelData> levelsData_; // Stores all the Data proper for PoGo Algo
 
 public:
+	// Setup the PokemonGo LevelData Vector
+	void initializeLevelData();
+
+	// initializeLevelData()'s Worker Task
+	void iLDThreadTask(const rapidjson::Value&);
+
 	// Setup the Pokemon Vector.
 	void initializePokemons();
 
