@@ -40,6 +40,9 @@
     <ClCompile Include="LevelData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PokemonGo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="json.hpp">

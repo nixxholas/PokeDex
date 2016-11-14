@@ -111,7 +111,7 @@ void PokeDex::initializeLevelData() {
 
 	// Create a thread pool with 15 worker threads
 	ThreadPool pool(8); // 15 Workers provide the best performance
-	auto start = chrono::high_resolution_clock::now();
+	//auto start = chrono::high_resolution_clock::now();
 
 	for (SizeType i = 0; i < levels.Size(); i++) {
 		const Value& level = levels[i];
@@ -123,12 +123,9 @@ void PokeDex::initializeLevelData() {
 	}
 
 	pool.WaitAll();
-	auto finish = chrono::high_resolution_clock::now();
+	//auto finish = chrono::high_resolution_clock::now();
 
-	system("cls"); // Clear the Console
-
-	std::cout << chrono::duration_cast<chrono::nanoseconds>(finish - start).count() / 1000000 << " ms" << endl;
-
+	//std::cout << chrono::duration_cast<chrono::nanoseconds>(finish - start).count() / 1000000 << " ms" << endl;
 }
 
 // initializeLevelData ThreadTask Function
@@ -1106,7 +1103,7 @@ void PokeDex::launchCreatePokemon() {
 	std::cout << "Will " + name + " have any evolution/s?" << endl;
 	std::cout << "Yes (1) or No (0)" << endl;
 	for (;;) {
-		if (std::cin >> evoChoice && (typeCount > 0 && typeCount < 2)) {
+		if (std::cin >> evoChoice && (typeCount > -1 && typeCount < 2)) {
 			break;
 		}
 		else {
@@ -1333,7 +1330,7 @@ void PokeDex::launchMenu() {
 		std::cout << "(1) Search for a pokemon" << endl;
 		std::cout << "(2) Create a new pokemon" << endl;
 		std::cout << "(3) Compare two pokemons" << endl;
-		std::cout << "(4) Command Mode" << endl;
+		std::cout << "(4) PokemonGo IV Calculator" << endl;
 		std::cout << "(5) Exit the PokeDex" << endl;
 
 		std::cin >> choice; // http://stackoverflow.com/questions/13421965/using-cin-get-to-get-an-integer

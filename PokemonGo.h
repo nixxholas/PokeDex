@@ -16,7 +16,8 @@ public:
 	void calculatePotentialIV() const;
 
 	// Default Constructor
-	PokemonGo(string, int = 0, int = 0, int = 0, int = 0);
+	PokemonGo(string, int, int, int, int, Grade,
+		int, string, vector<Evolution>, vector<Type>, vector<Move>);
 
 	// Destructor
 	~PokemonGo();

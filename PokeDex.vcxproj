@@ -155,6 +155,7 @@
     <ClCompile Include="Move.cpp" />
     <ClCompile Include="PokeDex.cpp" />
     <ClCompile Include="Pokemon.cpp" />
+    <ClCompile Include="PokemonGo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Evolution.h" />

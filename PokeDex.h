@@ -16,6 +16,7 @@ private:
 	// https://www.tutorialspoint.com/cplusplus/cpp_multi_dimensional_arrays.htm
 	//Pokemon::Type typeEffectiveness[][]; // Screw this, not gonna waste time on that
 	vector<LevelData> levelsData_; // Stores all the Data proper for PoGo Algo
+	vector<PokemonGo> PoGomons_; // Stores all the PokemonGo Pokemons
 
 public:
 	// Setup the PokemonGo LevelData Vector
