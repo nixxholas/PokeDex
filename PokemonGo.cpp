@@ -12,9 +12,11 @@ PokemonGo::PokemonGo(string nickname, int cp, int hp, int stardust, int level, G
 	hp_(hp),
 	stardust_(stardust),
 	level_(level),
-	grade_(grade) {
-
-}
+	grade_(grade) { }
 
 // Destruction
 PokemonGo::~PokemonGo() {};
+
+void PokemonGo::calculatePotentialIV() const {
+
+}
