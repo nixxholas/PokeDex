@@ -43,6 +43,9 @@ public:
 	// Function to display the search menu
 	void launchSearchMenu();
 
+	// Function to search pokemon via substring name
+	Pokemon* searchWithName(string);
+
 	// Function to search and return the pokemon select in integer
 	int searchAndGetPokemonIndex();
 

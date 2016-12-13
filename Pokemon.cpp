@@ -71,65 +71,6 @@ vector<string> Pokemon::typesToString() {
 
 	for (Type t : types_) {
 		result.push_back(GetStringType(t));
-		//switch (t) {
-		//case Type::BUG: // 0
-		//	result.push_back("bug");
-		//	break;
-		//case Type::GRASS: // 1
-		//	result.push_back("grass");
-		//	break;
-		//case Type::DARK: // 2
-		//	result.push_back("dark");
-		//	break;
-		//case Type::GROUND: // 3
-		//	result.push_back("ground");
-		//	break;
-		//case Type::DRAGON: // 4
-		//	result.push_back("dragon");
-		//	break;
-		//case Type::ICE: // 5
-		//	result.push_back("ice");
-		//	break;
-		//case Type::ELECTRIC: // 6
-		//	result.push_back("electric");
-		//	break;
-		//case Type::NORMAL: // 7
-		//	result.push_back("normal");
-		//	break;
-		//case Type::FAIRY: // 8
-		//	result.push_back("fairy");
-		//	break;
-		//case Type::POISON: // 9
-		//	result.push_back("poison");
-		//	break;
-		//case Type::FIGHTING: // 10
-		//	result.push_back("fighting");
-		//	break;
-		//case Type::PSYCHIC: // 11
-		//	result.push_back("psychic");
-		//	break;
-		//case Type::FIRE: // 12
-		//	result.push_back("fire");
-		//	break;
-		//case Type::ROCK: // 13
-		//	result.push_back("rock");
-		//	break;
-		//case Type::FLYING: // 14
-		//	result.push_back("flying");
-		//	break;
-		//case Type::STEEL: // 15
-		//	result.push_back("steel");
-		//	break;
-		//case Type::GHOST: // 16
-		//	result.push_back("ghost");
-		//	break;
-		//case Type::WATER: // 17
-		//	result.push_back("water");
-		//	break;
-		//default:
-		//	cout << "Failed to parse a Type enum." << endl;
-		//	break;
-		//}
 	}
 
 	return result;
@@ -225,65 +166,6 @@ void Pokemon::printEnumChoices() {
 // Returns the string of the Enumerator identified by an Integer
 Pokemon::Type Pokemon::enumIntToType(int inType) {
 	return Type(inType); // http://www.gamedev.net/topic/330476-cc-how-to-convert-int-to-enum/
-	//switch (inType) {
-	//case Type::BUG: // 0
-	//	return "bug";
-	//	break;
-	//case Type::GRASS: // 1
-	//	return "grass";
-	//	break;
-	//case Type::DARK: // 2
-	//	return "dark";
-	//	break;
-	//case Type::GROUND: // 3
-	//	return "ground";
-	//	break;
-	//case Type::DRAGON: // 4
-	//	return "dragon";
-	//	break;
-	//case Type::ICE: // 5
-	//	return "ice";
-	//	break;
-	//case Type::ELECTRIC: // 6
-	//	return "electric";
-	//	break;
-	//case Type::NORMAL: // 7
-	//	return "normal";
-	//	break;
-	//case Type::FAIRY: // 8
-	//	return "fairy";
-	//	break;
-	//case Type::POISON: // 9
-	//	return "poison";
-	//	break;
-	//case Type::FIGHTING: // 10
-	//	return "fighting";
-	//	break;
-	//case Type::PSYCHIC: // 11
-	//	return "psychic";
-	//	break;
-	//case Type::FIRE: // 12
-	//	return "fire";
-	//	break;
-	//case Type::ROCK: // 13
-	//	return "rock";
-	//	break;
-	//case Type::FLYING: // 14
-	//	return "flying";
-	//	break;
-	//case Type::STEEL: // 15
-	//	return "steel";
-	//	break;
-	//case Type::GHOST: // 16
-	//	return "ghost";
-	//	break;
-	//case Type::WATER: // 17
-	//	return "water";
-	//	break;
-	//default:
-	//	cout << "Failed to parse a Type enum." << endl;
-	//	break;
-	//}
 }
 
 vector<Pokemon::Type> Pokemon::stringToTypes(vector<string>& typesInString) {

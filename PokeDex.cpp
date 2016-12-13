@@ -243,517 +243,6 @@ void PokeDex::iPThreadTask(const Value& pokemon) {
 	Pokemons_.push_back(currentPokemon);
 }
 
-// initializePokemons() version 2.2 = Utilizing stringstreams
-// This iteration of initializePokemons() is more streamlined with predefined variables
-
-//void PokeDex::initializePokemons() {
-//	// Open the Pokemons.json array
-//	// http://www.cplusplus.com/doc/tutorial/files/
-//	ifstream pokemonsFile("pokemonsString.json");
-//	stringstream jsonSS;
-//
-//	if (pokemonsFile) {
-//		jsonSS << pokemonsFile.rdbuf();
-//		pokemonsFile.close();
-//	}
-//	else {
-//		throw std::runtime_error("!! Unable to open json file");
-//	}
-//
-//	// Convert the file into a document object in conjunction with rapidJSON
-//	Document pokemonDoc;
-//
-//	if (pokemonDoc.Parse<0>(jsonSS.str().c_str()).HasParseError())
-//		throw std::invalid_argument("json parse error");
-//
-//	// Let rapidJSON know that there's an array name pokemons within the json
-//	if (!pokemonDoc.IsArray()) {
-//		pokemonDoc.IsArray();
-//	}
-//
-//	const Value& pokemons = pokemonDoc;
-//	assert(pokemons.IsArray());
-//
-//	auto startTimer = std::chrono::high_resolution_clock::now();
-//
-//	for (SizeType i = 0; i < pokemons.Size(); i++) {
-//		// Debugging Purposes Only
-//		//cout << i << endl;
-//
-//		// ============== Data Seeding Per Pokemon =============== //
-//
-//		// Evolution
-//		vector<Evolution> evolutions;
-//		for (SizeType j = 0; j < pokemons[i]["evolutions"].Size(); j++) {
-//			// Parse the current evolution object into an auto
-//			auto& currObj = pokemons[i]["evolutions"][j];
-//
-//			// Push the auto object to an evolution object into the vector
-//			evolutions.push_back(Evolution(pokemons[i]["evolutions"][j]["pokemon"].GetInt(), pokemons[i]["evolutions"][j]["event"].GetString()));
-//		}
-//
-//		// Types
-//		vector<string> types_;
-//		// http://discuss.cocos2d-x.org/t/how-to-get-array-inside-json-into-vector/25614/2
-//		for (SizeType k = 0; k < pokemons[i]["types"].Size(); k++) {
-//			types_.push_back(pokemons[i]["types"][k].GetString());
-//		}
-//		// Get the proper types in
-//		vector<Pokemon::Type> types = Pokemon::stringToTypes(types_);
-//
-//		// Moves
-//		vector<Move> moves;
-//		for (SizeType l = 0; l < pokemons[i]["moves"].Size(); l++) {
-//			auto& currObj = pokemons[i]["moves"][l];
-//
-//			moves.push_back(Move(
-//				pokemons[i]["moves"][l]["level"].GetInt(), // Level
-//				pokemons[i]["moves"][l]["name"].GetString(), // Move Name
-//				pokemons[i]["moves"][l]["type"].GetString(), // Move Type
-//				pokemons[i]["moves"][l]["category"].GetString(), // Move Category
-//				pokemons[i]["moves"][l]["attack"].GetInt(), // Attack Damage
-//				pokemons[i]["moves"][l]["accuracy"].GetInt(), // Move Accuracy Percentage
-//				pokemons[i]["moves"][l]["pp"].GetInt(), // PP Move Amount
-//				pokemons[i]["moves"][l]["effect_percent"].GetInt(), // Effect Chance
-//				pokemons[i]["moves"][l]["description"].GetString())); // Description
-//		}
-//
-//		// Create the Pokemon Object
-//		Pokemon currentPokemon(pokemons[i]["index"].GetInt(), pokemons[i]["name"].GetString(), evolutions, types, moves);
-//		Pokemons_.push_back(currentPokemon);
-//		std::cout << ".";
-//	}
-//
-//	cout << endl;
-//	auto finishTimer = std::chrono::high_resolution_clock::now();
-//	std::cout << Pokemons_.size() + " Pokemons loaded in " << std::chrono::duration_cast<std::chrono::milliseconds>(finishTimer - startTimer).count()<< "ms" << endl;
-//
-//}
-
-// initializePokemons() version 2.1 = Utilizing stringstreams
-// This iteration of initializePokemons() is more streamlined.
-// Instead of running an IOStream Wrapper which is a little slower
-// than a other streams, we'll use StringStream, the fastest one available
-// for rapidJSON
-
-//void PokeDex::initializePokemons() {
-//	// Open the Pokemons.json array
-//	// http://www.cplusplus.com/doc/tutorial/files/
-//	ifstream pokemonsFile("pokemons.json");
-//	stringstream jsonSS;
-//
-//	if (pokemonsFile) {
-//		jsonSS << pokemonsFile.rdbuf();
-//		pokemonsFile.close();
-//	}
-//	else {
-//		throw std::runtime_error("!! Unable to open json file");
-//	}
-//
-//	// Convert the file into a document object in conjunction with rapidJSON
-//	Document pokemonDoc;
-//
-//	if (pokemonDoc.Parse<0>(jsonSS.str().c_str()).HasParseError())
-//		throw std::invalid_argument("json parse error");
-//
-//	// Let rapidJSON know that there's an array name pokemons within the json
-//	if (!pokemonDoc.IsArray()) {
-//		pokemonDoc.IsArray();
-//	}
-//
-//	const Value& pokemons = pokemonDoc;
-//	assert(pokemons.IsArray());
-//
-//	for (SizeType i = 0; i < pokemons.Size(); i++) {
-//		// Debugging Purposes Only
-//		//cout << i << endl;
-//
-//		// ============== Data Seeding Per Pokemon =============== //
-//
-//		// Evolution
-//		vector<Evolution> evolutions;
-//		for (SizeType j = 0; j < pokemons[i]["evolutions"].Size(); j++) {
-//			// Parse the current evolution object into an auto
-//			auto& currObj = pokemons[i]["evolutions"][j];
-//
-//			// Push the auto object to an evolution object into the vector
-//			evolutions.push_back(Evolution(pokemons[i]["evolutions"][j]["pokemon"].GetInt(), pokemons[i]["evolutions"][j]["event"].GetString()));
-//		}
-//
-//		// Types
-//		vector<string> types_;
-//		// http://discuss.cocos2d-x.org/t/how-to-get-array-inside-json-into-vector/25614/2
-//		for (SizeType k = 0; k < pokemons[i]["types"].Size(); k++) {
-//			types_.push_back(pokemons[i]["types"][k].GetString());
-//		}
-//		// Get the proper types in
-//		vector<Pokemon::Type> types = Pokemon::stringToTypes(types_);
-//
-//		// Moves
-//		vector<Move> moves;
-//		for (SizeType l = 0; l < pokemons[i]["moves"].Size(); l++) {
-//			auto& currObj = pokemons[i]["moves"][l];
-//
-//			// Level Integer Variable
-//			int level;
-//			if (is_number(pokemons[i]["moves"][l]["level"].GetString())) { // Call is_number to check if we can parse it to an int
-//
-//																		   // pokemons[i]["moves"][l]["level"].GetInt()); // Doesn't work
-//				level = stoi(pokemons[i]["moves"][l]["level"].GetString());
-//			}
-//			else { // Else, it means that there are no level requirements
-//				level = 0; // So we'll just set the level to 0
-//			}
-//
-//			// Attack Integer Variable
-//			int attack;
-//			if (is_number(pokemons[i]["moves"][l]["attack"].GetString())) { // Call is_number to check if we can parse it to an int
-//
-//				attack = stoi(pokemons[i]["moves"][l]["attack"].GetString());
-//			}
-//			else { // Else, it means that there is no attack damage
-//				attack = 0; // So we'll just set the attack to 0
-//			}
-//
-//			// Accuracy Integer Variable
-//			int accuracy;
-//			if (is_number(pokemons[i]["moves"][l]["accuracy"].GetString())) { // Call is_number to check if we can parse it to an int
-//
-//				accuracy = stoi(pokemons[i]["moves"][l]["accuracy"].GetString());
-//				if (accuracy > 100 || accuracy < 0) { // Don't cheat you bastard
-//					accuracy = 0;
-//				}
-//			}
-//			else { // Else, it means that there is no accuracy requirement
-//				accuracy = 0; // So we'll just set the accuracy to 0
-//			}
-//
-//			// PP Integer Variable
-//			int pp;
-//			if (is_number(pokemons[i]["moves"][l]["pp"].GetString())) { // Call is_number to check if we can parse it to an int
-//
-//				pp = stoi(pokemons[i]["moves"][l]["pp"].GetString());
-//			}
-//			else { // Else, it means that there is no pp requirement
-//				pp = 0; // So we'll just set the pp to 0
-//			}
-//
-//			// Effect Percent Integer Variable
-//			int effect_percent;
-//			if (is_number(pokemons[i]["moves"][l]["effect_percent"].GetString())) { // Call is_number to check if we can parse it to an int
-//
-//				effect_percent = stoi(pokemons[i]["moves"][l]["effect_percent"].GetString());
-//			}
-//			else { // Else, it means that there is no pp requirement
-//				effect_percent = 0; // So we'll just set the pp to 0
-//			}
-//
-//			/*Move::Move(int level, string name, string type, string category,
-//			int attack, int accuracy, int pp, int effect_percent, string description) :*/
-//			moves.push_back(Move(level, // Level
-//				pokemons[i]["moves"][l]["name"].GetString(), // Move Name
-//				pokemons[i]["moves"][l]["type"].GetString(), // Move Type
-//				pokemons[i]["moves"][l]["category"].GetString(), // Move Category
-//				attack, // Attack Damage
-//				accuracy, // Move Accuracy Percentage
-//				pp, // PP Move Amount
-//				effect_percent, // Effect Chance
-//				pokemons[i]["moves"][l]["description"].GetString())); // Description
-//		}
-//
-//		// Create the Pokemon Object
-//		Pokemon currentPokemon(pokemons[i]["index"].GetInt(), pokemons[i]["name"].GetString(), evolutions, types, moves);
-//		Pokemons_.push_back(currentPokemon);
-//		cout << ".";
-//	}
-//
-//}
-
-// initializePokemons() version 2.0 =  Utilizing iostream Wrappers
-// NOTE: To validate why 2.1 is better
-// ===> "However, please note that the performance will be 
-// much lower than the other streams above." Quoted from rapidJSON
-//
-// Method to iterate through the pokemons.json 
-// to create the Pokemon Objects
-// From the proof of research via https://github.com/miloyip/nativejson-benchmark,
-// rapidJSON is the fastest parser for JSON for C++ and is thus utilized.
-
-//void PokeDex::initializePokemons() {
-//	// Open the Pokemons.json array
-//	// http://www.cplusplus.com/doc/tutorial/files/
-//	ifstream pokemonsFile("pokemons.json");
-//	IStreamWrapper isw(pokemonsFile);
-//
-//	// Convert the file into a document object in conjunction with rapidJSON
-//	Document pokemonDoc;
-//	pokemonDoc.ParseStream(isw);
-//
-//	// Let rapidJSON know that there's an array name pokemons within the json
-//	if (!pokemonDoc.IsArray()) {
-//		pokemonDoc.IsArray();
-//	}
-//
-//	const Value& pokemons = pokemonDoc;
-//
-//	assert(pokemons.IsArray());
-//
-//	for (SizeType i = 0; i < pokemons.Size(); i++) {
-//		// Debugging Purposes Only
-//		//cout << i << endl;
-//
-//		// ============== Data Seeding Per Pokemon =============== //
-//
-//		// Evolution
-//		vector<Evolution> evolutions;
-//		for (SizeType j = 0; j < pokemons[i]["evolutions"].Size(); j++) {
-//			// Parse the current evolution object into an auto
-//			auto& currObj = pokemons[i]["evolutions"][j];
-//
-//			// Push the auto object to an evolution object into the vector
-//			evolutions.push_back(Evolution(pokemons[i]["evolutions"][j]["pokemon"].GetInt(), pokemons[i]["evolutions"][j]["event"].GetString()));
-//		}
-//
-//		// Types
-//		vector<string> types_;
-//		// http://discuss.cocos2d-x.org/t/how-to-get-array-inside-json-into-vector/25614/2
-//		for (SizeType k = 0; k < pokemons[i]["types"].Size(); k++) {
-//			types_.push_back(pokemons[i]["types"][k].GetString());
-//		}
-//		// Get the proper types in
-//		vector<Pokemon::Type> types = Pokemon::stringToTypes(types_);
-//
-//		// Moves
-//		vector<Move> moves;
-//		for (SizeType l = 0; l < pokemons[i]["moves"].Size(); l++) {
-//			auto& currObj = pokemons[i]["moves"][l];
-//
-//			// Level Integer Variable
-//			int level;
-//			if (is_number(pokemons[i]["moves"][l]["level"].GetString())) { // Call is_number to check if we can parse it to an int
-//
-//				// pokemons[i]["moves"][l]["level"].GetInt()); // Doesn't work
-//				level = stoi(pokemons[i]["moves"][l]["level"].GetString());
-//			}
-//			else { // Else, it means that there are no level requirements
-//				level = 0; // So we'll just set the level to 0
-//			}
-//
-//			// Attack Integer Variable
-//			int attack;
-//			if (is_number(pokemons[i]["moves"][l]["attack"].GetString())) { // Call is_number to check if we can parse it to an int
-//
-//				attack = stoi(pokemons[i]["moves"][l]["attack"].GetString());
-//			}
-//			else { // Else, it means that there is no attack damage
-//				attack = 0; // So we'll just set the attack to 0
-//			}
-//			
-//			// Accuracy Integer Variable
-//			int accuracy;
-//			if (is_number(pokemons[i]["moves"][l]["accuracy"].GetString())) { // Call is_number to check if we can parse it to an int
-//
-//				accuracy = stoi(pokemons[i]["moves"][l]["accuracy"].GetString());
-//				if (accuracy > 100 || accuracy < 0) { // Don't cheat you bastard
-//					accuracy = 0;
-//				}
-//			}
-//			else { // Else, it means that there is no accuracy requirement
-//				accuracy = 0; // So we'll just set the accuracy to 0
-//			}
-//
-//			// PP Integer Variable
-//			int pp;
-//			if (is_number(pokemons[i]["moves"][l]["pp"].GetString())) { // Call is_number to check if we can parse it to an int
-//
-//				pp = stoi(pokemons[i]["moves"][l]["pp"].GetString());
-//			}
-//			else { // Else, it means that there is no pp requirement
-//				pp = 0; // So we'll just set the pp to 0
-//			}
-//
-//			// Effect Percent Integer Variable
-//			int effect_percent;
-//			if (is_number(pokemons[i]["moves"][l]["effect_percent"].GetString())) { // Call is_number to check if we can parse it to an int
-//
-//				effect_percent = stoi(pokemons[i]["moves"][l]["effect_percent"].GetString());
-//			}
-//			else { // Else, it means that there is no pp requirement
-//				effect_percent = 0; // So we'll just set the pp to 0
-//			}
-//
-//			/*Move::Move(int level, string name, string type, string category,
-//				int attack, int accuracy, int pp, int effect_percent, string description) :*/
-//			moves.push_back(Move(level, // Level
-//				pokemons[i]["moves"][l]["name"].GetString(), // Move Name
-//				pokemons[i]["moves"][l]["type"].GetString(), // Move Type
-//				pokemons[i]["moves"][l]["category"].GetString(), // Move Category
-//				attack, // Attack Damage
-//				accuracy, // Move Accuracy Percentage
-//				pp, // PP Move Amount
-//				effect_percent, // Effect Chance
-//				pokemons[i]["moves"][l]["description"].GetString())); // Description
-//		}
-//
-//		// Create the Pokemon Object
-//		Pokemon currentPokemon(pokemons[i]["index"].GetInt(), pokemons[i]["name"].GetString(), evolutions, types, moves);
-//		Pokemons_.push_back(currentPokemon);
-//		cout << ".";
-//	}
-//
-//}
-
-// initializePokemons() version 1.0 = Utilizing nholmann's JSON
-// Method to iterate through the Pokemons folder dynamically
-// to create the Pokemon objects
-// Time taken: 13.56 secs
-//#include "json.hpp" nlohmann's JSON hpp
-
-//void PokeDex::initializePokemons() {
-//	string line;
-//
-//	cout << "Initializing PokeDex Data" << endl;
-//
-//	for (auto& p : ::recursive_directory_iterator("Pokemons")) {
-//		// For debugging purposes only
-//		//cout << p << endl;
-//
-//		// cout is a stream, so basically we're just getting the p to a stream
-//		// http://stackoverflow.com/questions/3513173/converting-ostream-into-standard-string
-//		ostringstream stream; // http://www.cplusplus.com/reference/sstream/ostringstream/
-//
-//							  // Bring the p to the ostringstream since it is a string when sent to a stream
-//		stream << p;
-//
-//		// Finally just convert the stream to a string
-//		string path = stream.str();
-//
-//		// Current jsonContent
-//		json jsonContent;
-//
-//		// Reads the file from the string path
-//		ifstream in(path);
-//
-//		// Parse the Stream to the Json Object
-//		// http://stackoverflow.com/questions/33628250/c-reading-a-json-object-from-file-with-nlohmann-json
-//		in >> jsonContent;
-//
-//		// Debugging jsonContent
-//		//cout << jsonContent["name"] << endl; //  Works
-//
-//		vector<string> types;
-//		// Iterate through the types array to instantiate the Pokemon's types Array
-//		for (json::iterator it = jsonContent["types"].begin(); it != jsonContent["types"].end(); ++it) {
-//			// Debugging Types, Has "
-//			//cout << *it << endl;			
-//			string str_type = removeQuote(*it);
-//
-//			types.push_back(str_type);
-//		}
-//
-//		vector<Evolution> evolutions;
-//		for (json::iterator it = jsonContent["evolutions"].begin(); it != jsonContent["evolutions"].end(); ++it) {
-//			// Debugging for the output
-//			//cout << *it << endl;
-//
-//			int pokemon = (*it)["pokemon"];
-//			string event = (*it)["event"];
-//
-//			Evolution evolution(pokemon, event);
-//			evolutions.push_back(evolution);
-//		}
-//
-//		vector<Move> moves;
-//		// Iterate through the moves array to instantiate the Pokemon's Moves Array
-//		for (json::iterator it = jsonContent["moves"].begin(); it != jsonContent["moves"].end(); ++it) {
-//			// Debugging for the output
-//			// * means De-reference
-//			//cout << *it << endl; // Works
-//
-//			/*
-//			Converting Json Object Attributes to
-//			C++ based Datatypes
-//
-//			str::stoi
-//			http://stackoverflow.com/questions/7663709/convert-string-to-int-c
-//
-//			removeQuote()
-//			A custom quote remover for strings
-//
-//			is_number()
-//			StackOverFlow's response to a string to integer checker
-//			*/
-//
-//			// Define the strings for the current Move object
-//			// So that things will look like it's in an orderly manner
-//			// Level Integer Variable
-//			int level;
-//			if (is_number(removeQuote((*it)["level"]))) { // Call is_number to check if we can parse it to an int
-//														  // Debugging for level integer datatype
-//														  //cout << removeQuote((*it)["level"]) << endl;
-//				level = stoi(removeQuote((*it)["level"]));
-//			}
-//			else { // Else, it means that there are no level requirements
-//				level = 0; // So we'll just set the level to 0
-//			}
-//
-//			// Category string Variable
-//			//cout << category << endl;
-//
-//			// Attack Integer Variable
-//			int attack;
-//			if (is_number(removeQuote((*it)["attack"]))) { // Call is_number to check if we can parse it to an int
-//				attack = stoi(removeQuote((*it)["attack"]));
-//			}
-//			else { // Else, it means that there is no attack damage
-//				attack = 0; // So we'll just set the attack to 0
-//			}
-//
-//			// Accuracy Integer Variable
-//			int accuracy;
-//			if (is_number(removeQuote((*it)["accuracy"]))) { // Call is_number to check if we can parse it to an int
-//				accuracy = stoi(removeQuote((*it)["accuracy"]));
-//			}
-//			else { // Else, it means that there are no level requirements
-//				accuracy = 0; // So we'll just set the level to 0
-//			}
-//
-//			// PP Integer Variable
-//			int pp;
-//			if (is_number(removeQuote((*it)["pp"]))) { // Call is_number to check if we can parse it to an int
-//				string str_pp = removeQuote((*it)["pp"]);
-//				pp = stoi(str_pp);
-//			}
-//			else { // Else, it means that there isn't a pp limit
-//				pp = 0; // So we'll just set the pp to 0
-//			}
-//
-//			// Accuracy Integer Variable
-//			int effect_percent;
-//			if (is_number(removeQuote((*it)["effect_percent"]))) { // Call is_number to check if we can parse it to an int
-//				effect_percent = stoi(removeQuote((*it)["effect_percent"]));
-//			}
-//			else { // Else, it means that there are no level requirements
-//				effect_percent = 0; // So we'll just set the level to 0
-//			}
-//
-//			// (int level, string name, string type, string category,
-//			//int attack, int accuracy, int pp, int effect_percent, string description)
-//			Move newMove(level, (*it)["name"], (*it)["type"], (*it)["category"], attack, accuracy, pp, effect_percent, (*it)["description"]);
-//
-//			// Debugging newMove
-//			//cout << newMove.getMoveName() << endl;
-//
-//			// Push newMove to the vector
-//			moves.push_back(newMove);
-//		}
-//
-//		// Create the Pokemon Object
-//		Pokemon currentPokemon(jsonContent["index"], jsonContent["name"], evolutions, types, moves);
-//		Pokemons_.push_back(currentPokemon);
-//	}
-//}
-
 /* savePokemons() Current Version: 2.1
 
 	Version 2.0
@@ -930,113 +419,45 @@ void PokeDex::sPThreadTask(const Pokemon& pokemonObj) {
 	(*document_).PushBack(pokemon, allocator);
 }
 
-// savePokemons() version 1.0
-
-//void PokeDex::savePokemons() {
-//	std::cout << "Saving your data before exiting.." << endl;
-//
-//	// Delete the existing JSON
-//	// http://www.cplusplus.com/reference/cstdio/remove/
-//	if (remove("pokemons.json") != 0) {
-//		perror("Error deleting file");
-//	}
-//	else {
-//		puts("File successfully deleted");
-//	}
-//
-//	std::cout << endl;
-//	std::cout << "Saving the new and existing data..";
-//
-//	// Combine the unstaged and staged vectors
-//	// http://discuss.cocos2d-x.org/t/solved-how-to-write-json-array-using-rapidjson/29551
-//	stringstream jsonSS; // Define the stringstream
-//	Document outputDocument; // Define the document to receive the C++ Objects for jsonSS
-//	outputDocument.SetArray(); // It's an object
-//	//assert(outputDocument.IsArray());
-//	Document::AllocatorType& allocator = outputDocument.GetAllocator();
-//
-//	// For Loop Timer
-//	auto startTimer = std::chrono::high_resolution_clock::now();
-//
-//	// Push the Existing Pokemons Back
-//	for (int i = 0; i < Pokemons_.size(); i++)
-//	{
-//		Value pokemon(kObjectType);
-//		Value evolutions(kArrayType);
-//		Value types(kArrayType);
-//		Value moves(kArrayType);
-//		Value reUsable;
-//
-//		// Push in the object properties into the GenericObject
-//		pokemon.AddMember("index", Pokemons_.at(i).getPokemonId(), allocator);
-//
-//		reUsable.SetString(Pokemons_.at(i).getPokemonName().c_str(), allocator);
-//		// http://stackoverflow.com/questions/7352099/stdstring-to-char
-//		pokemon.AddMember("name", reUsable, allocator);
-//
-//		// Get the types
-//		for (int j = 0; j < Pokemons_.at(i).typesToString().size(); j++) {
-//			//Value type;
-//			types.PushBack(reUsable.SetString(Pokemons_.at(i).typesToString().at(j).c_str(), allocator), allocator);
-//		}
-//		pokemon.AddMember("types", types, allocator);
-//
-//		// Get the evolutions
-//		for (int k = 0; k < Pokemons_.at(i).getEvolutions().size(); k++) {
-//			Value evolution(kObjectType);
-//			evolution.AddMember("pokemon", Pokemons_.at(i).getEvolutions().at(k).getPokemonId(), allocator);
-//			evolution.AddMember("event", reUsable.SetString(Pokemons_.at(i).getEvolutions().at(k).getEvolvingEvent().c_str(), allocator), allocator);
-//			evolutions.PushBack(evolution, allocator);
-//		}
-//		pokemon.AddMember("evolutions", evolutions, allocator);
-//
-//		// Get the moves
-//		for (int l = 0; l < Pokemons_.at(i).getMoves().size(); l++) {
-//			Value move(kObjectType);
-//
-//			// Set the values for the current move
-//			move.AddMember("level", Pokemons_.at(i).getMoves().at(l).getMoveLevel(), allocator);
-//			move.AddMember("name", reUsable.SetString(Pokemons_.at(i).getMoves().at(l).getMoveName().c_str(), allocator), allocator);
-//			move.AddMember("type", reUsable.SetString(Pokemons_.at(i).getMoves().at(l).getMoveType().c_str(), allocator), allocator);
-//			move.AddMember("category", reUsable.SetString(Pokemons_.at(i).getMoves().at(l).getMoveCategory().c_str(), allocator), allocator);
-//			move.AddMember("attack", Pokemons_.at(i).getMoves().at(l).getMoveAttack(), allocator);
-//			move.AddMember("accuracy", Pokemons_.at(i).getMoves().at(l).getMoveAccuracy(), allocator);
-//			move.AddMember("pp", Pokemons_.at(i).getMoves().at(l).getMovePP(), allocator);
-//			move.AddMember("effect_percent", Pokemons_.at(i).getMoves().at(l).getMoveEffectPercent(), allocator);
-//			move.AddMember("description", reUsable.SetString(Pokemons_.at(i).getMoves().at(l).getMoveDescription().c_str(), allocator), allocator);
-//
-//			moves.PushBack(move, allocator);
-//		}
-//		pokemon.AddMember("moves", moves, allocator);
-//
-//		// Push the GenericObject to the Document Array
-//		outputDocument.PushBack(pokemon, allocator);
-//	}
-//	auto finishTimer = std::chrono::high_resolution_clock::now();
-//
-//	std::system("cls");
-//	cout << endl;
-//	std::cout << Pokemons_.size() + " Pokemons unloaded in " << std::chrono::duration_cast<std::chrono::milliseconds>(finishTimer - startTimer).count() << "ms" << endl;
-//	std::cout << "Writing to json" << endl;
-//
-//	// Output the JSON
-//	StringBuffer strbuf;
-//	Writer<StringBuffer> writer(strbuf);
-//	outputDocument.Accept(writer);
-//
-//	// Output to the file
-//	ofstream ofs("pokemons.json");
-//	ofs << strbuf.GetString();
-//}
-
 void PokeDex::launchSearchMenu() {
-	string searchString;
+	std::system("cls"); // Clear the main menu away from the CLI
+
+	int choice;
 	std::cout << "============= Search Menu ===============" << endl;
 	std::cout << "(1) Search by Pokemon name" << endl;
 	std::cout << "(2) Search a Pokemon by one of it's type" << endl;
+	std::cout << "(3) Show all Pokemons" << endl;
 	std::cout << "" << endl;
 	std::cout << "(5) Back to Main Menu" << endl;
-	std::cin >> searchString;
+	
+	for (;;) {
+		if (std::cin >> choice) {
+			switch (choice) {
+			case 1:
+
+				break;
+			case 2:
+
+				break;
+			case 5:
+				std::system("cls");
+				launchMenu();
+				break;
+			default:
+				std::cout << "Please enter a valid choice." << endl;
+				break;
+			}
+		}
+		else {
+			std::cout << "Please enter a valid choice." << endl;
+			std::cin.clear();
+		}
+	}
+
+}
+
+Pokemon* PokeDex::searchWithName(string searchStr) {
+
 }
 
 // Launches the Create Pokemon Instance.
@@ -1155,10 +576,6 @@ void PokeDex::launchCreatePokemon() {
 	launchMenu();
 }
 
-void PokeDex::launchDeletePokemon() {
-
-}
-
 Evolution PokeDex::createEvolution() {
 	int index = searchAndGetPokemonIndex();
 	string event;
@@ -1255,6 +672,10 @@ Move PokeDex::createMove() {
 	return Move(Level_, Name_, Type_, Category_, Attack_, Accuracy_, Pp_, Effect_percent_, Description_);
 }
 
+void PokeDex::launchDeletePokemon() {
+
+}
+
 void PokeDex::menuChoice(int& choice) {
 	switch (choice) {
 	case 1:
@@ -1270,7 +691,7 @@ void PokeDex::menuChoice(int& choice) {
 	case 5:
 		savePokemons();
 		system("pause"); // Windows Command Prompt Compatible only.
-		exit(0);
+		exit(0); // Exit the program
 		break;
 	default:
 		std::cout << "Please try again" << endl;

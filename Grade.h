@@ -2,7 +2,7 @@
 class Grade {
 private:
 	char gradeChar_;
-	double min;
+	double min_;
 
 public:
 	// Retrieves the minimum requirement for the grade
@@ -12,7 +12,7 @@ public:
 	char GetGradeChar() const;
 
 	// Constructor
-	Grade(char, int);
+	Grade(char, double);
 
 	// Destructor
 	~Grade();

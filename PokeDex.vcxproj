@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Evolution.cpp" />
+    <ClCompile Include="Grade.cpp" />
     <ClCompile Include="LevelData.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Move.cpp" />

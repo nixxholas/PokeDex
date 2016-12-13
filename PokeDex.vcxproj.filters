@@ -20,6 +20,9 @@
     <Filter Include="Header Files\PoGo">
       <UniqueIdentifier>{8c10d88e-9810-444c-a3ea-743cb8f8f1db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\PoGo">
+      <UniqueIdentifier>{6321c97a-3567-4934-9c6f-04651a46d882}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -37,11 +40,14 @@
     <ClCompile Include="PokeDex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Grade.cpp">
+      <Filter>Source Files\PoGo</Filter>
+    </ClCompile>
     <ClCompile Include="LevelData.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\PoGo</Filter>
     </ClCompile>
     <ClCompile Include="PokemonGo.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\PoGo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
