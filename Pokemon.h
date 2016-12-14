@@ -63,6 +63,9 @@ public:
 	// Returns the pokemon name
 	string getPokemonName() const;
 
+	// Sets the pokemon name
+	void setPokemonName(string&);
+
 	// Returns the pokemon name with it's id
 	string getPokemonNameInt(int index) const;
 

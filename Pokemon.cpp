@@ -45,6 +45,10 @@ string Pokemon::getPokemonName() const {
 	return name_;
 }
 
+void Pokemon::setPokemonName(string& name) {
+	name_ = name;
+}
+
 int Pokemon::getTypesSize() const {
 	return types_.size();
 }

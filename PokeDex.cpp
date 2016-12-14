@@ -873,8 +873,54 @@ Move PokeDex::createMove() {
 }
 
 void PokeDex::launchEditPokemon(Pokemon& pokemon) {
+	int choice;
+
 	cout << "What would you like to edit for " << pokemon.getPokemonName() << "?" << endl;
 	cout << "(1) Edit name" << endl;
+	cout << "(2) Edit Evolutions" << endl;
+	cout << "(3) Edit Moves" << endl;
+	cout << "(4) Return to the previous menu" << endl;
+	cout << "(5) Return to the main menu" << endl;
+
+	for (;;) {
+		if (std::cin >> choice) {
+			switch (choice) {
+			case 1:
+				cout << "So what would you like to name it now?" << endl;
+				break;
+			case 2:
+
+				break;
+			case 3:
+
+				break;
+			case 4:
+				std::system("cls");
+				launchPokemonResult(pokemon);
+				break;
+			case 5:
+				std::system("cls");
+				launchMenu();
+				break;
+			default:
+				std::cout << "Please enter a valid choice." << endl;
+				std::cin.clear();
+				// Now you must get rid of the bad input.
+				// Personally I would just ignore the rest of the line
+				// http://stackoverflow.com/questions/13212043/integer-input-validation-how
+				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				break;
+			}
+		}
+		else {
+			std::cout << "Please enter a valid choice." << endl;
+			std::cin.clear();
+
+			// Now you must get rid of the bad input.
+			// Personally I would just ignore the rest of the line
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+	}
 }
 
 void PokeDex::launchDeletePokemon() {
