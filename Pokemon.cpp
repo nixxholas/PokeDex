@@ -49,8 +49,8 @@ int Pokemon::getTypesSize() const {
 	return types_.size();
 }
 
-bool Pokemon::operator==(const string& name) const {
-	return (name_ == name);
+bool Pokemon::operator==(const Pokemon& pokemon) const {
+	return index_ == pokemon.index_;
 }
 
 bool Pokemon::contains(const string& name) const {

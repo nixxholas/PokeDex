@@ -46,7 +46,7 @@ protected:
 
 public:
 	// == Operator to check with the Pokemon's name
-	bool operator==(const string&) const;
+	bool operator==(const Pokemon&) const;
 
 	// Function to check the Pokemon's name with a substring of it
 	bool contains(const string&) const;

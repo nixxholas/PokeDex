@@ -436,9 +436,16 @@ void PokeDex::launchSearchMenu() {
 		if (std::cin >> choice) {
 			switch (choice) {
 			case 1:
-				results = searchWithName();
-				launchEditPokemon(*selectPokemonFromResults(results));
-				break;
+				for (;;) {
+					results = searchWithName();
+					if (!results.empty()) {
+						launchEditPokemon(*selectPokemonFromResults(results));
+						break;
+					}
+					else {
+						std::cout << "No pokemon was found." << endl;
+					}
+				}
 			case 2:
 
 				break;
@@ -448,12 +455,21 @@ void PokeDex::launchSearchMenu() {
 				break;
 			default:
 				std::cout << "Please enter a valid choice." << endl;
+				std::cin.clear();
+				// Now you must get rid of the bad input.
+				// Personally I would just ignore the rest of the line
+				// http://stackoverflow.com/questions/13212043/integer-input-validation-how
+				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 				break;
 			}
 		}
 		else {
 			std::cout << "Please enter a valid choice." << endl;
 			std::cin.clear();
+
+			// Now you must get rid of the bad input.
+			// Personally I would just ignore the rest of the line
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
 	}
 
@@ -519,7 +535,7 @@ Pokemon* PokeDex::selectPokemonFromResults(vector<Pokemon*> &results) {
 		}
 
 		for (;;) {
-			if (cin >> choice && choice < results.size()) {
+			if (cin >> choice && choice < (results.size() + 1) && choice > 0) {
 				selected = results[choice - 1];
 				break;
 			}
@@ -537,31 +553,108 @@ Pokemon* PokeDex::selectPokemonFromResults(vector<Pokemon*> &results) {
 }
 
 void PokeDex::launchEditPokemon(Pokemon& pokemon) {
+	int choice;
 	std::system("cls"); // Clear the console again
+	string pokemonName = pokemon.getPokemonName();
 
-	cout << "Here are " << pokemon.getPokemonName() << "'s information: " << endl;
-	cout << "Pokemon ID: " << pokemon.getPokemonId() << endl;
+	std::cout << "Here are " << pokemon.getPokemonName() << "'s information: " << endl;
+	std::cout << "Pokemon ID: " << pokemon.getPokemonId() << endl;
 	
 	// Show the types
-	cout << "Type/s: ";
+	std::cout << "Type/s: ";
 	for (string& t : pokemon.typesToString()) {
 		cout << t << " ";
 	}
-	cout << endl;
+	std::cout << endl;
 
 	// Show the Evolutions
-	cout << "Evolution/s: " << endl;
-	for (Evolution& e : pokemon.getEvolutions()) {
-		Pokemon* evolvedPokemon = getPokemonById(e.getPokemonId());
-		cout << "Evolving to: " << evolvedPokemon->getPokemonName() << endl;
-		cout << "Requires: " << e.getEvolvingEvent() << endl;
+	std::cout << "Evolution/s: ";
+	if (!pokemon.getEvolutions().size() < 1) {
+		std::cout << endl;
+		for (Evolution& e : pokemon.getEvolutions()) {
+			Pokemon* evolvedPokemon = getPokemonById(e.getPokemonId());
+			std::cout << "Evolving to: " << evolvedPokemon->getPokemonName() << endl;
+			std::cout << "Requires: " << e.getEvolvingEvent() << endl;
+		}
+	}
+	else {
+		std::cout << "No evolution/s." << endl;
 	}
 
+	std::cout << endl;
+
 	// Show the Moves
+	std::cout << "Move/s: ";
+	if (!pokemon.getMoves().size() < 1) {
+		for (Move& m : pokemon.getMoves()) {
+			std::cout << endl;
+			std::cout << "Move Name: " << m.getMoveName() << endl;
+			std::cout << "Move Level Requirement: " << m.getMoveLevel() << endl;
+			std::cout << "Move Type: " << m.getMoveType() << endl;
+			std::cout << "Move Category: " << m.getMoveCategory() << endl;
+			std::cout << "Move Attack Damage: " << m.getMoveAttack() << endl;
+			std::cout << "Move Accuracy: " << m.getMoveAccuracy() << endl;
+			std::cout << "Move PP: " << m.getMovePP() << endl;
+			std::cout << "Move Effect Percent: " << m.getMoveEffectPercent() << endl;
+			std::cout << "Move Description: " << m.getMoveDescription() << endl;
+		}
+	}
+	else {
+		std::cout << "No move/s." << endl;
+	}
 
-	//cout << "What would you like to do to " << pokemon.getPokemonName() << "?" << endl;
-	//cout << "(1) Edit Name" << endl;
+	std::cout << endl;
+	std::cout << "=====================================" << endl;
 
+	std::cout << "What would you like to do?" << endl;
+	std::cout << "(1) Edit " << pokemonName << endl;
+	std::cout << "(2) Delete " << pokemonName << endl;
+	std::cout << "(3) Go back to the main menu" << endl;
+
+	char answer;
+	for (;;) {
+		if (std::cin >> choice) {
+			switch (choice) {
+			case 1:
+				break;
+			case 2:
+				std::cout << "Are you sure you want to delete " << pokemonName << "?" << endl;
+				for (;;) {
+					if (cin >> answer) {
+						switch (answer) {
+						case 'y':
+							Pokemons_.erase(std::remove(Pokemons_.begin(), Pokemons_.end(), pokemon), Pokemons_.end());
+							std::system("cls");
+							std::cout << pokemonName << " deleted." << endl;
+							launchMenu();
+							break;
+						case 'n':
+							launchEditPokemon(pokemon);
+							break;
+						default:
+							std::cout << "Please enter y/n only." << endl;
+						}
+					}
+					else {
+						std::cout << "Please enter y/n only." << endl;
+					}
+				}				
+				break;
+			case 3:
+				std::system("cls");
+				launchMenu();
+				break;
+			default:
+				std::cout << "Please enter one of the choices." << endl;
+				std::cin.clear();
+				break;
+			}
+		}
+		else {
+			std::cout << "Please try again." << endl;
+			std::cin.clear();
+		}
+	}
 }
 
 // Launches the Create Pokemon Instance.
