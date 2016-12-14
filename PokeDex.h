@@ -58,6 +58,9 @@ public:
 	// Function to create a new pokemon
 	void launchCreatePokemon();
 
+	// Function to show search result
+	void launchPokemonResult(Pokemon&);
+
 	// Function to edit an existing pokemon
 	void launchEditPokemon(Pokemon&);
 

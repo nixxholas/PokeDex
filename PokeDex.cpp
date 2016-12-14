@@ -439,7 +439,7 @@ void PokeDex::launchSearchMenu() {
 				for (;;) {
 					results = searchWithName();
 					if (!results.empty()) {
-						launchEditPokemon(*selectPokemonFromResults(results));
+						launchPokemonResult(*selectPokemonFromResults(results));
 						break;
 					}
 					else {
@@ -552,7 +552,7 @@ Pokemon* PokeDex::selectPokemonFromResults(vector<Pokemon*> &results) {
 	return selected;
 }
 
-void PokeDex::launchEditPokemon(Pokemon& pokemon) {
+void PokeDex::launchPokemonResult(Pokemon& pokemon) {
 	int choice;
 	std::system("cls"); // Clear the console again
 	string pokemonName = pokemon.getPokemonName();
@@ -618,7 +618,7 @@ void PokeDex::launchEditPokemon(Pokemon& pokemon) {
 			case 1:
 				break;
 			case 2:
-				std::cout << "Are you sure you want to delete " << pokemonName << "?" << endl;
+				std::cout << "Are you sure you want to delete " << pokemonName << "? Yes = y | No = n" << endl;
 				for (;;) {
 					if (cin >> answer) {
 						switch (answer) {
@@ -629,7 +629,7 @@ void PokeDex::launchEditPokemon(Pokemon& pokemon) {
 							launchMenu();
 							break;
 						case 'n':
-							launchEditPokemon(pokemon);
+							launchPokemonResult(pokemon);
 							break;
 						default:
 							std::cout << "Please enter y/n only." << endl;
