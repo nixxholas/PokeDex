@@ -50,7 +50,13 @@ int Pokemon::getTypesSize() const {
 }
 
 bool Pokemon::operator==(const string& name) const {
-	return (name_ == name);
+	if (strstr(name_.c_str(), name.c_str()))
+	{
+		return true;
+	}
+
+	return false;
+	//return (name_ == name);
 }
 
 vector<Evolution> Pokemon::getEvolutions() const {

@@ -44,9 +44,15 @@ public:
 	void launchSearchMenu();
 
 	// Function to search pokemon via substring name
-	Pokemon* searchWithName(string);
+	vector<Pokemon*> searchWithName();
 
-	// Function to search and return the pokemon select in integer
+	// Function to search pokemon via Type
+	vector<Pokemon*> searchWithType(Pokemon::Type);
+
+	// Function to select pokemon from the results
+	Pokemon* selectPokemonFromResults(vector<Pokemon*>&);
+
+	// Function to search and return the pokemon selected in integer
 	int searchAndGetPokemonIndex();
 
 	// Function to create a new pokemon

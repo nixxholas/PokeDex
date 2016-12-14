@@ -34,6 +34,7 @@ then its a definition, otherwise its a declaration.
 #include "rapidjson/reader.h"
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <filesystem>
@@ -430,11 +431,12 @@ void PokeDex::launchSearchMenu() {
 	std::cout << "" << endl;
 	std::cout << "(5) Back to Main Menu" << endl;
 	
+	vector<Pokemon*> results;
 	for (;;) {
 		if (std::cin >> choice) {
 			switch (choice) {
 			case 1:
-
+				results = searchWithName();
 				break;
 			case 2:
 
@@ -454,10 +456,61 @@ void PokeDex::launchSearchMenu() {
 		}
 	}
 
+	Pokemon* selected = selectPokemonFromResults(results);
 }
 
-Pokemon* PokeDex::searchWithName(string searchStr) {
+// Searches for the Pokemon via it's name, and returns a pointer
+// Back
+vector<Pokemon*> PokeDex::searchWithName() {
+	string searchStr;
+	vector<Pokemon*> result;
 
+	for (;;) {
+		cout << "Please enter the name of the Pokemon " << endl;
+
+		if (std::cin >> searchStr) {
+			break;
+		}
+		else {
+			std::cout << "Please try again." << endl;
+			std::cin.clear();
+		}
+	}
+
+	// http://stackoverflow.com/questions/14124395/c-stdvector-search-for-value
+	for (Pokemon &p : Pokemons_) {
+		if (p == searchStr) {
+			//cout << "Found " << p.getPokemonName() << endl;
+			Pokemon* found = &p;
+			result.push_back(found);
+		}
+	}
+
+	return result;
+}
+
+// Searches for the Pokemon via it's type and returns a pointer
+// back
+vector<Pokemon*> PokeDex::searchWithType(Pokemon::Type type) {
+
+}
+
+Pokemon* PokeDex::selectPokemonFromResults(vector<Pokemon*> &results) {
+	Pokemon* selected = results[0]; // By default, select the first one
+	int count = 1;
+
+	if (results.size() > 1) {
+		cout << "Please select your choice: " << endl;
+		for (Pokemon* p : results) {
+			cout << "(" << count << ") " << p->getPokemonName() << endl;
+			count++;
+		}
+	}
+	else {
+		cout << "Only " << selected->getPokemonName() << " was found." << endl;
+	}
+
+	return selected;
 }
 
 // Launches the Create Pokemon Instance.
