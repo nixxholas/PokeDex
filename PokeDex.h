@@ -40,6 +40,9 @@ public:
 	// savePokemons()'s Worker Task
 	void sPThreadTask(const Pokemon&);
 
+	// Function to retrieve pokemon via it's ID
+	Pokemon* getPokemonById(int);
+
 	// Function to display the search menu
 	void launchSearchMenu();
 
@@ -51,9 +54,6 @@ public:
 
 	// Function to select pokemon from the results
 	Pokemon* selectPokemonFromResults(vector<Pokemon*>&);
-
-	// Function to search and return the pokemon selected in integer
-	int searchAndGetPokemonIndex();
 
 	// Function to create a new pokemon
 	void launchCreatePokemon();

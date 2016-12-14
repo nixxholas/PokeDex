@@ -479,7 +479,7 @@ vector<Pokemon*> PokeDex::searchWithName() {
 
 	// http://stackoverflow.com/questions/14124395/c-stdvector-search-for-value
 	for (Pokemon &p : Pokemons_) {
-		if (p == searchStr) {
+		if (p.contains(searchStr)) {
 			//cout << "Found " << p.getPokemonName() << endl;
 			Pokemon* found = &p;
 			result.push_back(found);
@@ -493,6 +493,17 @@ vector<Pokemon*> PokeDex::searchWithName() {
 // back
 vector<Pokemon*> PokeDex::searchWithType(Pokemon::Type type) {
 
+}
+
+Pokemon* PokeDex::getPokemonById(int id) {
+	for (Pokemon& p : Pokemons_) {
+		if (p.getPokemonId() == id) {
+			return &p;
+		}
+	}
+	// Nothing will get through here because we're passing in an id we know.
+	
+	return &Pokemons_[0]; // Return the first pokemon since we don't have a choice
 }
 
 Pokemon* PokeDex::selectPokemonFromResults(vector<Pokemon*> &results) {
@@ -526,7 +537,31 @@ Pokemon* PokeDex::selectPokemonFromResults(vector<Pokemon*> &results) {
 }
 
 void PokeDex::launchEditPokemon(Pokemon& pokemon) {
-	cout << "What would you like to do to " << pokemon.getPokemonName() << "?" << endl;
+	std::system("cls"); // Clear the console again
+
+	cout << "Here are " << pokemon.getPokemonName() << "'s information: " << endl;
+	cout << "Pokemon ID: " << pokemon.getPokemonId() << endl;
+	
+	// Show the types
+	cout << "Type/s: ";
+	for (string& t : pokemon.typesToString()) {
+		cout << t << " ";
+	}
+	cout << endl;
+
+	// Show the Evolutions
+	cout << "Evolution/s: " << endl;
+	for (Evolution& e : pokemon.getEvolutions()) {
+		Pokemon* evolvedPokemon = getPokemonById(e.getPokemonId());
+		cout << "Evolving to: " << evolvedPokemon->getPokemonName() << endl;
+		cout << "Requires: " << e.getEvolvingEvent() << endl;
+	}
+
+	// Show the Moves
+
+	//cout << "What would you like to do to " << pokemon.getPokemonName() << "?" << endl;
+	//cout << "(1) Edit Name" << endl;
+
 }
 
 // Launches the Create Pokemon Instance.
@@ -766,50 +801,6 @@ void PokeDex::menuChoice(int& choice) {
 		std::cout << "Please try again" << endl;
 		break;
 	}
-}
-
-int PokeDex::searchAndGetPokemonIndex() {
-	string search;
-
-	cout << "Enter the name of the pokemon you would like to find: " << endl;
-	cin >> search;
-
-	cout << "Searching..." << endl;
-
-	for (Pokemon p : Pokemons_) {
-		if (p.getPokemonName() == search) {
-			cout << p.getPokemonId() << endl;
-			cout << p.getPokemonName() << endl;
-			return p.getPokemonId();
-		}
-	}
-
-	while (true) {
-		cout << "Pokemon not found, please search again." << endl;
-		cin >> search;
-		for (Pokemon p : Pokemons_) {
-			if (p.getPokemonName() == search) {
-				cout << p.getPokemonId() << endl;
-				cout << p.getPokemonName() << endl;
-				return p.getPokemonId();
-			}
-		}
-	}
-
-	//auto iter = find_if(Pokemons_.begin(),
-	//	Pokemons_.end(), [&search](const Pokemon& obj) { return obj.getPokemonName() == search; });
-
-	//if (iter != Pokemons_.end())
-	//{
-	//	// found element. it is an iterator to the first matching element.
-	//	// if you really need the index, you can also get it:		
-	//	cout << distance(Pokemons_.begin(), iter) << endl;
-	//	
-
-	//	return distance(Pokemons_.begin(), iter);
-	//}
-
-	return 0;
 }
 
 void PokeDex::launchMenu() {

@@ -48,6 +48,9 @@ public:
 	// == Operator to check with the Pokemon's name
 	bool operator==(const string&) const;
 
+	// Function to check the Pokemon's name with a substring of it
+	bool contains(const string&) const;
+
 	// Returns a vector of enum Types with the vector of strings
 	static vector<Type> stringToTypes(vector<string>&);
 
