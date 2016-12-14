@@ -616,6 +616,7 @@ void PokeDex::launchPokemonResult(Pokemon& pokemon) {
 		if (std::cin >> choice) {
 			switch (choice) {
 			case 1:
+				launchEditPokemon(pokemon);
 				break;
 			case 2:
 				std::cout << "Are you sure you want to delete " << pokemonName << "? Yes = y | No = n" << endl;
@@ -623,6 +624,7 @@ void PokeDex::launchPokemonResult(Pokemon& pokemon) {
 					if (cin >> answer) {
 						switch (answer) {
 						case 'y':
+							// http://stackoverflow.com/questions/39912/how-do-i-remove-an-item-from-a-stl-vector-with-a-certain-value
 							Pokemons_.erase(std::remove(Pokemons_.begin(), Pokemons_.end(), pokemon), Pokemons_.end());
 							std::system("cls");
 							std::cout << pokemonName << " deleted." << endl;
@@ -868,6 +870,11 @@ Move PokeDex::createMove() {
 	cin >> Description_;
 
 	return Move(Level_, Name_, Type_, Category_, Attack_, Accuracy_, Pp_, Effect_percent_, Description_);
+}
+
+void PokeDex::launchEditPokemon(Pokemon& pokemon) {
+	cout << "What would you like to edit for " << pokemon.getPokemonName() << "?" << endl;
+	cout << "(1) Edit name" << endl;
 }
 
 void PokeDex::launchDeletePokemon() {
