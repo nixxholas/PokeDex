@@ -681,7 +681,8 @@ void PokeDex::launchCreatePokemon() {
 }
 
 Evolution PokeDex::createEvolution() {
-	int index = searchAndGetPokemonIndex();
+	Pokemon* result = selectPokemonFromResults(searchWithName());
+	int index = result->getPokemonId();
 	string event;
 
 	std::cout << "What is the event that would trigger the evolution?" << endl;
