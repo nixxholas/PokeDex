@@ -437,6 +437,7 @@ void PokeDex::launchSearchMenu() {
 			switch (choice) {
 			case 1:
 				results = searchWithName();
+				launchEditPokemon(*selectPokemonFromResults(results));
 				break;
 			case 2:
 
@@ -456,7 +457,6 @@ void PokeDex::launchSearchMenu() {
 		}
 	}
 
-	Pokemon* selected = selectPokemonFromResults(results);
 }
 
 // Searches for the Pokemon via it's name, and returns a pointer
@@ -500,10 +500,22 @@ Pokemon* PokeDex::selectPokemonFromResults(vector<Pokemon*> &results) {
 	int count = 1;
 
 	if (results.size() > 1) {
+		int choice;
 		cout << "Please select your choice: " << endl;
 		for (Pokemon* p : results) {
 			cout << "(" << count << ") " << p->getPokemonName() << endl;
 			count++;
+		}
+
+		for (;;) {
+			if (cin >> choice && choice < results.size()) {
+				selected = results[choice - 1];
+				break;
+			}
+			else {
+				std::cout << "Please enter a valid choice." << endl;
+				std::cin.clear();
+			}
 		}
 	}
 	else {
@@ -511,6 +523,10 @@ Pokemon* PokeDex::selectPokemonFromResults(vector<Pokemon*> &results) {
 	}
 
 	return selected;
+}
+
+void PokeDex::launchEditPokemon(Pokemon& pokemon) {
+	cout << "What would you like to do to " << pokemon.getPokemonName() << "?" << endl;
 }
 
 // Launches the Create Pokemon Instance.

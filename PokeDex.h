@@ -59,7 +59,7 @@ public:
 	void launchCreatePokemon();
 
 	// Function to edit an existing pokemon
-	void launchEditPokemon();
+	void launchEditPokemon(Pokemon&);
 
 	// Function to remove an existing pokemon
 	void launchDeletePokemon();
