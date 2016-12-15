@@ -60,6 +60,9 @@ public:
 	// Returns the vector of evolutions
 	vector<Evolution> getEvolutions() const;
 
+	// Returns the EXACT vector of evolutions
+	vector<Evolution>& getExactEvolutions();
+
 	// Returns the pokemon name
 	string getPokemonName() const;
 
@@ -86,6 +89,9 @@ public:
 
 	// Returns the vector of moves
 	vector<Move> getMoves() const;
+
+	// Returns the EXACT vector of moves
+	vector<Move>& getExactMoves();
 
 	// Returns us the pokemon type chosen
 	static void printEnumChoices();

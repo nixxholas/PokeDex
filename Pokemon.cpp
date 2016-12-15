@@ -70,6 +70,10 @@ vector<Evolution> Pokemon::getEvolutions() const {
 	return evolutions_;
 }
 
+vector<Evolution>& Pokemon::getExactEvolutions() {
+	return evolutions_;
+}
+
 vector<Pokemon::Type> Pokemon::getTypesVector() const {
 	return types_;
 }
@@ -107,6 +111,10 @@ int Pokemon::typeToInt(const Type& t) const {
 }
 
 vector<Move> Pokemon::getMoves() const {
+	return moves_;
+}
+
+vector<Move>& Pokemon::getExactMoves() {
 	return moves_;
 }
 

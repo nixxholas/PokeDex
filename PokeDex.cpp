@@ -255,6 +255,7 @@ void PokeDex::iPThreadTask(const Value& pokemon) {
 	Version 2.1
 	- Indices-based for loops
 	- Reduction in redundant .at functions
+	- Removed Multi Threading Support with ThreadPool to quadruple throughput.
 */
 void PokeDex::savePokemons() {
 	std::cout << "Saving your data before exiting.." << endl;
@@ -291,45 +292,13 @@ void PokeDex::savePokemons() {
 	// Test 4 -> 215ms
 	// Test 5 -> 218ms
 	// Theoretical Average = 217.2ms
+	// Therefore, it is theoretically faster than utitlizing the ThreadPool Library to offload
+	// the Pokemons.json.
 	for (std::vector<Pokemon>::size_type i = 0; i < Pokemons_.size(); i++)
 	{
-		//Pokemon& pokemon = Pokemons_[i]; // Pokemons_[i] is faster than .at(i)
-
-		//pool.AddJob([&](void) { // http://stackoverflow.com/questions/26903602/an-enclosing-function-local-variable-cannot-be-referenced-in-a-lambda-body-unles
 		sPThreadTask(Pokemons_[i]);
-		//	}
-		//);
 	}
 
-	//ThreadPool pool(15); // 15 Workers have shown a 1000ms latency decrease compared to 4 Workers
-
-	// Push the existing pokemons back
-	// test 1 -> 7597ms
-	// test 2 -> 7633ms
-	// test 3 -> 8235ms
-	// theoretical average = 7821.6ms
-	//for (std::vector<pokemon>::size_type i = 0; i < pokemons_.size(); i++)
-	//{
-	//	pokemon& pokemon = pokemons_[i]; // pokemons_[i] is faster than .at(i)
-
-	//	pool.addjob([&](void) { // http://stackoverflow.com/questions/26903602/an-enclosing-function-local-variable-cannot-be-referenced-in-a-lambda-body-unles
-	//			spthreadtask(pokemons_[i]);
-	//		}
-	//	);
-	//}
-
-	// 7970ms -> Test 1
-	// 8660ms -> Test 2, Relaunching after Test 2 crashes the program.
-	// 7614ms -> Test 3
-	// Theoretical Average = 8081.3ms
-	//for (auto const& pokemon : Pokemons_) {
-	//	pool.AddJob([&](void) { // http://stackoverflow.com/questions/26903602/an-enclosing-function-local-variable-cannot-be-referenced-in-a-lambda-body-unles
-	//		sPThreadTask(pokemon);
-	//		}
-	//	);
-	//}
-
-	//pool.WaitAll();
 	auto finish = chrono::high_resolution_clock::now();
 
 	//system("cls");
@@ -447,7 +416,8 @@ void PokeDex::launchSearchMenu() {
 					}
 				}
 			case 2:
-
+				// We'll have to print out the choices for the pokemon types first before we call
+				// searchWithType
 				break;
 			case 5:
 				std::system("cls");
@@ -537,6 +507,7 @@ Pokemon* PokeDex::selectPokemonFromResults(vector<Pokemon*> &results) {
 		for (;;) {
 			if (cin >> choice && choice < (results.size() + 1) && choice > 0) {
 				selected = results[choice - 1];
+				std::cout << results[choice - 1]->getPokemonName() << " has been selected." << endl;
 				break;
 			}
 			else {
@@ -783,6 +754,9 @@ Evolution PokeDex::createEvolution() {
 	std::cout << "What is the event that would trigger the evolution?" << endl;
 	std::cin >> event;
 
+	std::cout << endl;
+	std::cout << "Evolution Created." << endl;
+
 	return Evolution(index, event);
 }
 
@@ -882,23 +856,36 @@ void PokeDex::launchEditPokemon(Pokemon& pokemon) {
 	cout << "(4) Return to the previous menu" << endl;
 	cout << "(5) Return to the main menu" << endl;
 
+	string input;
 	for (;;) {
 		if (std::cin >> choice) {
 			switch (choice) {
-			case 1:
+			case 1: // Change the name of the current pokemon
 				cout << "So what would you like to name it now?" << endl;
+				for (;;) {
+					if (cin >> input) {
+						std::system("cls");
+						cout << pokemon.getPokemonName() << " is renamed to " << input << endl;
+						pokemon.setPokemonName(input);
+						launchEditPokemon(pokemon);
+						break;
+					}
+					else {
+						cout << "Please enter something." << endl;
+					}
+				}
 				break;
-			case 2:
-
+			case 2: // Edit the evolutions of the pokemon
+				launchEditEvolutions(pokemon);
 				break;
-			case 3:
-
+			case 3: // Edit the moves of the pokemon
+				launchEditMoves(pokemon.getExactMoves());
 				break;
-			case 4:
+			case 4: // Get back to the selected pokemon menu
 				std::system("cls");
 				launchPokemonResult(pokemon);
 				break;
-			case 5:
+			case 5: // Get back to the main menu.
 				std::system("cls");
 				launchMenu();
 				break;
@@ -921,6 +908,196 @@ void PokeDex::launchEditPokemon(Pokemon& pokemon) {
 			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
 	}
+}
+
+void PokeDex::launchEditEvolutions(Pokemon& pokemon) {
+	vector<Evolution>& evolutions = pokemon.getExactEvolutions();
+	int evolutionSize = evolutions.size();
+	int count = 1;
+	int choice;
+	cout << "Here's the evolution/s: " << endl;
+
+	if (evolutionSize > 0) {
+		// Print out all the evolution info first
+		for (Evolution evolution : evolutions) {
+			Pokemon* p = getPokemonById(evolution.getPokemonId());
+			cout << endl;
+			cout << "============= Evolution " << count << " =============" << endl;
+			cout << "====== Select this by typing (" << count << ") ======" << endl;
+			cout << "Evolving to: " << p->getPokemonName() << endl;
+			cout << "Evolving Event: " << evolution.getEvolvingEvent() << endl;
+
+			count++;
+		}
+	}
+	else {
+		std::cout << endl;
+		std::cout << "There are no evolutions." << endl;
+	}
+
+	std::cout << endl;
+	// We'll set all the misc items to a count of above 10, so that we can accomodate
+	// a further custom menu for any of the selected evolution that the user wants to make
+	// changes to.
+	//std::cout << "What would you like to do?" << endl;
+	std::cout << "(10) Add a new evolution" << endl;
+	std::cout << "(11) Return to the main menu" << endl;
+
+	for (;;) {
+		if (std::cin >> choice) {
+				if (choice < (evolutionSize + 1)) {
+					bool result = launchEditEvolution(evolutions[choice - 1]);
+					break;
+				}
+				else if (choice > 9 && choice < 12) {
+					if (choice == 10) {
+						evolutions.push_back(createEvolution());
+					}
+					else {
+						launchMenu();
+					}
+					break;
+				}
+				else {
+					std::cout << "Please select a valid input." << endl;
+					std::cin.clear();
+
+					// Now you must get rid of the bad input.
+					// Personally I would just ignore the rest of the line
+					cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				}
+		}
+		else {
+			std::cout << "Please select a valid input." << endl;
+			std::cin.clear();
+
+			// Now you must get rid of the bad input.
+			// Personally I would just ignore the rest of the line
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+	}
+
+	int finalSelection;
+	std::cout << "Would you like to head back to the main menu or head back to the" << endl;
+	std::cout << "previous menu?" << endl;
+	std::cout << "(1) Main Menu" << endl;
+	std::cout << "(2) Back to the previous menu" << endl;
+
+	for (;;) {
+		if (cin >> finalSelection) {
+			switch (finalSelection) {
+			case 1:
+				launchMenu();
+				break;
+			case 2:
+				launchEditEvolutions(pokemon);
+				break;
+			default:
+				std::cout << "Please select a valid input." << endl;
+				std::cin.clear();
+
+				// Now you must get rid of the bad input.
+				// Personally I would just ignore the rest of the line
+				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
+ 		}
+		else {
+			std::cout << "Please select a valid input." << endl;
+			std::cin.clear();
+
+			// Now you must get rid of the bad input.
+			// Personally I would just ignore the rest of the line
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+	}
+}
+
+bool PokeDex::launchEditEvolution(Evolution& evolution) {
+	int choice;
+	string input;
+
+	std::system("cls");
+	std::cout << endl << endl;
+	std::cout << "Here's the evolution information you're editing" << endl;
+	std::cout << "Evolving To: " << getPokemonById(evolution.getPokemonId())->getPokemonName() << endl;
+	std::cout << "Evolving Event: " << evolution.getEvolvingEvent() << endl;
+	std::cout << endl << endl;
+	std::cout << "What would you like to do?" << endl;
+	std::cout << "(1) Change the Evolving Pokemon" << endl;
+	std::cout << "(2) Change the Evolving Event" << endl;
+		
+	for (;;) {
+		if (cin >> choice) {
+			switch (choice) {
+			case 1:
+				// The line below will allow the user to search the pokemon by it's name,
+				// select the pokemon from the list of results from the user's input and finally
+				// extact out the selected pokemon id to be set into the evolution object.
+				evolution.setPokemonId(selectPokemonFromResults(searchWithName())->getPokemonId());
+				std::cout << getPokemonById(evolution.getPokemonId())->getPokemonName() << " has been set as the evolving pokemon." << endl;
+				return true;
+				break;
+			case 2:
+				std::cout << "Please enter the new evolving event below:" << endl;
+				for (;;) {
+					if (cin >> input) {
+						evolution.setEvent(input);
+						break;
+					}
+					else {
+						std::cout << "Please try again." << endl;
+						std::cin.clear();
+					}
+				}
+				break;
+			default:
+				std::cout << "Please select a valid input." << endl;
+				std::cin.clear();
+
+				// Now you must get rid of the bad input.
+				// Personally I would just ignore the rest of the line
+				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
+		}
+		else {
+			std::cout << "Please select a valid input." << endl;
+			std::cin.clear();
+
+			// Now you must get rid of the bad input.
+			// Personally I would just ignore the rest of the line
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+	}
+
+	std::cout << "Left launchEditEvolution()" << endl;
+
+	return true;
+}
+
+void PokeDex::launchEditMoves(vector<Move>& moves) {
+	int count = 1;
+	cout << "Here's the move/s: " << endl;
+
+	// Print out all the move info first
+	for (Move m : moves) {
+		cout << endl;
+		cout << "============= Move " << count << " =============" << endl;
+		std::cout << "Move Name: " << m.getMoveName() << endl;
+		std::cout << "Move Level Requirement: " << m.getMoveLevel() << endl;
+		std::cout << "Move Type: " << m.getMoveType() << endl;
+		std::cout << "Move Category: " << m.getMoveCategory() << endl;
+		std::cout << "Move Attack Damage: " << m.getMoveAttack() << endl;
+		std::cout << "Move Accuracy: " << m.getMoveAccuracy() << endl;
+		std::cout << "Move PP: " << m.getMovePP() << endl;
+		std::cout << "Move Effect Percent: " << m.getMoveEffectPercent() << endl;
+		std::cout << "Move Description: " << m.getMoveDescription() << endl;		
+		
+		count++;
+	}
+
+	cout << endl;
+
+
 }
 
 void PokeDex::launchDeletePokemon() {
