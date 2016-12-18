@@ -50,7 +50,7 @@ public:
 	vector<Pokemon*> searchWithName();
 
 	// Function to search pokemon via Type
-	vector<Pokemon*> searchWithType(Pokemon::Type);
+	vector<Pokemon*> searchWithType();
 
 	// Function to select pokemon from the results
 	Pokemon* selectPokemonFromResults(vector<Pokemon*>&);

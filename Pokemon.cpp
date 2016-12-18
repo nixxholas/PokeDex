@@ -37,6 +37,16 @@ Pokemon::~Pokemon()
 {
 }
 
+vector<const char*> Pokemon::getTypesInString() {
+	vector<const char*> result;
+
+	for (const char * c : TypeStrings) {
+		result.push_back(c);
+	}
+
+	return result;
+}
+
 int Pokemon::getPokemonId() const {
 	return index_;
 }

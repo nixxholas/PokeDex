@@ -447,7 +447,17 @@ void PokeDex::launchSearchMenu() {
 					}
 				}
 			case 2:
-
+				for (;;) {
+					results = searchWithType();
+					
+					if (!results.empty()) {
+						launchPokemonResult(*selectPokemonFromResults(results));
+						break;
+					}
+					else {
+						std::cout << "No pokemon was found." << endl;
+					}
+				}
 				break;
 			case 5:
 				std::system("cls");
@@ -507,8 +517,45 @@ vector<Pokemon*> PokeDex::searchWithName() {
 
 // Searches for the Pokemon via it's type and returns a pointer
 // back
-vector<Pokemon*> PokeDex::searchWithType(Pokemon::Type type) {
+vector<Pokemon*> PokeDex::searchWithType() {
+	int typeChoice;
+	vector <const char *> typesVector = Pokemon::getTypesInString();
+	vector<Pokemon*> resultVector;
 
+	int counter = 0;
+	cout << "Please choose the type you want to search with: " << endl;
+	for (const char * c : typesVector) {
+		cout << "(" << counter + 1 << ") " << c << endl;
+		counter++;
+	}
+
+	for (;;) {
+		if (std::cin >> typeChoice) {
+			if (typeChoice > 0 && typeChoice < counter + 2) { // Limit against the size of the types vector
+				break;
+			}
+		}
+
+		else {
+			std::cout << "Please try again." << endl;
+			std::cin.clear();
+		}
+	}
+
+	Pokemon::Type chosen = static_cast<Pokemon::Type>(typeChoice - 1);
+
+	for (Pokemon& p : Pokemons_) {
+		vector<Pokemon::Type>& currTypes = p.getTypesVector();
+		if (std::find(currTypes.begin(), currTypes.end(), chosen) != currTypes.end()) {
+			// Found something
+			resultVector.push_back(&p);
+
+			// Debugging Purposes only
+			//std::cout << "Found " << p.getPokemonName() << endl;
+		}
+	}
+
+	return resultVector;
 }
 
 Pokemon* PokeDex::getPokemonById(int id) {

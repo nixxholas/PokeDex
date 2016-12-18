@@ -54,6 +54,9 @@ public:
 	// Returns a vector of enum Types with the vector of strings
 	static vector<Type> stringToTypes(vector<string>&);
 
+	// Returns the vector of types in string
+	static vector<const char*> getTypesInString();
+
 	// Returns int pokemon
 	int getPokemonId() const;
 
