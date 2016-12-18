@@ -183,6 +183,7 @@ void PokeDex::initializePokemons() {
 	const Value& pokemons = pokemonDoc;
 	assert(pokemons.IsArray());
 
+
 	// Create a thread pool with 15 worker threads
 	ThreadPool pool(8); // 15 Workers provide the best performance
 	auto start = chrono::high_resolution_clock::now();
@@ -559,7 +560,7 @@ Pokemon* PokeDex::selectPokemonFromResults(vector<Pokemon*> &results) {
 		}
 
 		for (;;) {
-			if (cin >> choice && choice < (results.size() + 1) && choice > 0) {
+			if (std::cin >> choice && choice < (results.size() + 1) && choice > 0) {
 				selected = results[choice - 1];
 				std::cout << results[choice - 1]->getPokemonName() << " has been selected." << endl;
 				break;
@@ -646,7 +647,7 @@ void PokeDex::launchPokemonResult(Pokemon& pokemon) {
 			case 2:
 				std::cout << "Are you sure you want to delete " << pokemonName << "? Yes = y | No = n" << endl;
 				for (;;) {
-					if (cin >> answer) {
+					if (std::cin >> answer) {
 						switch (answer) {
 						case 'y':
 							// http://stackoverflow.com/questions/39912/how-do-i-remove-an-item-from-a-stl-vector-with-a-certain-value
@@ -827,7 +828,7 @@ Move PokeDex::createMove() {
 
 	cout << "What's the level requirement for the move?" << endl;
 	for (;;) {
-		if (cin >> Level_ && (Level_ < 100 && Level_ >= 0)) {
+		if (std::cin >> Level_ && (Level_ < 100 && Level_ >= 0)) {
 			break;
 		}
 		else {
@@ -837,18 +838,18 @@ Move PokeDex::createMove() {
 		}
 	}
 
-	cout << "What's the name of the move?" << endl;
-	cin >> Name_;
+	std::cout << "What's the name of the move?" << endl;
+	std::cin >> Name_;
 
-	cout << "What's the type of " + Name_ + "?" << endl;
-	cin >> Type_;
+	std::cout << "What's the type of " + Name_ + "?" << endl;
+	std::cin >> Type_;
 
-	cout << "What's the category of " + Name_ + "?" << endl;
-	cin >> Category_;
+	std::cout << "What's the category of " + Name_ + "?" << endl;
+	std::cin >> Category_;
 
 	cout << "What's the attack damage of " + Name_ + "?" << endl;
 	for (;;) {
-		if (cin >> Attack_ && (Attack_ < 999 && Attack_ >= 0)) {
+		if (std::cin >> Attack_ && (Attack_ < 999 && Attack_ >= 0)) {
 			break;
 		}
 		else {
@@ -860,7 +861,7 @@ Move PokeDex::createMove() {
 
 	cout << "What's the accuracy percentage of " + Name_ + "?" << endl;
 	for (;;) {
-		if (cin >> Accuracy_ && (Accuracy_ < 100 && Accuracy_ >= 0)) {
+		if (std::cin >> Accuracy_ && (Accuracy_ < 100 && Accuracy_ >= 0)) {
 			break;
 		}
 		else {
@@ -872,7 +873,7 @@ Move PokeDex::createMove() {
 	
 	cout << "What's the PP of " + Name_ + "?" << endl;
 	for (;;) {
-		if (cin >> Pp_ && (Pp_ < 100 && Pp_ >= 0)) {
+		if (std::cin >> Pp_ && (Pp_ < 100 && Pp_ >= 0)) {
 			break;
 		}
 		else {
@@ -884,7 +885,7 @@ Move PokeDex::createMove() {
 
 	cout << "What's the effect chance percentage of " + Name_ + "?" << endl;
 	for (;;) {
-		if (cin >> Effect_percent_ && (Effect_percent_ < 100 && Effect_percent_ >= 0)) {
+		if (std::cin >> Effect_percent_ && (Effect_percent_ < 100 && Effect_percent_ >= 0)) {
 			break;
 		}
 		else {
@@ -894,8 +895,8 @@ Move PokeDex::createMove() {
 		}
 	}
 
-	cout << "Provide a simple/detailed description for " + Name_ + "." << endl;
-	cin >> Description_;
+	std::cout << "Provide a simple/detailed description for " + Name_ + "." << endl;
+	std::cin >> Description_;
 
 	return Move(Level_, Name_, Type_, Category_, Attack_, Accuracy_, Pp_, Effect_percent_, Description_);
 }
@@ -903,12 +904,12 @@ Move PokeDex::createMove() {
 void PokeDex::launchEditPokemon(Pokemon& pokemon) {
 	int choice;
 
-	cout << "What would you like to edit for " << pokemon.getPokemonName() << "?" << endl;
-	cout << "(1) Edit Name" << endl;
-	cout << "(2) Edit Evolutions" << endl;
-	cout << "(3) Edit Moves" << endl;
-	cout << "(4) Return to the previous menu" << endl;
-	cout << "(5) Return to the main menu" << endl;
+	std::cout << "What would you like to edit for " << pokemon.getPokemonName() << "?" << endl;
+	std::cout << "(1) Edit Name" << endl;
+	std::cout << "(2) Edit Evolutions" << endl;
+	std::cout << "(3) Edit Moves" << endl;
+	std::cout << "(4) Return to the previous menu" << endl;
+	std:: cout << "(5) Return to the main menu" << endl;
 
 	string input;
 	for (;;) {
@@ -917,7 +918,7 @@ void PokeDex::launchEditPokemon(Pokemon& pokemon) {
 			case 1: // Change the name of the current pokemon
 				cout << "So what would you like to name it now?" << endl;
 				for (;;) {
-					if (cin >> input) {
+					if (std::cin >> input) {
 						std::system("cls");
 						cout << pokemon.getPokemonName() << " is renamed to " << input << endl;
 						pokemon.setPokemonName(input);
@@ -949,7 +950,7 @@ void PokeDex::launchEditPokemon(Pokemon& pokemon) {
 				// Now you must get rid of the bad input.
 				// Personally I would just ignore the rest of the line
 				// http://stackoverflow.com/questions/13212043/integer-input-validation-how
-				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 				break;
 			}
 		}
@@ -959,7 +960,7 @@ void PokeDex::launchEditPokemon(Pokemon& pokemon) {
 
 			// Now you must get rid of the bad input.
 			// Personally I would just ignore the rest of the line
-			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
 	}
 }
@@ -1000,7 +1001,7 @@ void PokeDex::launchEditEvolutions(Pokemon& pokemon) {
 	for (;;) {
 		if (std::cin >> choice) {
 				if (choice < (evolutionSize + 1)) {
-					bool result = launchEditEvolution(evolutions[choice - 1]);
+					bool result = launchEditEvolution(evolutions[choice - 1], pokemon);
 					break;
 				}
 				else if (choice > 9 && choice < 12) {
@@ -1018,7 +1019,7 @@ void PokeDex::launchEditEvolutions(Pokemon& pokemon) {
 
 					// Now you must get rid of the bad input.
 					// Personally I would just ignore the rest of the line
-					cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 				}
 		}
 		else {
@@ -1027,7 +1028,7 @@ void PokeDex::launchEditEvolutions(Pokemon& pokemon) {
 
 			// Now you must get rid of the bad input.
 			// Personally I would just ignore the rest of the line
-			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
 	}
 
@@ -1038,7 +1039,7 @@ void PokeDex::launchEditEvolutions(Pokemon& pokemon) {
 	std::cout << "(2) Back to the previous menu" << endl;
 
 	for (;;) {
-		if (cin >> finalSelection) {
+		if (std::cin >> finalSelection) {
 			switch (finalSelection) {
 			case 1:
 				launchMenu();
@@ -1052,7 +1053,7 @@ void PokeDex::launchEditEvolutions(Pokemon& pokemon) {
 
 				// Now you must get rid of the bad input.
 				// Personally I would just ignore the rest of the line
-				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			}
  		}
 		else {
@@ -1061,12 +1062,12 @@ void PokeDex::launchEditEvolutions(Pokemon& pokemon) {
 
 			// Now you must get rid of the bad input.
 			// Personally I would just ignore the rest of the line
-			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
 	}
 }
 
-bool PokeDex::launchEditEvolution(Evolution& evolution) {
+bool PokeDex::launchEditEvolution(Evolution& evolution, Pokemon& pokemon) {
 	int choice;
 	string input;
 
@@ -1079,9 +1080,10 @@ bool PokeDex::launchEditEvolution(Evolution& evolution) {
 	std::cout << "What would you like to do?" << endl;
 	std::cout << "(1) Change the Evolving Pokemon" << endl;
 	std::cout << "(2) Change the Evolving Event" << endl;
+	std::cout << "(3) Return to the previous menu" << endl;
 		
 	for (;;) {
-		if (cin >> choice) {
+		if (std::cin >> choice) {
 			switch (choice) {
 			case 1:
 				// The line below will allow the user to search the pokemon by it's name,
@@ -1094,7 +1096,7 @@ bool PokeDex::launchEditEvolution(Evolution& evolution) {
 			case 2:
 				std::cout << "Please enter the new evolving event below:" << endl;
 				for (;;) {
-					if (cin >> input) {
+					if (std::cin >> input) {
 						evolution.setEvent(input);
 						break;
 					}
@@ -1104,13 +1106,15 @@ bool PokeDex::launchEditEvolution(Evolution& evolution) {
 					}
 				}
 				break;
+			case 3:
+				launchEditEvolutions(pokemon);
 			default:
 				std::cout << "Please select a valid input." << endl;
 				std::cin.clear();
 
 				// Now you must get rid of the bad input.
 				// Personally I would just ignore the rest of the line
-				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			}
 		}
 		else {
@@ -1119,7 +1123,7 @@ bool PokeDex::launchEditEvolution(Evolution& evolution) {
 
 			// Now you must get rid of the bad input.
 			// Personally I would just ignore the rest of the line
-			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
 	}
 
@@ -1204,7 +1208,7 @@ void PokeDex::launchMenu() {
 			menuChoice(choiceInt);
 		}
 		else {
-			cin.clear();
+			std::cin.clear();
 			choice = "";
 			std::system("cls");
 			std::cout << "Invalid Input, Please try again." << endl;
