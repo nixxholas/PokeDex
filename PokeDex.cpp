@@ -459,6 +459,14 @@ void PokeDex::launchSearchMenu() {
 					}
 				}
 				break;
+			case 3:
+				for (auto it = Pokemons_.begin(); it != Pokemons_.end(); it++) {
+					results.push_back(&(*it));
+				}
+
+				launchPokemonResult(*selectPokemonFromResults(results));
+
+				break;
 			case 5:
 				std::system("cls");
 				launchMenu();
@@ -923,7 +931,7 @@ void PokeDex::launchEditPokemon(Pokemon& pokemon) {
 	int choice;
 
 	cout << "What would you like to edit for " << pokemon.getPokemonName() << "?" << endl;
-	cout << "(1) Edit name" << endl;
+	cout << "(1) Edit Name" << endl;
 	cout << "(2) Edit Evolutions" << endl;
 	cout << "(3) Edit Moves" << endl;
 	cout << "(4) Return to the previous menu" << endl;
