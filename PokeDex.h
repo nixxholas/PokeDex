@@ -71,10 +71,10 @@ public:
 	bool launchEditEvolution(Evolution&, Pokemon&);
 
 	// Function to edit an existing pokemon's move/s
-	void launchEditMoves(vector<Move>&);
+	void launchEditMoves(Pokemon&);
 
 	// Function to edit the selected move from the pokemon
-	bool launchEditMove(Move&);
+	bool launchEditMove(Move&, Pokemon&);
 
 	// Function to remove an existing pokemon
 	void launchDeletePokemon();

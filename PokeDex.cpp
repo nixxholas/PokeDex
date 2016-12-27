@@ -934,7 +934,7 @@ void PokeDex::launchEditPokemon(Pokemon& pokemon) {
 				launchEditEvolutions(pokemon);
 				break;
 			case 3: // Edit the moves of the pokemon
-				launchEditMoves(pokemon.getExactMoves());
+				launchEditMoves(pokemon);
 				break;
 			case 4: // Get back to the selected pokemon menu
 				std::system("cls");
@@ -1127,12 +1127,11 @@ bool PokeDex::launchEditEvolution(Evolution& evolution, Pokemon& pokemon) {
 		}
 	}
 
-	std::cout << "Left launchEditEvolution()" << endl;
-
 	return true;
 }
 
-void PokeDex::launchEditMoves(vector<Move>& moves) {
+void PokeDex::launchEditMoves(Pokemon& pokemon) {
+	vector<Move>& moves = pokemon.getExactMoves();
 	int count = 1;
 	cout << "Here's the move/s: " << endl;
 
@@ -1154,12 +1153,39 @@ void PokeDex::launchEditMoves(vector<Move>& moves) {
 	}
 
 	cout << endl;
-
+	cout << "(51) " << endl;
 
 }
 
 void PokeDex::launchDeletePokemon() {
-
+	for (;;) {
+		vector<Pokemon*> results = searchWithName();
+		if (!results.empty()) {
+			// http://stackoverflow.com/questions/39912/how-do-i-remove-an-item-from-a-stl-vector-with-a-certain-value
+			Pokemons_.erase(std::remove(Pokemons_.begin(), Pokemons_.end(), *selectPokemonFromResults(results)), Pokemons_.end());
+			break;
+		}
+		else {
+			std::cout << "No pokemon was found." << endl;
+			std::cout << "Would you like to search again? Yes (Y) / No (n)" << endl;
+			for (;;) {
+				string input;
+				if (std::cin >> input) {
+					if (input == "Y" || input == "y") {
+						break;
+					}
+					else if (input == "n") {
+						std::system("cls");
+						launchMenu();
+						break;
+					}
+				}
+				else {
+					std::cout << "Invalid Input, Please try again." << endl;
+				}
+			}
+		}
+	}
 }
 
 void PokeDex::menuChoice(int& choice) {
@@ -1171,6 +1197,7 @@ void PokeDex::menuChoice(int& choice) {
 		launchCreatePokemon();
 		break;
 	case 3:
+		launchDeletePokemon();
 		break;
 	case 4:
 		break;
@@ -1192,7 +1219,7 @@ void PokeDex::launchMenu() {
 		std::cout << "============ C++ PokeDex [Developers Release] ============" << endl;
 		std::cout << "(1) Search for a pokemon" << endl;
 		std::cout << "(2) Create a new pokemon" << endl;
-		std::cout << "(3) Compare two pokemons" << endl;
+		std::cout << "(3) Delete a pokemon" << endl;
 		std::cout << "(4) PokemonGo IV Calculator" << endl;
 		std::cout << "(5) Exit the PokeDex" << endl;
 
