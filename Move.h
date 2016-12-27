@@ -23,27 +23,53 @@ public:
 	// Returns the level integer
 	int getMoveLevel() const;
 
+	// Sets the level of the move
+	void setMoveLevel(int&);
+
 	// Returns the move name in string
 	string getMoveName() const;
+
+	// Sets the name of the move
+	void setMoveName(string&);
 
 	// Returns the Move type in string
 	string getMoveType() const;
 
+	// Sets the type of the move
+	void setMoveType(string&);
+
 	// Returns the move category in string
 	string getMoveCategory() const;
+
+	void setMoveCategory(string&);
 
 	// Returns the attack damage in integer
 	int getMoveAttack() const;
 
+	// Sets the attack damage of the move
+	void setMoveAttack(int&);
+
 	// Returns the accuracy of the move
 	int getMoveAccuracy() const;
+
+	// Sets the accuracy of the move
+	void setMoveAccuracy(int&);
 
 	// Returns the PP amount of the move
 	int getMovePP() const;
 
+	// Sets the PP amount of the move
+	void setMovePP(int&);
+
 	// Returns the effect percent of the move
 	int getMoveEffectPercent() const;
 
+	// Sets the effect percent of the move
+	void setMoveEffectPercent(int&);
+
 	// Returns the description of the move
 	string getMoveDescription() const;
+
+	// Sets the description of the move
+	void setMoveDescription(string&);
 };

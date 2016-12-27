@@ -134,61 +134,61 @@ void Pokemon::printEnumChoices() {
 	for (int i = Type::BUG; i != Type::WATER; ++i) {
 		switch (i) {
 		case Type::BUG: // 0
-			cout << "(1) Bug" << endl;
+			cout << "(1) Bug" << std::endl;
 			break;
 		case Type::GRASS: // 1
-			cout << "(2) Grass" << endl;
+			cout << "(2) Grass" << std::endl;
 			break;
 		case Type::DARK: // 2
-			cout << "(3) Dark" << endl;
+			cout << "(3) Dark" << std::endl;
 			break;
 		case Type::GROUND: // 3
-			cout << "(4) Ground" << endl;
+			cout << "(4) Ground" << std::endl;
 			break;
 		case Type::DRAGON: // 4
-			cout << "(5) Dragon" << endl;
+			cout << "(5) Dragon" << std::endl;
 			break;
 		case Type::ICE: // 5
-			cout << "(6) Ice" << endl;
+			cout << "(6) Ice" << std::endl;
 			break;
 		case Type::ELECTRIC: // 6
-			cout << "(7) Electric" << endl;
+			cout << "(7) Electric" << std::endl;
 			break;
 		case Type::NORMAL: // 7
-			cout << "(8) Normal" << endl;
+			cout << "(8) Normal" << std::endl;
 			break;
 		case Type::FAIRY: // 8
-			cout << "(9) Fairy" << endl;
+			cout << "(9) Fairy" << std::endl;
 			break;
 		case Type::POISON: // 9
-			cout << "(10) Poison" << endl;
+			cout << "(10) Poison" << std::endl;
 			break;
 		case Type::FIGHTING: // 10
-			cout << "(11) Fighting" << endl;
+			cout << "(11) Fighting" << std::endl;
 			break;
 		case Type::PSYCHIC: // 11
-			cout << "(12) Psychic" << endl;
+			cout << "(12) Psychic" << std::endl;
 			break;
 		case Type::FIRE: // 12
-			cout << "(13) Fire" << endl;
+			cout << "(13) Fire" << std::endl;
 			break;
 		case Type::ROCK: // 13
-			cout << "(14) Rock" << endl;
+			cout << "(14) Rock" << std::endl;
 			break;
 		case Type::FLYING: // 14
-			cout << "(15) Flying" << endl;
+			cout << "(15) Flying" << std::endl;
 			break;
 		case Type::STEEL: // 15
-			cout << "(16) Steel" << endl;
+			cout << "(16) Steel" << std::endl;
 			break;
 		case Type::GHOST: // 16
-			cout << "(17) Ghost" << endl;
+			cout << "(17) Ghost" << std::endl;
 			break;
 		case Type::WATER: // 17
-			cout << "(18) Water" << endl;
+			cout << "(18) Water" << std::endl;
 			break;
 		default:
-			cout << "Failed to parse a Type enum." << endl;
+			cout << "Failed to parse a Type enum." << std::endl;
 			break;
 		}
 	}
@@ -283,7 +283,7 @@ vector<Pokemon::Type> Pokemon::stringToTypes(vector<string>& typesInString) {
 			}
 			break;
 		default:
-			cout << "Error detecting type for: " + type << endl;
+			cout << "Error detecting type for: " + type << std::endl;
 			break;
 		}
 

@@ -8,14 +8,14 @@
 using namespace std;
 
 int main() {
-	cout << "Loading Pokemons" << endl;
+	cout << "Loading Pokemons" << std::endl;
 
 	PokeDex pokeDex;
 	pokeDex.initializePokemons();
 
 	pokeDex.initializeLevelData();
 
-	cout <<  "Loaded. Let's Begin!" << endl;
+	cout <<  "Loaded. Let's Begin!" << std::endl;
 	
 	//system("cls"); // Clear the Console
 
