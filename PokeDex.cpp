@@ -1132,6 +1132,7 @@ bool PokeDex::launchEditEvolution(Evolution& evolution, Pokemon& pokemon) {
 
 void PokeDex::launchEditMoves(Pokemon& pokemon) {
 	vector<Move>& moves = pokemon.getExactMoves();
+	int moveSize = moves.size();
 	int count = 1;
 	cout << "Here's the move/s: " << endl;
 
@@ -1153,8 +1154,88 @@ void PokeDex::launchEditMoves(Pokemon& pokemon) {
 	}
 
 	cout << endl;
-	cout << "(51) " << endl;
+	cout << "(51) Add a new move" << endl;
+	cout << "(52) Return to the previous menu" << endl;
+	cout << "(53) Return to the main menu" << endl;
 
+	int choice;
+	for (;;) {
+		if (std::cin >> choice) {
+			if (choice < (moveSize + 1)) {
+				bool result = launchEditMove(moves[choice - 1], pokemon);
+				break;
+			}
+			else if (choice > 50 && choice < 54) {
+				if (choice == 51) {
+					std::system("cls");
+					moves.push_back(createMove());
+				}
+				else if (choice == 52) {
+					std::system("cls");
+					launchEditPokemon(pokemon);
+				}
+				else {
+					std::system("cls");
+					launchMenu();
+				}
+				break;
+			}
+			else {
+				std::cout << "Please select a valid input." << endl;
+				std::cin.clear();
+
+				// Now you must get rid of the bad input.
+				// Personally I would just ignore the rest of the line
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
+		}
+		else {
+			std::cout << "Please select a valid input." << endl;
+			std::cin.clear();
+
+			// Now you must get rid of the bad input.
+			// Personally I would just ignore the rest of the line
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+	}
+
+	int finalSelection;
+	std::cout << "Would you like to head back to the main menu or head back to the" << endl;
+	std::cout << "previous menu?" << endl;
+	std::cout << "(1) Main Menu" << endl;
+	std::cout << "(2) Back to the previous menu" << endl;
+
+	for (;;) {
+		if (std::cin >> finalSelection) {
+			switch (finalSelection) {
+			case 1:
+				launchMenu();
+				break;
+			case 2:
+				launchEditMoves(pokemon);
+				break;
+			default:
+				std::cout << "Please select a valid input." << endl;
+				std::cin.clear();
+
+				// Now you must get rid of the bad input.
+				// Personally I would just ignore the rest of the line
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
+		}
+		else {
+			std::cout << "Please select a valid input." << endl;
+			std::cin.clear();
+
+			// Now you must get rid of the bad input.
+			// Personally I would just ignore the rest of the line
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+	}
+}
+
+bool PokeDex::launchEditMove(Move& move, Pokemon& pokemon) {
+	return true;
 }
 
 void PokeDex::launchDeletePokemon() {
