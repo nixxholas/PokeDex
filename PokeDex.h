@@ -79,6 +79,12 @@ public:
 	// Function to remove an existing pokemon
 	void launchDeletePokemon();
 
+	// Function to display the PotentialIV Menu
+	void launchPoGoMenu();
+
+	// Function to create a PokemonGo Pokemon
+	PokemonGo& launchCreatePoGoMon(Pokemon&);
+
 	// Function to display the main menu
 	void launchMenu();
 

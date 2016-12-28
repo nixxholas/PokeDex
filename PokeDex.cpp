@@ -1464,10 +1464,120 @@ void PokeDex::launchDeletePokemon() {
 				}
 				else {
 					std::cout << "Invalid Input, Please try again." << std::endl;
+					std::cin.clear();
+
+					// Now you must get rid of the bad input.
+					// Personally I would just ignore the rest of the line
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 				}
 			}
 		}
 	}
+}
+
+void PokeDex::launchPoGoMenu() {
+	std::cout << "= Take note that all your IV calculations must come from an existing pokemon =" << std::endl;
+	std::cout << std::endl;
+	std::cout << "Please select the pokemon first:" << std::endl;
+
+	// Search and retrieve the selected pokemon
+	Pokemon& currentPokemon = *selectPokemonFromResults(searchWithName());
+
+	// And finally, create the PokemonGo Object
+	PokemonGo& currentPoGomon = launchCreatePoGoMon(currentPokemon);
+
+	// Now, compute it
+	if (currentPoGomon.calculatePotentialIV()) {
+		std::system("cls");
+		launchMenu();
+	}
+}
+
+PokemonGo& PokeDex::launchCreatePoGoMon(Pokemon& pokemon) {
+	// Set the variables for the PokemonGo Object
+	std::cout << "Please give " << pokemon.getPokemonName() << " a nickname: ";
+	string nickname;
+
+	for (;;) {
+		if (std::cin >> nickname) {
+			break;
+		}
+		else {
+			std::cout << "Invalid Input, Please try again." << std::endl;
+		}
+	}
+
+	std::cout << "Please enter the CP of " << nickname << " :";
+	int cp;
+
+	for (;;) {
+		if (std::cin >> cp) { // Need to find out the limit of CP..
+			break;
+		}
+		else {
+			std::cout << "Invalid input, please try again." << std::endl;
+			std::cin.clear();
+
+			// Now you must get rid of the bad input.
+			// Personally I would just ignore the rest of the line
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+	}
+
+	std::cout << "Please enter the HP of " << nickname << " :";
+	int hp;
+
+	for (;;) {
+		if (std::cin >> hp) {
+			break;
+		}
+		else {
+			std::cout << "Invalid input, please try again." << std::endl;
+			std::cin.clear();
+
+			// Now you must get rid of the bad input.
+			// Personally I would just ignore the rest of the line
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+	}
+
+	std::cout << "Please enter the amount of stardust of " << nickname << " :";
+	int stardust;
+
+	for (;;) {
+		if (std::cin >> stardust) {
+			break;
+		}
+		else {
+			std::cout << "Invalid input, please try again." << std::endl;
+			std::cin.clear();
+
+			// Now you must get rid of the bad input.
+			// Personally I would just ignore the rest of the line
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+	}
+
+	std::cout << "Please enter the level of " << nickname << " :";
+	int level;
+
+	for (;;) {
+		if (std::cin >> level) {
+			break;
+		}
+		else {
+			std::cout << "Invalid input, please try again." << std::endl;
+			std::cin.clear();
+
+			// Now you must get rid of the bad input.
+			// Personally I would just ignore the rest of the line
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+	}
+
+	return PokemonGo(nickname, cp, hp, stardust, level,
+		pokemon.getPokemonId(), pokemon.getPokemonName(), pokemon.getExactEvolutions(), pokemon.getTypesVector(),
+		pokemon.getExactMoves());
 }
 
 void PokeDex::menuChoice(int& choice) {
@@ -1482,6 +1592,7 @@ void PokeDex::menuChoice(int& choice) {
 		launchDeletePokemon();
 		break;
 	case 4:
+		launchPoGoMenu();
 		break;
 	case 5:
 		savePokemons();

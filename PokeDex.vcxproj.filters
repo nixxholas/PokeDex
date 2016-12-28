@@ -40,9 +40,6 @@
     <ClCompile Include="PokeDex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Grade.cpp">
-      <Filter>Source Files\PoGo</Filter>
-    </ClCompile>
     <ClCompile Include="LevelData.cpp">
       <Filter>Source Files\PoGo</Filter>
     </ClCompile>
@@ -175,9 +172,6 @@
       <Filter>Header Files\rapidjson</Filter>
     </ClInclude>
     <ClInclude Include="PokemonGo.h">
-      <Filter>Header Files\PoGo</Filter>
-    </ClInclude>
-    <ClInclude Include="Grade.h">
       <Filter>Header Files\PoGo</Filter>
     </ClInclude>
     <ClInclude Include="LevelData.h">

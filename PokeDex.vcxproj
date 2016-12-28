@@ -150,7 +150,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Evolution.cpp" />
-    <ClCompile Include="Grade.cpp" />
     <ClCompile Include="LevelData.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Move.cpp" />
@@ -160,7 +159,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Evolution.h" />
-    <ClInclude Include="Grade.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="LevelData.h" />
     <ClInclude Include="Move.h" />
