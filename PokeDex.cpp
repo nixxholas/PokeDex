@@ -863,7 +863,7 @@ Move PokeDex::createMove() {
 
 	cout << "What's the attack damage of " + Name_ + "?" << std::endl;
 	for (;;) {
-		if (std::cin >> Attack_ && (Attack_ < 999 && Attack_ >= 0)) {
+		if (std::cin >> Attack_ && (Attack_ < 1000 && Attack_ >= 0)) {
 			break;
 		}
 		else {
@@ -875,7 +875,7 @@ Move PokeDex::createMove() {
 
 	cout << "What's the accuracy percentage of " + Name_ + "?" << std::endl;
 	for (;;) {
-		if (std::cin >> Accuracy_ && (Accuracy_ < 100 && Accuracy_ >= 0)) {
+		if (std::cin >> Accuracy_ && (Accuracy_ < 101 && Accuracy_ >= 0)) {
 			break;
 		}
 		else {
@@ -887,7 +887,7 @@ Move PokeDex::createMove() {
 	
 	cout << "What's the PP of " + Name_ + "?" << std::endl;
 	for (;;) {
-		if (std::cin >> Pp_ && (Pp_ < 100 && Pp_ >= 0)) {
+		if (std::cin >> Pp_ && (Pp_ < 101 && Pp_ >= 0)) {
 			break;
 		}
 		else {
@@ -899,7 +899,7 @@ Move PokeDex::createMove() {
 
 	cout << "What's the effect chance percentage of " + Name_ + "?" << std::endl;
 	for (;;) {
-		if (std::cin >> Effect_percent_ && (Effect_percent_ < 100 && Effect_percent_ >= 0)) {
+		if (std::cin >> Effect_percent_ && (Effect_percent_ < 101 && Effect_percent_ >= 0)) {
 			break;
 		}
 		else {
