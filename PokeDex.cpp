@@ -732,9 +732,23 @@ void PokeDex::launchCreatePokemon() {
 
 		// Input Checking + Data pushing to vector
 		for (;;) {
-			if (std::cin >> choice && (choice < 19 && choice > 0)) {
-				types.push_back(Pokemon::enumIntToType(choice));
-				break;
+			if (std::cin >> choice && choice < 19 && choice > 0) {
+				if (types.size() > 0) {
+					if (types.at(0) == choice) {
+						std::cout << "Don't be funny, choose a different type from the first." << std::endl;
+						std::cout << "Please enter again: ";
+						std::cin.clear();
+						std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
+					}
+					else {
+						types.push_back(Pokemon::enumIntToType(choice));
+						break;
+					}
+				}
+				else {
+					types.push_back(Pokemon::enumIntToType(choice));
+					break;
+				}
 			}
 			else {
 				std::cout << "Please enter a valid integer [1 to 18]" << std::endl;
