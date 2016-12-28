@@ -749,7 +749,7 @@ void PokeDex::launchCreatePokemon() {
 	std::cout << "Will " + name + " have any evolution/s?" << std::endl;
 	std::cout << "Yes (1) or No (0)" << std::endl;
 	for (;;) {
-		if (std::cin >> evoChoice && (typeCount > -1 && typeCount < 2)) {
+		if (std::cin >> evoChoice && typeCount > -1 && typeCount < 2) {
 			break;
 		}
 		else {

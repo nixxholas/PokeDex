@@ -131,7 +131,7 @@ vector<Move>& Pokemon::getExactMoves() {
 // couts a list of Enumerators for the user to cin via enumIntToString()
 // Checks the input, and eventually returns a string
 void Pokemon::printEnumChoices() {
-	for (int i = Type::BUG; i != Type::WATER; ++i) {
+	for (int i = Type::BUG; i < Type::WATER + 1; ++i) {
 		switch (i) {
 		case Type::BUG: // 0
 			cout << "(1) Bug" << std::endl;
