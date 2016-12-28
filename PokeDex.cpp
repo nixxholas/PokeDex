@@ -1428,6 +1428,9 @@ void PokeDex::launchDeletePokemon() {
 		if (!results.empty()) {
 			// http://stackoverflow.com/questions/39912/how-do-i-remove-an-item-from-a-stl-vector-with-a-certain-value
 			Pokemons_.erase(std::remove(Pokemons_.begin(), Pokemons_.end(), *selectPokemonFromResults(results)), Pokemons_.end());
+			std::system("cls");
+			std::cout << "The Pokemon has been deleted." << endl;
+			launchMenu();
 			break;
 		}
 		else {
