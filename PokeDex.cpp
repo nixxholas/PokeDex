@@ -1286,7 +1286,7 @@ bool PokeDex::launchEditMove(Move& move, Pokemon& pokemon) {
 					if (std::cin >> input) {
 						move.setMoveName(input);
 						cout << "The move name is now set to: " << input << endl;
-						break;
+						return true;
 					}
 					else {
 						std::cout << "Please try again." << std::endl;
@@ -1301,7 +1301,7 @@ bool PokeDex::launchEditMove(Move& move, Pokemon& pokemon) {
 					if (std::cin >> level) {
 						move.setMoveLevel(level);
 						cout << "The move name is now set to: " << level << endl;
-						break;
+						return true;
 					}
 					else {
 						std::cout << "Please try again." << std::endl;
@@ -1315,7 +1315,7 @@ bool PokeDex::launchEditMove(Move& move, Pokemon& pokemon) {
 					if (std::cin >> input) {
 						move.setMoveType(input);
 						cout << "The move type is now set to: " << input << endl;
-						break;
+						return true;
 					}
 					else {
 						std::cout << "Please try again." << std::endl;
@@ -1329,7 +1329,7 @@ bool PokeDex::launchEditMove(Move& move, Pokemon& pokemon) {
 					if (std::cin >> input) {
 						move.setMoveCategory(input);
 						cout << "The move category is now set to: " << input << endl;
-						break;
+						return true;
 					}
 					else {
 						std::cout << "Please try again." << std::endl;
@@ -1344,7 +1344,7 @@ bool PokeDex::launchEditMove(Move& move, Pokemon& pokemon) {
 					if (std::cin >> atk) {
 						move.setMoveAttack(atk);
 						cout << "The move attack damage is now set to: " << atk << endl;
-						break;
+						return true;
 					}
 					else {
 						std::cout << "Please try again." << std::endl;
@@ -1359,7 +1359,7 @@ bool PokeDex::launchEditMove(Move& move, Pokemon& pokemon) {
 					if (std::cin >> acc) {
 						move.setMoveAccuracy(acc);
 						cout << "The move accuracy is now set to: " << acc << endl;
-						break;
+						return true;
 					}
 					else {
 						std::cout << "Please try again." << std::endl;
@@ -1374,7 +1374,7 @@ bool PokeDex::launchEditMove(Move& move, Pokemon& pokemon) {
 					if (std::cin >> pp) {
 						move.setMovePP(pp);
 						std::cout << "The move PP is now set to: " << pp << std::endl;
-						break;
+						return true;
 					}
 					else {
 						std::cout << "Please try again." << std::endl;
@@ -1389,7 +1389,7 @@ bool PokeDex::launchEditMove(Move& move, Pokemon& pokemon) {
 					if (std::cin >> effect_percent) {
 						move.setMoveEffectPercent(effect_percent);
 						std::cout << "The move effect percent is now set to: " << effect_percent << std::endl;
-						break;
+						return true;
 					}
 					else {
 						std::cout << "Please try again." << std::endl;
@@ -1403,7 +1403,7 @@ bool PokeDex::launchEditMove(Move& move, Pokemon& pokemon) {
 					if (std::cin >> input) {
 						move.setMoveDescription(input);
 						std::cout << "The move description is now set to: " << input << std::endl;
-						break;
+						return true;
 					}
 					else {
 						std::cout << "Please try again." << std::endl;
