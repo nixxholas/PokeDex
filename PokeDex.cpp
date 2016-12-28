@@ -1558,13 +1558,13 @@ PokemonGo& PokeDex::launchCreatePoGoMon(Pokemon& pokemon) {
 		}
 	}
 
-	std::cout << "Please enter the level of " << nickname << " :";
+	std::cout << "Please enter the level of " << nickname << " [Level 1 - 80] : ";
 	int level;
 
 	for (;;) {
-		if (std::cin >> level) {
+		if (std::cin >> level && level > 0 && level < 81) {
 			break;
-		}
+		} 
 		else {
 			std::cout << "Invalid input, please try again." << std::endl;
 			std::cin.clear();
