@@ -568,6 +568,7 @@ Pokemon* PokeDex::selectPokemonFromResults(vector<Pokemon*> &results) {
 			else {
 				std::cout << "Please enter a valid choice." << std::endl;
 				std::cin.clear();
+				std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			}
 		}
 	}
@@ -1487,7 +1488,7 @@ void PokeDex::launchPoGoMenu() {
 	PokemonGo& currentPoGomon = launchCreatePoGoMon(currentPokemon);
 
 	// Now, compute it
-	if (currentPoGomon.calculatePotentialIV()) {
+	if (currentPoGomon.calculatePotentialIV(levelsData_.at(currentPoGomon.getLevel() - 1))) {
 		std::system("cls");
 		launchMenu();
 	}

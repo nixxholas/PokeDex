@@ -1,5 +1,6 @@
 #pragma once
 #include "Pokemon.h"
+#include "LevelData.h"
 
 class PokemonGo : public Pokemon {
 private:
@@ -11,7 +12,10 @@ private:
 
 public:
 	// Calculates the Potential of Individual Values of the PokemonGo Pokemon
-	bool calculatePotentialIV() const;
+	bool calculatePotentialIV(LevelData&) const;
+
+	// Retrieves the level of the PoGomon
+	int getLevel() const;
 
 	// Default Constructor
 	PokemonGo(string, int, int, int, int,

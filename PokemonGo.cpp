@@ -1,4 +1,6 @@
 #include "PokemonGo.h"
+#include <iostream>
+#include <limits>
 
 // Default Constructor
 //
@@ -16,6 +18,16 @@ PokemonGo::PokemonGo(string nickname, int cp, int hp, int stardust, int level,
 // Destruction
 PokemonGo::~PokemonGo() {};
 
-bool PokemonGo::calculatePotentialIV() const {
+ bool PokemonGo::calculatePotentialIV(LevelData& levelData) const {
+	std::cout << "Candy required for the level: " << levelData.getCandy() << std::endl;
 
+	// http://stackoverflow.com/questions/903221/press-enter-to-continue
+	std::cout << "Press Enter to Continue";
+	std::cin.get();
+
+	return true;
+}
+
+int PokemonGo::getLevel() const {
+	return level_;
 }
