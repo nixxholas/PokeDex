@@ -759,11 +759,11 @@ void PokeDex::launchCreatePokemon() {
 	}
 
 	// Pokemon Evolution/s
-	char evoChoice;
+	int evoChoice;
 	std::cout << "Will " + name + " have any evolution/s?" << std::endl;
 	std::cout << "Yes (1) or No (0)" << std::endl;
 	for (;;) {
-		if (std::cin >> evoChoice && typeCount > -1 && typeCount < 2) {
+		if (std::cin >> evoChoice && evoChoice > -1 && evoChoice < 2) {
 			break;
 		}
 		else {
@@ -775,7 +775,7 @@ void PokeDex::launchCreatePokemon() {
 	
 	if (evoChoice == 1) {
 		int evoCount;
-		std::cout << "How many evolution variations will " + name + " have?" << std::endl;
+		std::cout << "How many evolution variations will " + name + " have? [1 to 4]" << std::endl;
 		for (;;) {
 			if (std::cin >> evoCount && (evoCount < 5 && evoCount > 0)) {
 				break;
