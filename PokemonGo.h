@@ -12,7 +12,7 @@ private:
 
 public:
 	// Calculates the Potential of Individual Values of the PokemonGo Pokemon
-	bool calculatePotentialIV(LevelData&) const;
+	bool calculatePotential(LevelData&) const;
 
 	// Retrieves the level of the PoGomon
 	int getLevel() const;

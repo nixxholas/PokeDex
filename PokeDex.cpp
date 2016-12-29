@@ -1488,7 +1488,7 @@ void PokeDex::launchPoGoMenu() {
 	PokemonGo& currentPoGomon = launchCreatePoGoMon(currentPokemon);
 
 	// Now, compute it
-	if (currentPoGomon.calculatePotentialIV(levelsData_.at(currentPoGomon.getLevel() - 1))) {
+	if (currentPoGomon.calculatePotential(levelsData_.at(currentPoGomon.getLevel() - 1))) {
 		std::system("cls");
 		launchMenu();
 	}
@@ -1614,7 +1614,7 @@ void PokeDex::launchMenu() {
 		std::cout << "(1) Search for a pokemon" << std::endl;
 		std::cout << "(2) Create a new pokemon" << std::endl;
 		std::cout << "(3) Delete a pokemon" << std::endl;
-		std::cout << "(4) PokemonGo IV Calculator" << std::endl;
+		std::cout << "(4) PokemonGo Level Calculator" << std::endl;
 		std::cout << "(5) Exit the PokeDex" << std::endl;
 
 		std::cin >> choice; // http://stackoverflow.com/questions/13421965/using-cin-get-to-get-an-integer

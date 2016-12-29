@@ -18,13 +18,13 @@ PokemonGo::PokemonGo(string nickname, int cp, int hp, int stardust, int level,
 // Destruction
 PokemonGo::~PokemonGo() {};
 
- bool PokemonGo::calculatePotentialIV(LevelData& levelData) const {
+ bool PokemonGo::calculatePotential(LevelData& levelData) const {
 	std::cout << "Candy required for the level: " << levelData.getCandy() << std::endl;
+	std::cout << "Stardust required for the level: " << levelData.getDust() << std::endl;
 
 	// http://stackoverflow.com/questions/903221/press-enter-to-continue
 	std::cout << "Press Enter to Continue";
-	std::cin.get();
-
+	if (std::cin.get())
 	return true;
 }
 
