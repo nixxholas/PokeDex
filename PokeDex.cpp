@@ -1170,7 +1170,7 @@ void PokeDex::launchEditMoves(Pokemon& pokemon) {
 
 	cout << std::endl;
 	cout << "(51) Add a new move" << std::endl;
-	cout << "(52) Return to the previous menu" << std::endl;
+	cout << "(52) Return to the previous menu" << std::endl; 
 	cout << "(53) Return to the main menu" << std::endl;
 
 	int choice;

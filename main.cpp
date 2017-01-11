@@ -8,7 +8,7 @@
 using namespace std;
 
 int main() {
-	cout << "Loading Pokemons" << std::endl;
+	cout << "Loading Pokemon" << std::endl;
 
 	PokeDex pokeDex;
 	pokeDex.initializePokemons();
