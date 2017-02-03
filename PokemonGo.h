@@ -9,6 +9,7 @@ private:
 	int hp_;
 	int stardust_;
 	int level_;
+	int stamina_;
 
 public:
 	// Calculates the Potential of Individual Values of the PokemonGo Pokemon
@@ -18,8 +19,8 @@ public:
 	int getLevel() const;
 
 	// Default Constructor
-	PokemonGo(string, int, int, int, int,
-		int, string, vector<Evolution>, vector<Type>, vector<Move>);
+	PokemonGo(string, int, int, int, int, int,
+		Pokemon&);
 
 	// Destructor
 	~PokemonGo();

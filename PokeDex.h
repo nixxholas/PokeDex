@@ -83,7 +83,7 @@ public:
 	void launchPoGoMenu();
 
 	// Function to create a PokemonGo Pokemon
-	PokemonGo& launchCreatePoGoMon(Pokemon&);
+	PokemonGo* launchCreatePoGoMon(Pokemon&);
 
 	// Function to display the main menu
 	void launchMenu();
