@@ -35,7 +35,7 @@ PokemonGo::~PokemonGo() {};
 	std::cout << nickname_ << "'s CP IV is: " << cpIV << std::endl;
 
 	// http://stackoverflow.com/questions/903221/press-enter-to-continue
-	std::cout << "Press Enter to Continue";
+	std::cout << "Type any key and enter to Continue";
 	if (std::cin.get())
 	return true;
 }

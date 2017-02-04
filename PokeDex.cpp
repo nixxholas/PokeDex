@@ -1518,7 +1518,18 @@ void PokeDex::launchPoGoMenu() {
 
 		currentPoGomon->calculatePotential(levelsData_[currentPoGomon->getLevel() - 1]);
 
-		if (std::cin >> input) {
+		for (;;) {
+			if (std::cin >> input) {
+				break;
+			}
+			else {
+				std::cout << "Invalid input, please try again." << std::endl;
+				std::cin.clear();
+
+				// Now you must get rid of the bad input.
+				// Personally I would just ignore the rest of the line
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
 		}
 
 		std::system("cls");
