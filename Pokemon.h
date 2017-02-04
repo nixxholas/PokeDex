@@ -2,6 +2,8 @@
 
 #include <string>
 #include <vector>
+#include <algorithm>
+#include <cctype> 
 
 #include "Evolution.h"
 #include "Move.h"

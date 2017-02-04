@@ -68,7 +68,15 @@ bool Pokemon::operator==(const Pokemon& pokemon) const {
 }
 
 bool Pokemon::contains(const string& name) const {
-	if (strstr(name_.c_str(), name.c_str()))
+	// Let us have temporary variables to convert them to lowercase
+	string currName = name_;
+	string compName = name;
+
+	// We now convert them to lower first
+	std::transform(currName.begin(), currName.end(), currName.begin(), ::tolower);
+	std::transform(compName.begin(), compName.end(), compName.begin(), ::tolower);
+
+	if (strstr(currName.c_str(), compName.c_str()))
 	{
 		return true;
 	}
